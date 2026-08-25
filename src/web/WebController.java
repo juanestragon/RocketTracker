@@ -4,12 +4,10 @@ import config.Config;
 import config.ConfigStorage;
 import events.WebEventListener;
 import javafx.application.Platform;
-import javafx.stage.DirectoryChooser;
 import network.ConnectionState;
 import network.ConnectionStateListener;
 import network.RocketLeagueClient;
 
-import java.io.File;
 import java.nio.file.Path;
 
 public class WebController implements WebEventListener, ConnectionStateListener {

@@ -197,7 +197,7 @@ public class WebView {
         );
 
         connectionButton.getStyleClass().add(
-                "connection-on"
+                "connection-connected"
         );
     }
 
@@ -221,8 +221,7 @@ public class WebView {
                 "connection-connected",
                 "connection-connecting",
                 "connection-disconnected",
-                "connection-on",
-                "connection-off"
+                "connection-connected"
         );
 
         connectionButton.getStyleClass().add(
@@ -250,12 +249,11 @@ public class WebView {
                 "connection-connected",
                 "connection-connecting",
                 "connection-disconnected",
-                "connection-on",
-                "connection-off"
+                "connection-connected"
         );
 
         connectionButton.getStyleClass().add(
-                "connection-off"
+                "connection-disconnected"
         );
     }
 

@@ -71,68 +71,6 @@ public class WebAPI {
         return currentPlaylistId;
     }
 
-    public String getCurrentPlaylistName() {
-        return switch (currentPlaylistId) {
-            case -1 -> "Main Menu";
-
-            case 0 -> "Casual";
-            case 1 -> "1v1";
-            case 2 -> "2v2";
-            case 3 -> "3v3";
-            case 4 -> "4v4";
-
-            case 10 -> "Ranked 1v1";
-            case 11 -> "Ranked 2v2";
-            case 13 -> "Ranked 3v3";
-
-            case 15 -> "Snow Day Casual";
-            case 17 -> "Hoops Casual";
-            case 18 -> "Rumble Casual";
-            case 23 -> "Dropshot Casual";
-
-            case 27 -> "Ranked Hoops";
-            case 28 -> "Ranked Rumble";
-            case 29 -> "Ranked Dropshot";
-            case 30 -> "Ranked Snow Day";
-
-            case 31 -> "Haunted Ball";
-            case 32 -> "Beach Ball";
-            case 33 -> "Gridiron";
-            case 35 -> "Rocket Labs";
-            case 37 -> "RumShot";
-            case 38 -> "GodBall";
-            case 41 -> "Boomer";
-            case 43 -> "GodBall 2v2";
-            case 44 -> "Special Snow Day";
-            case 46 -> "Football";
-            case 47 -> "Cubic";
-            case 48 -> "Tactical Rumble";
-            case 49 -> "Spring Loaded";
-            case 50 -> "Speed Demon";
-            case 52 -> "Rumble BM";
-            case 54 -> "Knockout";
-            case 55 -> "Thirdwheel";
-            case 62 -> "Magnus Futball";
-
-            case 22 -> "Custom Tournament";
-            case 34 -> "Tournament";
-
-            case 6 -> "Private Match";
-            case 7 -> "Season";
-            case 8 -> "Exhibition";
-            case 9 -> "Free Training";
-            case 16 -> "Rocket Labs";
-            case 19 -> "Workshop";
-            case 20 -> "Training Editor";
-            case 21 -> "Custom Training";
-            case 24 -> "LAN";
-            case 26 -> "External Match";
-            case 40 -> "Coops Vs AI";
-
-            default -> "Desconocida (" + currentPlaylistId + ")";
-        };
-    }
-
     public MatchResult getLastMatch() {
         return repository.getLastMatches(1).getFirst();
     }

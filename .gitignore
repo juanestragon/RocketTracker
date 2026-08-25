@@ -4,6 +4,7 @@ runtime/
 RocketTracker.jar
 .idea/
 out/
+data/
 .kotlin
 
 ### Eclipse ###

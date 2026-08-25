@@ -402,7 +402,7 @@ public class HomeView {
         currentMatchLabel.setText(
                 getPlaylistName(playlistId)
                         + " - "
-                        + arena
+                        + getHumanArenaName(arena)
         );
     }
 
@@ -610,7 +610,7 @@ public class HomeView {
     // Utilidades
     // ============================
 
-    public String getPlaylistName(int playListId) {
+    private String getPlaylistName(int playListId) {
         return switch (playListId) {
             case -1 -> "Main Menu";
 
@@ -671,6 +671,76 @@ public class HomeView {
             default -> "Desconocida (" + playListId + ")";
         };
     }
+
+    private String getHumanArenaName(String arenaName) {
+        return switch (arenaName) {
+            //STANDARD
+
+            case "Stadium_P", "Stadium_Race_Day_P", "Stadium_Day_P",
+                 "Stadium_Winter_P", "Stadium_Foggy_P", "Stadium_10A_P" -> "DFH Stadium";
+            case "Underwater_P", "Underwater_GRS_P" -> "Aquadome";
+            case "Park_P", "Park_Bman_P", "Park_Night_P", "Park_Snowy_P", "Park_Rainy_P" -> "Beckwith Park";
+            case "CS_P", "CS_Day_P", "CS_HW_P", "BB_P", "Swoosh_P" -> "Champions Field";
+            case "Outlaw_P", "Outlaw_Oasis_P" -> "Deadeye Canyon";
+            case "Woods_P", "Woods_Night_P", "Woods_Forest_P" -> "Drift Woods";
+            case "FF_Dusk_P" -> "Estadio Vida";
+            case "Farm_P", "Farm_Night_P", "Farm_HW_P", "Farm_GRS_P" -> "Farmstead";
+            case "CHN_Stadium_P", "CHN_Stadium_Day_P", "FNI_Stadium_P" -> "Forbidden Temple";
+            case "UF_Day_P" -> "Futura Garden";
+            case "EuroStadium_P", "EuroStadium_Dusk_P", "EuroStadium_Night_P",
+                 "EuroStadium_SnowNight_P", "EuroStadium_Rainy_P" -> "Mannfield";
+            case "NeoTokyo_Standard_P", "NeoTokyo_Toon_P", "NeoTokyo_Hax_P", "NeoTokyo_Arcade_P",
+                 "NeoTokyo_Hax_Signs_P", "NeoTokyo_Hax_Signs_Off_P" -> "Neo Tokyo";
+            case "Music_P" -> "Neon Fields";
+            case "Beach_P", "Beach_Night_P", "Beach_Night_GRS_P" -> "Salty Shores";
+            case "Street_P" -> "Sovereign Heights";
+            case "ARC_Standard_P", "ARC_Darc_P" -> "Starbase Arc";
+            case "TrainStation_P", "TrainStation_Dawn_P", "Haunted_TrainStation_P",
+                 "TrainStation_Night_P" -> "Urban Central";
+            case "UtopiaStadium_P", "UtopiaStadium_Dusk_P", "UtopiaStadium_Lux_P", "UtopiaStadium_Snow_P" -> "Utopia Coliseum";
+            case "Wasteland_S_P", "Wasteland_Night_S_P", "Wasteland_GRS_P" -> "Wasteland";
+            case "Paname_Dusk_P" -> "Parc de Paris";
+
+            // NON STANDARD
+
+            case "ARC_P" -> "Arctagon";
+            case "Wasteland_P", "Wasteland_Night_P" -> "Badlands";
+            case "Labs_Holyfield_Space_P" -> "Force Field (Star Wars)";
+            case "NeoTokyo_P" -> "Tokyo Underpass";
+            case "ThrowbackStadium_P", "ThrowbackHockey_P" -> "Throwback Stadium";
+
+            // LABS MAPS
+
+            case "Labs_PillarHeat_P" -> "Barricade";
+            case "Labs_Basin_P" -> "Basin";
+            case "Labs_PillarWings_P" -> "Colossus";
+            case "Labs_Corridor_P" -> "Corridor";
+            case "Labs_Cosmic_P", "Labs_Cosmic_V4_P" -> "Cosmic";
+            case "Labs_DoubleGoal_P" -> "Double Goal";
+            case "Labs_Galleon_P", "Labs_Galleon_Mast_P" -> "Galleon";
+            case "Labs_PillarGlass_P" -> "Hourglass";
+            case "Labs_Holyfield_P" -> "Loophole";
+            case "Labs_Octagon_P", "Labs_Octagon_02_P" -> "Octagon";
+            case "Labs_CirclePillars_P" -> "Pillars";
+            case "Labs_Octagon_B2B_02_P" -> "Roadblock";
+            case "Labs_Underpass_P", "Labs_Underpass_v0_p" -> "Underpass";
+            case "Labs_Utopia_P" -> "Utopia Retro";
+
+            // EXTRA MODES
+
+            case "HoopsStreet_P", "HoopsStreet_Art_P" -> "The Block";
+            case "HoopsStadium_P" -> "Dunk House";
+
+            case "ShatterShot_P" -> "Core 707";
+
+            case "KO_Calavera_P" -> "Calavera";
+            case "KO_Carbon_P" -> "Carbon";
+            case "KO_Quadron_P" -> "Quadron";
+
+            default -> "Unknown: " + arenaName;
+        };
+    }
+
 
     private String formatDate(
             String date
