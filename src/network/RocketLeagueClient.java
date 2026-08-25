@@ -232,12 +232,6 @@ public class RocketLeagueClient {
         return connectionState;
     }
 
-    public boolean isConnected() {
-
-        return connectionState ==
-                ConnectionState.CONNECTED;
-    }
-
     public boolean isRunning() {
         return running;
     }

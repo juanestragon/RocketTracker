@@ -163,30 +163,6 @@ public class ConfigStorage {
         return string;
     }
 
-    private String getOptionalString(
-            Map<?, ?> map,
-            String key
-    ) {
-
-        Object value = map.get(key);
-
-        if (value == null) {
-            return null;
-        }
-
-        if (!(value instanceof String string)) {
-
-            throw new IllegalArgumentException(
-                    "La configuración no contiene un valor válido para: "
-                            + key
-            );
-        }
-
-        return string.isBlank()
-                ? null
-                : string;
-    }
-
     private String escape(String value) {
 
         if (value == null) {

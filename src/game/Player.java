@@ -91,14 +91,6 @@ public class Player {
         return saves;
     }
 
-    public int getTouches() {
-        return touches;
-    }
-
-    public int getCarTouches() {
-        return carTouches;
-    }
-
     public int getDemos() {
         return demos;
     }

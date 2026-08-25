@@ -16,8 +16,6 @@ public class StatisticsView {
     // Filtros
     // ============================
 
-    private final HBox playlistSelector;
-
     private final Button allButton;
     private final Button oneVsOneButton;
     private final Button twoVsTwoButton;
@@ -49,8 +47,6 @@ public class StatisticsView {
     public StatisticsView() {
 
         root = new VBox();
-
-        playlistSelector = new HBox();
 
         allButton = new Button("Todas");
         oneVsOneButton = new Button("1v1");

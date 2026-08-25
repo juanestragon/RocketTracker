@@ -207,23 +207,11 @@ public class SettingsView {
     // Controls
     // ============================
 
-    public TextField getPlayerNameField() {
-        return playerNameField;
-    }
-
-    public TextField getStoragePathField() {
-        return storagePathField;
-    }
-
     public Button getBrowseButton() {
         return browseButton;
     }
 
     public Button getSaveButton() {
         return saveButton;
-    }
-
-    public Label getStatusLabel() {
-        return statusLabel;
     }
 }

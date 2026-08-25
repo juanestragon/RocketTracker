@@ -52,18 +52,6 @@ public class Game {
         return playlistId;
     }
 
-    public int getTimeSeconds() {
-        return timeSeconds;
-    }
-
-    public boolean isOvertime() {
-        return overtime;
-    }
-
-    public boolean isReplay() {
-        return replay;
-    }
-
     public boolean hasWinner() {
         return hasWinner;
     }
