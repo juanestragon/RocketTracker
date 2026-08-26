@@ -6,6 +6,8 @@ RocketTracker.jar
 out/
 data/
 .kotlin
+build/
+lib/
 
 ### Eclipse ###
 .apt_generated
