@@ -84,6 +84,9 @@ jpackage \
     --dest "$RELEASE"
 
 cd "$RELEASE/RocketTracker"
+
+mkdir "data"
+mkdir "data/matches"
 ln -sf "bin/RocketTracker" "RocketTracker"
 chmod +x "RocketTracker"
 
