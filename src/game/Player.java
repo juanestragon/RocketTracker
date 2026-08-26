@@ -10,8 +10,6 @@ public class Player {
     private final int shots;
     private final int assists;
     private final int saves;
-    private final int touches;
-    private final int carTouches;
     private final int demos;
 
     private final boolean boosting;
@@ -50,8 +48,6 @@ public class Player {
         this.shots = shots;
         this.assists = assists;
         this.saves = saves;
-        this.touches = touches;
-        this.carTouches = carTouches;
         this.demos = demos;
         this.hasCar = hasCar;
         this.speed = speed;
@@ -109,10 +105,6 @@ public class Player {
 
     public boolean isSupersonic() {
         return supersonic;
-    }
-
-    public boolean isBoosting() {
-        return boosting;
     }
 
     public boolean isOnGround() {

@@ -19,35 +19,23 @@ public class ConfigStorage {
     public Config load() {
 
         if (!Files.exists(configFile)) {
-
             Config config = createDefaultConfig();
-
             save(config);
-
             return config;
         }
 
         try {
 
             String json = Files.readString(configFile);
-
             Object parsed = JsonParser.parse(json);
-
             if (!(parsed instanceof Map<?, ?> map)) {
                 throw new IllegalArgumentException("La configuración no es un objeto JSON");
             }
 
             String playerName = getString(map, "playerName");
-
             String rocketLeagueUrl = getString(map, "rocketLeagueUrl");
-
             String storagePath = getString(map, "storagePath");
-
-            return new Config(
-                    playerName,
-                    rocketLeagueUrl,
-                    Path.of(storagePath)
-            );
+            return new Config(playerName, rocketLeagueUrl, Path.of(storagePath));
 
         } catch (IOException e) {
 
@@ -75,68 +63,30 @@ public class ConfigStorage {
             );
 
         } catch (IOException e) {
-
-            throw new RuntimeException(
-                    "No se pudo guardar la configuración",
-                    e
-            );
+            throw new RuntimeException("No se pudo guardar la configuración", e);
         }
     }
 
     private Config createDefaultConfig() {
-
-        return new Config(
-                "",
-                "ws://127.0.0.1:49124",
-                Path.of("data", "matches")
-        );
+        return new Config("", "ws://127.0.0.1:49124", Path.of("data", "matches"));
     }
 
     private String buildJson(Config config) {
 
-        StringBuilder json =
-                new StringBuilder();
+        StringBuilder json = new StringBuilder();
 
         json.append("{\n");
-
-        appendString(
-                json,
-                "playerName",
-                config.getPlayerName(),
-                true
-        );
-
-        appendString(
-                json,
-                "rocketLeagueUrl",
-                config.getRocketLeagueUrl(),
-                true
-        );
-
-        appendString(
-                json,
-                "storagePath",
-                config.getStoragePath().toString(),
-                false
-        );
-
+        appendString(json, "playerName", config.getPlayerName(), true);
+        appendString(json, "rocketLeagueUrl", config.getRocketLeagueUrl(), true);
+        appendString(json, "storagePath", config.getStoragePath().toString(), false);
         json.append("}\n");
 
         return json.toString();
     }
 
-    private void appendString(
-            StringBuilder json,
-            String key,
-            String value,
-            boolean comma
-    ) {
+    private void appendString(StringBuilder json, String key, String value, boolean comma) {
 
-        json.append("    \"")
-                .append(key)
-                .append("\": \"")
-                .append(escape(value))
-                .append("\"");
+        json.append("    \"").append(key).append("\": \"").append(escape(value)).append("\"");
 
         if (comma) {
             json.append(",");
@@ -145,19 +95,12 @@ public class ConfigStorage {
         json.append("\n");
     }
 
-    private String getString(
-            Map<?, ?> map,
-            String key
-    ) {
+    private String getString(Map<?, ?> map, String key) {
 
         Object value = map.get(key);
 
         if (!(value instanceof String string)) {
-
-            throw new IllegalArgumentException(
-                    "La configuración no contiene un valor válido para: "
-                            + key
-            );
+            throw new IllegalArgumentException("La configuración no contiene un valor válido para: " + key);
         }
 
         return string;
@@ -169,8 +112,6 @@ public class ConfigStorage {
             return "";
         }
 
-        return value
-                .replace("\\", "\\\\")
-                .replace("\"", "\\\"");
+        return value.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 }

@@ -45,41 +45,21 @@ public class MatchAnalyzer {
     // ============================
     // Sesiones de boost
     // ============================
-    private int boostSamples = 0;
-
-    private int MAX_BOOST_SAMPLES = 10;
-
-    private int airborneBoostSamples = 0;
 
     private static final int MAX_AIRBORNE_BOOST_SAMPLES = 20;
-    /*
-     * Sesiones iniciadas usando boost en tierra.
-     */
-    private long groundBoostSessions = 0;
-
-    /*
-     * Sesiones de boost en tierra que consiguieron
-     * alcanzar supersónico.
-     */
-    private long successfulSupersonicSessions = 0;
-
-    /*
-     * Boost gastado en la sesión actual de boost
-     * en tierra.
-     */
-    private double currentBoostSession = 0.0;
-
-    /*
-     * Boost total utilizado para conseguir
-     * supersónico.
-     */
-    private double boostToSupersonicTotal = 0.0;
+    private static final int MAX_BOOST_SAMPLES = 10;
 
     private boolean wasGroundBoosting = false;
 
-    /*
-     * Último valor de boost recibido.
-     */
+    private int boostSamples = 0;
+    private int airborneBoostSamples = 0;
+
+
+    private long groundBoostSessions = 0;
+    private long successfulSupersonicSessions = 0;
+
+    private double currentBoostSession = 0.0;
+    private double boostToSupersonicTotal = 0.0;
     private double previousBoost = -1.0;
 
     public MatchAnalyzer(String playerId) {
@@ -98,22 +78,12 @@ public class MatchAnalyzer {
             return;
         }
 
-        /*
-         * Sin coche = respawn.
-         *
-         * No analizamos ese estado.
-         */
         if (!player.hasCar()) {
 
             resetTransientState();
-
             return;
         }
 
-        /*
-         * Una demolición termina inmediatamente
-         * cualquier estado transitorio.
-         */
         if (player.isDemolished()) {
 
             finishBoostSession();
@@ -155,14 +125,7 @@ public class MatchAnalyzer {
 
     private void updateAirTime(Player player) {
 
-        /*
-         * El tiempo en pared no cuenta como tiempo en aire.
-         */
-        boolean airborne =
-                !player.isOnGround()
-                        && !player.isOnWall();
-
-        if (airborne) {
+        if (!player.isOnGround() && !player.isOnWall()) {
             airTime += SAMPLE_INTERVAL;
         }
     }
@@ -181,14 +144,9 @@ public class MatchAnalyzer {
 
             if (!wasSupersonic) {
 
-                if (wasGroundBoosting
-                        && currentBoostSession > 0.0) {
-
+                if (wasGroundBoosting && currentBoostSession > 0.0) {
                     successfulSupersonicSessions++;
-
-                    boostToSupersonicTotal +=
-                            currentBoostSession;
-
+                    boostToSupersonicTotal += currentBoostSession;
                     finishBoostSession();
                 }
             }
@@ -205,9 +163,7 @@ public class MatchAnalyzer {
 
         double currentBoost = player.getBoost();
         boostSamples++;
-        /*
-         * Primera muestra válida.
-         */
+
         if (previousBoost < 0.0) {
             previousBoost = currentBoost;
             return;
@@ -215,10 +171,6 @@ public class MatchAnalyzer {
 
         double difference = previousBoost - currentBoost;
 
-        /*
-         * El boost ha aumentado:
-         * hemos recogido boost, no consumido.
-         */
         if (difference <= 0.0) {
 
             if (player.isOnGround()) {
@@ -226,71 +178,38 @@ public class MatchAnalyzer {
             }
 
             previousBoost = currentBoost;
-
             if (boostSamples > MAX_BOOST_SAMPLES) {
                 finishBoostSession();
             }
 
             return;
         }
-
-        /*
-         * Hemos consumido boost.
-         */
         if (wasSupersonic) {
-
-            /*
-             * Ya estábamos en supersónico.
-             * Este boost cuenta como boost usado
-             * durante supersónica.
-             */
             boostUsedSupersonic += difference;
 
         } else if (player.isOnGround()) {
             boostSamples = 0;
-            /*
-             * Estamos en tierra y todavía no somos supersónicos.
-             *
-             * Comenzamos una nueva sesión de boost si no
-             * había ninguna activa.
-             */
             if (!wasGroundBoosting) {
 
                 groundBoostSessions++;
-
                 wasGroundBoosting = true;
                 currentBoostSession = 0.0;
             }
 
             airborneBoostSamples = 0;
-
             currentBoostSession += difference;
 
         } else {
 
-            /*
-             * Estamos en el aire.
-             *
-             * Si veníamos usando boost en tierra, permitimos
-             * unos pocos samples para cubrir flicks y pequeños
-             * saltos sin romper la sesión.
-             */
             if (wasGroundBoosting) {
 
                 airborneBoostSamples++;
 
-                if (airborneBoostSamples
-                        <= MAX_AIRBORNE_BOOST_SAMPLES) {
-
+                if (airborneBoostSamples <= MAX_AIRBORNE_BOOST_SAMPLES) {
                     currentBoostSession += difference;
 
                 } else {
 
-                    /*
-                     * Lleva demasiado tiempo en el aire.
-                     * Ya no consideramos este boost como parte
-                     * de la sesión que busca supersónico.
-                     */
                     finishBoostSession();
 
                     airborneBoostSamples = 0;
@@ -315,7 +234,6 @@ public class MatchAnalyzer {
     private void resetTransientState() {
 
         previousBoost = -1.0;
-
         wasSupersonic = false;
 
         finishBoostSession();
@@ -340,12 +258,9 @@ public class MatchAnalyzer {
 
     private Player findPlayer(Game game) {
 
-        for (Player player :
-                game.getPlayers()) {
+        for (Player player : game.getPlayers()) {
 
-            if (playerId.equals(
-                    player.getPrimaryId())) {
-
+            if (playerId.equals(player.getPrimaryId())) {
                 return player;
             }
         }
@@ -411,16 +326,9 @@ public class MatchAnalyzer {
 
     public double getAirPercentage() {
 
-        double totalTime =
-                speedSamples * SAMPLE_INTERVAL;
+        double totalTime = speedSamples * SAMPLE_INTERVAL;
 
-        if (totalTime <= 0.0) {
-            return 0.0;
-        }
-
-        return airTime /
-                totalTime *
-                100.0;
+        return totalTime <= 0.0 ? 0.0 : airTime / totalTime * 100.0;
     }
 
     // =========================================================
@@ -429,16 +337,9 @@ public class MatchAnalyzer {
 
     public double getSupersonicPercentage() {
 
-        double totalTime =
-                speedSamples * SAMPLE_INTERVAL;
+        double totalTime = speedSamples * SAMPLE_INTERVAL;
 
-        if (totalTime <= 0.0) {
-            return 0.0;
-        }
-
-        return supersonicTime /
-                totalTime *
-                100.0;
+        return totalTime <= 0.0 ? 0.0 : supersonicTime / totalTime * 100.0;
     }
 
     // =========================================================
@@ -454,14 +355,7 @@ public class MatchAnalyzer {
     // =========================================================
 
     public double getSupersonicBoostSessionPercentage() {
-
-        if (groundBoostSessions == 0) {
-            return 0.0;
-        }
-
-        return (double) successfulSupersonicSessions
-                / groundBoostSessions
-                * 100.0;
+        return groundBoostSessions == 0 ? 0.0 : (double) successfulSupersonicSessions / groundBoostSessions * 100.0;
     }
 
     // =========================================================
@@ -469,13 +363,7 @@ public class MatchAnalyzer {
     // =========================================================
 
     public double getAverageBoostToSupersonic() {
-
-        if (successfulSupersonicSessions == 0) {
-            return 0.0;
-        }
-
-        return boostToSupersonicTotal
-                / successfulSupersonicSessions;
+        return successfulSupersonicSessions == 0 ? 0.0 : boostToSupersonicTotal / successfulSupersonicSessions;
     }
 
     // =========================================================
@@ -483,12 +371,6 @@ public class MatchAnalyzer {
     // =========================================================
 
     public double getAverageSpeed() {
-
-        if (speedSamples == 0) {
-            return 0.0;
-        }
-
-        return speedSum /
-                speedSamples;
+        return speedSamples == 0.0 ? 0 : speedSum / speedSamples;
     }
 }

@@ -37,90 +37,44 @@ public class SettingsView {
 
     private void build() {
 
-        root.getStyleClass().add(
-                "settings-view"
-        );
+        root.getStyleClass().add("settings-view");
+        root.setPadding(new Insets(30));
+        root.setAlignment(Pos.TOP_LEFT);
 
-        root.setPadding(
-                new Insets(30)
-        );
-
-        root.setAlignment(
-                Pos.TOP_LEFT
-        );
-
-        Label title =
-                new Label("Settings");
-
-        title.getStyleClass().add(
-                "settings-title"
-        );
+        Label title = new Label("Settings");
+        title.getStyleClass().add("settings-title");
 
         // ============================
         // Player name
         // ============================
 
-        Label playerNameLabel =
-                new Label("Player name");
+        Label playerNameLabel = new Label("Player name");
+        playerNameLabel.getStyleClass().add("settings-label");
 
-        playerNameLabel.getStyleClass().add(
-                "settings-label"
-        );
-
-        playerNameField.setPromptText(
-                "Rocket League player name"
-        );
-
-        playerNameField.setMaxWidth(
-                Double.MAX_VALUE
-        );
+        playerNameField.setPromptText("Rocket League player name");
+        playerNameField.setMaxWidth(Double.MAX_VALUE);
 
         // ============================
         // Storage path
         // ============================
 
-        Label storagePathLabel =
-                new Label("Storage path");
+        Label storagePathLabel = new Label("Storage path");
+        storagePathLabel.getStyleClass().add("settings-label");
+        storagePathField.setMaxWidth(Double.MAX_VALUE);
 
-        storagePathLabel.getStyleClass().add(
-                "settings-label"
-        );
+        browseButton.getStyleClass().add("settings-browse-button");
 
-        storagePathField.setMaxWidth(
-                Double.MAX_VALUE
-        );
+        HBox storageBox = new HBox(8, storagePathField, browseButton);
+        storageBox.setAlignment(Pos.CENTER_LEFT);
 
-        browseButton.getStyleClass().add(
-                "settings-browse-button"
-        );
-
-        HBox storageBox =
-                new HBox(
-                        8,
-                        storagePathField,
-                        browseButton
-                );
-
-        storageBox.setAlignment(
-                Pos.CENTER_LEFT
-        );
-
-        HBox.setHgrow(
-                storagePathField,
-                javafx.scene.layout.Priority.ALWAYS
-        );
+        HBox.setHgrow(storagePathField, javafx.scene.layout.Priority.ALWAYS);
 
         // ============================
         // Save
         // ============================
 
-        saveButton.getStyleClass().add(
-                "settings-save-button"
-        );
-
-        statusLabel.getStyleClass().add(
-                "settings-status"
-        );
+        saveButton.getStyleClass().add("settings-save-button");
+        statusLabel.getStyleClass().add("settings-status");
 
         root.getChildren().addAll(
                 title,
@@ -132,8 +86,7 @@ public class SettingsView {
                 storageBox,
 
                 saveButton,
-                statusLabel
-        );
+                statusLabel);
     }
 
     // ============================
@@ -149,21 +102,11 @@ public class SettingsView {
     // ============================
 
     public String getPlayerName() {
-
-        return playerNameField
-                .getText()
-                .trim();
+        return playerNameField.getText().trim();
     }
 
-    public void setPlayerName(
-            String playerName
-    ) {
-
-        playerNameField.setText(
-                playerName != null
-                        ? playerName
-                        : ""
-        );
+    public void setPlayerName(String playerName) {
+        playerNameField.setText(playerName != null ? playerName : "");
     }
 
     // ============================
@@ -171,36 +114,19 @@ public class SettingsView {
     // ============================
 
     public String getStoragePath() {
-
-        return storagePathField
-                .getText()
-                .trim();
+        return storagePathField.getText().trim();
     }
 
-    public void setStoragePath(
-            String storagePath
-    ) {
-
-        storagePathField.setText(
-                storagePath != null
-                        ? storagePath
-                        : ""
-        );
+    public void setStoragePath(String storagePath) {
+        storagePathField.setText(storagePath != null ? storagePath : "");
     }
 
     // ============================
     // Status
     // ============================
 
-    public void setStatus(
-            String status
-    ) {
-
-        statusLabel.setText(
-                status != null
-                        ? status
-                        : ""
-        );
+    public void setStatus(String status) {
+        statusLabel.setText(status != null ? status : "");
     }
 
     // ============================

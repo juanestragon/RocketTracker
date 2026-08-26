@@ -41,8 +41,8 @@ public class MatchRepository {
             return new ArrayList<>();
         }
 
-        return matches.stream().sorted(Comparator.comparing((MatchResult match) -> LocalDateTime.parse(match.getDate()))
-                .reversed()).limit(amount).toList();
+        return matches.stream().sorted(Comparator.comparing((MatchResult match) ->
+                        LocalDateTime.parse(match.getDate())).reversed()).limit(amount).toList();
     }
 
     public List<MatchResult> getWinsByPlaylist(int playlist) {

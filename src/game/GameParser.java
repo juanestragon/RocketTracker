@@ -1,35 +1,25 @@
 package game;
 
 import util.JsonParser;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class GameParser {
 
-    private GameParser() {
-    }
-
     public static Game parse(String json) {
 
         Object rootObject = JsonParser.parse(json);
-
         if (!(rootObject instanceof Map<?, ?> root)) {
-            throw new IllegalArgumentException(
-                    "El JSON de GameState debe ser un objeto"
-            );
-        }
+            throw new IllegalArgumentException("El JSON de GameState debe ser un objeto");}
 
         String matchGuid = getString(root, "MatchGuid");
-
         List<Player> players = parsePlayers(root);
 
         Object gameObject = root.get("Game");
-
         if (!(gameObject instanceof Map<?, ?> game)) {
-            throw new IllegalArgumentException(
-                    "GameState no contiene un objeto Game válido"
-            );
+            throw new IllegalArgumentException("GameState no contiene un objeto Game válido");
         }
 
         int playlistId = getInt(game, "PlaylistId");
@@ -42,32 +32,17 @@ public class GameParser {
         String winner = getString(game, "Winner");
         String arena = getString(game, "Arena");
 
-        return new Game(
-                matchGuid,
-                players,
-                playlistId,
-                timeSeconds,
-                overtime,
-                replay,
-                hasWinner,
-                winner,
-                arena
-        );
+        return new Game(matchGuid, players, playlistId, timeSeconds, overtime, replay, hasWinner, winner, arena);
     }
 
-    private static List<Player> parsePlayers(
-            Map<?, ?> root
-    ) {
-        Object playersObject = root.get("Players");
+    private static List<Player> parsePlayers(Map<?, ?> root) {
 
+        Object playersObject = root.get("Players");
         if (!(playersObject instanceof List<?> playersList)) {
-            throw new IllegalArgumentException(
-                    "Players no es un array válido"
-            );
+            throw new IllegalArgumentException("Players no es un array válido");
         }
 
         List<Player> players = new ArrayList<>();
-
         for (Object playerObject : playersList) {
 
             if (!(playerObject instanceof Map<?, ?> player)) {
@@ -105,12 +80,9 @@ public class GameParser {
         return players;
     }
 
-    private static String getString(
-            Map<?, ?> object,
-            String key
-    ) {
-        Object value = object.get(key);
+    private static String getString(Map<?, ?> object, String key) {
 
+        Object value = object.get(key);
         if (value == null) {
             return null;
         }
@@ -118,12 +90,9 @@ public class GameParser {
         return String.valueOf(value);
     }
 
-    private static int getInt(
-            Map<?, ?> object,
-            String key
-    ) {
-        Object value = object.get(key);
+    private static int getInt(Map<?, ?> object, String key) {
 
+        Object value = object.get(key);
         if (value instanceof Number number) {
             return number.intValue();
         }
@@ -131,12 +100,9 @@ public class GameParser {
         return 0;
     }
 
-    private static double getDouble(
-            Map<?, ?> object,
-            String key
-    ) {
-        Object value = object.get(key);
+    private static double getDouble(Map<?, ?> object, String key) {
 
+        Object value = object.get(key);
         if (value instanceof Number number) {
             return number.doubleValue();
         }
@@ -144,12 +110,9 @@ public class GameParser {
         return 0.0;
     }
 
-    private static boolean getBoolean(
-            Map<?, ?> object,
-            String key
-    ) {
-        Object value = object.get(key);
+    private static boolean getBoolean(Map<?, ?> object, String key) {
 
+        Object value = object.get(key);
         if (value instanceof Boolean booleanValue) {
             return booleanValue;
         }
@@ -160,11 +123,8 @@ public class GameParser {
     public static int parseTeamNum(String json) {
 
         Object rootObject = JsonParser.parse(json);
-
         if (!(rootObject instanceof Map<?, ?> root)) {
-            throw new IllegalArgumentException(
-                    "El JSON de MatchEnded debe ser un objeto"
-            );
+            throw new IllegalArgumentException("El JSON de MatchEnded debe ser un objeto");
         }
 
         return getInt(root, "WinnerTeamNum");

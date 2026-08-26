@@ -19,21 +19,16 @@ public class GameMatchEventListener implements MatchEventListener {
 
     @Override
     public void onMatchStarted(String arena, int playlistId) {
-
         webAPI.onMatchStarted(arena, playlistId);
-
         if (listener != null) {
             listener.onMatchStarted();
         }
     }
 
     @Override
-    public void onMatchFinished(
-            MatchResult result
-    ) {
+    public void onMatchFinished(MatchResult result) {
 
         webAPI.onMatchFinished(result);
-
         if (listener != null) {
             listener.onMatchFinished();
         }

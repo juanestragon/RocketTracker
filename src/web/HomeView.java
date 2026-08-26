@@ -52,8 +52,7 @@ public class HomeView {
 
     private final GridPane recentMatchesBox;
 
-    private static final DateTimeFormatter DATE_FORMATTER =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public HomeView() {
 
@@ -88,21 +87,13 @@ public class HomeView {
 
         root.getStyleClass().add("home-view");
 
-        currentMatchLabel.getStyleClass().add(
-                "current-match"
-        );
+        currentMatchLabel.getStyleClass().add("current-match");
 
-        VBox lastMatchSection =
-                createLastMatchSection();
+        VBox lastMatchSection = createLastMatchSection();
 
-        VBox recentMatchesSection =
-                createRecentMatchesSection();
+        VBox recentMatchesSection = createRecentMatchesSection();
 
-        root.getChildren().addAll(
-                currentMatchLabel,
-                lastMatchSection,
-                recentMatchesSection
-        );
+        root.getChildren().addAll(currentMatchLabel, lastMatchSection, recentMatchesSection);
     }
 
     // ============================
@@ -111,230 +102,86 @@ public class HomeView {
 
     private VBox createLastMatchSection() {
 
-        VBox section =
-                new VBox();
+        VBox section = new VBox();
+        section.getStyleClass().add("home-section");
+        Label title = new Label("Última partida");
+        title.getStyleClass().add("section-title");
 
-        section.getStyleClass().add(
-                "home-section"
-        );
+        lastMatchCard.getStyleClass().add("last-match-card");
 
-        Label title =
-                new Label("Última partida");
+        GridPane informationGrid = new GridPane();
 
-        title.getStyleClass().add(
-                "section-title"
-        );
-
-        lastMatchCard.getStyleClass().add(
-                "last-match-card"
-        );
-
-        GridPane informationGrid =
-                new GridPane();
-
-        informationGrid.getStyleClass().add(
-                "match-information-grid"
-        );
-
+        informationGrid.getStyleClass().add("match-information-grid");
         informationGrid.setHgap(40);
         informationGrid.setVgap(18);
 
-        informationGrid.add(
-                createInfoBlock(
-                        "Jugador",
-                        lastPlayerLabel
-                ),
-                0,
-                0
-        );
+        informationGrid.add(createInfoBlock("Jugador", lastPlayerLabel), 0, 0);
+        informationGrid.add(createInfoBlock("Fecha", lastDateLabel), 1, 0);
+        informationGrid.add(createInfoBlock("Resultado", lastResultLabel), 0, 1);
+        informationGrid.add(createInfoBlock("Playlist", lastPlaylistLabel), 1, 1);
 
-        informationGrid.add(
-                createInfoBlock(
-                        "Fecha",
-                        lastDateLabel
-                ),
-                1,
-                0
-        );
+        GridPane.setColumnSpan(informationGrid, 2);
 
-        informationGrid.add(
-                createInfoBlock(
-                        "Resultado",
-                        lastResultLabel
-                ),
-                0,
-                1
-        );
-
-        informationGrid.add(
-                createInfoBlock(
-                        "Playlist",
-                        lastPlaylistLabel
-                ),
-                1,
-                1
-        );
-
-        GridPane.setColumnSpan(
-                informationGrid,
-                2
-        );
-
-        VBox metrics =
-                createMetrics();
-
-        lastMatchCard.getChildren().addAll(
-                informationGrid,
-                metrics
-        );
-
-        section.getChildren().addAll(
-                title,
-                lastMatchCard
-        );
+        VBox metrics = createMetrics();
+        lastMatchCard.getChildren().addAll(informationGrid, metrics);
+        section.getChildren().addAll(title, lastMatchCard);
 
         return section;
     }
 
-    private VBox createInfoBlock(
-            String title,
-            Label value
-    ) {
+    private VBox createInfoBlock(String title, Label value) {
 
-        VBox block =
-                new VBox();
-
-        block.getStyleClass().add(
-                "match-info"
-        );
-
-        Label titleLabel =
-                new Label(title);
-
-        titleLabel.getStyleClass().add(
-                "metric-title"
-        );
-
-        value.getStyleClass().add(
-                "metric-value"
-        );
-
-        block.getChildren().addAll(
-                titleLabel,
-                value
-        );
+        VBox block = new VBox();
+        block.getStyleClass().add("match-info");
+        Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("metric-title");
+        value.getStyleClass().add("metric-value");
+        block.getChildren().addAll(titleLabel, value);
 
         return block;
     }
 
     private VBox createMetrics() {
 
-        VBox metrics =
-                new VBox();
+        VBox metrics = new VBox();
+        metrics.getStyleClass().add("metrics-container");
 
-        metrics.getStyleClass().add(
-                "metrics-container"
-        );
-
-        HBox basicMetrics =
-                new HBox();
-
-        basicMetrics.getStyleClass().add(
-                "metrics-row"
-        );
+        HBox basicMetrics = new HBox();
+        basicMetrics.getStyleClass().add("metrics-row");
 
         basicMetrics.getChildren().addAll(
-                createMetric(
-                        "Goles",
-                        goalsLabel
-                ),
-                createMetric(
-                        "Salvadas",
-                        savesLabel
-                ),
-                createMetric(
-                        "Tiros",
-                        shotsLabel
-                ),
-                createMetric(
-                        "Asistencias",
-                        assistsLabel
-                ),
-                createMetric(
-                        "Demos",
-                        demosLabel
-                )
-        );
+                createMetric("Goles", goalsLabel),
+                createMetric("Salvadas", savesLabel),
+                createMetric("Tiros", shotsLabel),
+                createMetric("Asistencias", assistsLabel),
+                createMetric("Demos", demosLabel));
 
-        HBox advancedMetrics =
-                new HBox();
-
-        advancedMetrics.getStyleClass().add(
-                "metrics-row"
-        );
+        HBox advancedMetrics = new HBox();
+        advancedMetrics.getStyleClass().add("metrics-row");
 
         advancedMetrics.getChildren().addAll(
-                createMetric(
-                        "Tiempo en aire",
-                        airPercentageLabel
-                ),
-                createMetric(
-                        "Tiempo supersónico",
-                        supersonicPercentageLabel
-                ),
-                createMetric(
-                        "Boost hasta supersónico",
-                        averageBoostToSupersonicLabel
-                ),
-                createMetric(
-                        "Boost supersónico",
-                        boostUsedSupersonicLabel
-                ),
-                createMetric(
-                        "Boost que alcanzó supersónicas",
-                        supersonicSessionPercentageLabel
-                ),
-                createMetric(
-                        "Velocidad media",
-                        averageSpeedLabel
-                )
-        );
+                createMetric("Tiempo en aire", airPercentageLabel),
+                createMetric("Tiempo supersónico", supersonicPercentageLabel),
+                createMetric("Boost hasta supersónico", averageBoostToSupersonicLabel),
+                createMetric("Boost supersónico", boostUsedSupersonicLabel),
+                createMetric("Boost que alcanzó supersónicas", supersonicSessionPercentageLabel),
+                createMetric("Velocidad media", averageSpeedLabel));
 
-        metrics.getChildren().addAll(
-                basicMetrics,
-                advancedMetrics
-        );
+        metrics.getChildren().addAll(basicMetrics, advancedMetrics);
 
         return metrics;
     }
 
-    private VBox createMetric(
-            String title,
-            Label value
-    ) {
+    private VBox createMetric(String title, Label value) {
 
-        VBox metric =
-                new VBox();
+        VBox metric = new VBox();
+        metric.getStyleClass().add("metric");
 
-        metric.getStyleClass().add(
-                "metric"
-        );
+        Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("metric-title");
 
-        Label titleLabel =
-                new Label(title);
-
-        titleLabel.getStyleClass().add(
-                "metric-title"
-        );
-
-        value.getStyleClass().add(
-                "metric-value"
-        );
-
-        metric.getChildren().addAll(
-                titleLabel,
-                value
-        );
+        value.getStyleClass().add("metric-value");
+        metric.getChildren().addAll(titleLabel, value);
 
         return metric;
     }
@@ -345,46 +192,22 @@ public class HomeView {
 
     private VBox createRecentMatchesSection() {
 
-        VBox section =
-                new VBox();
+        VBox section = new VBox();
+        section.getStyleClass().add("home-section");
 
-        section.getStyleClass().add(
-                "home-section"
-        );
+        Label title = new Label("Últimas partidas");
+        title.getStyleClass().add("section-title");
 
-        Label title =
-                new Label("Últimas partidas");
 
-        title.getStyleClass().add(
-                "section-title"
-        );
-
-        recentMatchesBox.getStyleClass().add(
-                "recent-matches"
-        );
-
-        ColumnConstraints column =
-                new ColumnConstraints();
-
+        ColumnConstraints column = new ColumnConstraints();
         column.setPercentWidth(100);
 
-        recentMatchesBox
-                .getColumnConstraints()
-                .add(column);
+        recentMatchesBox.getStyleClass().add("recent-matches");
+        recentMatchesBox.getColumnConstraints().add(column);
+        recentMatchesBox.setMaxWidth(Double.MAX_VALUE);
 
-        recentMatchesBox.setMaxWidth(
-                Double.MAX_VALUE
-        );
-
-        VBox.setVgrow(
-                recentMatchesBox,
-                javafx.scene.layout.Priority.ALWAYS
-        );
-
-        section.getChildren().addAll(
-                title,
-                recentMatchesBox
-        );
+        VBox.setVgrow(recentMatchesBox, javafx.scene.layout.Priority.ALWAYS);
+        section.getChildren().addAll(title, recentMatchesBox);
 
         return section;
     }
@@ -398,16 +221,10 @@ public class HomeView {
     }
 
     public void setCurrentMatch(String arena, int playlistId) {
-
-        currentMatchLabel.setText(
-                getPlaylistName(playlistId)
-                        + " - "
-                        + getHumanArenaName(arena)
-        );
+        currentMatchLabel.setText(getPlaylistName(playlistId) + " - " + getHumanArenaName(arena));
     }
 
     public void clearCurrentMatch() {
-
         currentMatchLabel.setText("No hay ninguna partida en curso");
     }
 
@@ -459,149 +276,54 @@ public class HomeView {
         averageSpeedLabel.setText("-");
     }
 
-    public void setRecentMatches(
-            List<MatchResult> matches
-    ) {
+    public void setRecentMatches(List<MatchResult> matches) {
 
         recentMatchesBox.getChildren().clear();
 
         for (int i = 0; i < matches.size(); i++) {
 
-            GridPane row =
-                    createRecentMatch(
-                            matches.get(i)
-                    );
-
-            recentMatchesBox.add(
-                    row,
-                    0,
-                    i
-            );
-
-            GridPane.setHgrow(
-                    row,
-                    javafx.scene.layout.Priority.ALWAYS
-            );
-
-            GridPane.setFillWidth(
-                    row,
-                    true
-            );
+            GridPane row = createRecentMatch(matches.get(i));
+            recentMatchesBox.add(row, 0, i);
+            GridPane.setHgrow(row, javafx.scene.layout.Priority.ALWAYS);
+            GridPane.setFillWidth(row, true);
         }
     }
 
-    private GridPane createRecentMatch(
-            MatchResult match
-    ) {
+    private GridPane createRecentMatch(MatchResult match) {
 
-        GridPane row =
-                new GridPane();
+        GridPane row = new GridPane();
+        row.getStyleClass().add("recent-match");
+        row.setMaxWidth(Double.MAX_VALUE);
 
-        row.getStyleClass().add(
-                "recent-match"
-        );
-
-        row.setMaxWidth(
-                Double.MAX_VALUE
-        );
-
-        ColumnConstraints playlistColumn =
-                new ColumnConstraints();
-
+        ColumnConstraints playlistColumn = new ColumnConstraints();
         playlistColumn.setPercentWidth(30);
 
-        ColumnConstraints resultColumn =
-                new ColumnConstraints();
-
+        ColumnConstraints resultColumn = new ColumnConstraints();
         resultColumn.setPercentWidth(30);
 
-        ColumnConstraints dateColumn =
-                new ColumnConstraints();
-
+        ColumnConstraints dateColumn = new ColumnConstraints();
         dateColumn.setPercentWidth(40);
 
-        row.getColumnConstraints().addAll(
-                playlistColumn,
-                resultColumn,
-                dateColumn
-        );
+        row.getColumnConstraints().addAll(playlistColumn, resultColumn, dateColumn);
 
-        Label playlist =
-                new Label(
-                        getPlaylistName(
-                                match.getPlaylistId()
-                        )
-                );
+        Label playlist = new Label(getPlaylistName(match.getPlaylistId()));
+        playlist.getStyleClass().add("recent-match-playlist");
+        playlist.setMaxWidth(Double.MAX_VALUE);
+        playlist.setAlignment(Pos.CENTER_LEFT);
 
-        playlist.getStyleClass().add(
-                "recent-match-playlist"
-        );
+        Label result = new Label(match.isWon() ? "Victoria" : "Derrota");
+        result.getStyleClass().add(match.isWon() ? "match-win" : "match-loss");
+        result.setMaxWidth(Double.MAX_VALUE);
+        result.setAlignment(Pos.CENTER);
 
-        playlist.setMaxWidth(
-                Double.MAX_VALUE
-        );
+        Label date = new Label(formatDate(match.getDate()));
+        date.getStyleClass().add("recent-match-date");
+        date.setMaxWidth(Double.MAX_VALUE);
+        date.setAlignment(Pos.CENTER_RIGHT);
 
-        playlist.setAlignment(
-                Pos.CENTER_LEFT
-        );
-
-        Label result =
-                new Label(
-                        match.isWon()
-                                ? "Victoria"
-                                : "Derrota"
-                );
-
-        result.getStyleClass().add(
-                match.isWon()
-                        ? "match-win"
-                        : "match-loss"
-        );
-
-        result.setMaxWidth(
-                Double.MAX_VALUE
-        );
-
-        result.setAlignment(
-                Pos.CENTER
-        );
-
-        Label date =
-                new Label(
-                        formatDate(
-                                match.getDate()
-                        )
-                );
-
-        date.getStyleClass().add(
-                "recent-match-date"
-        );
-
-        date.setMaxWidth(
-                Double.MAX_VALUE
-        );
-
-        date.setAlignment(
-                Pos.CENTER_RIGHT
-        );
-
-        row.add(
-                playlist,
-                0,
-                0
-        );
-
-        row.add(
-                result,
-                1,
-                0
-        );
-
-        row.add(
-                date,
-                2,
-                0
-        );
+        row.add(playlist, 0, 0);
+        row.add(result, 1, 0);
+        row.add(date, 2, 0);
 
         return row;
     }
@@ -611,6 +333,7 @@ public class HomeView {
     // ============================
 
     private String getPlaylistName(int playListId) {
+
         return switch (playListId) {
             case -1 -> "Main Menu";
 
@@ -673,6 +396,7 @@ public class HomeView {
     }
 
     private String getHumanArenaName(String arenaName) {
+
         return switch (arenaName) {
             //STANDARD
 
@@ -742,42 +466,20 @@ public class HomeView {
     }
 
 
-    private String formatDate(
-            String date
-    ) {
-
+    private String formatDate(String date) {
         try {
-
-            LocalDateTime dateTime =
-                    LocalDateTime.parse(date);
-
-            return DATE_FORMATTER.format(
-                    dateTime
-            );
-
+            LocalDateTime dateTime = LocalDateTime.parse(date);
+            return DATE_FORMATTER.format(dateTime);
         } catch (Exception e) {
-
             return date;
         }
     }
 
-    private String formatPercentage(
-            double value
-    ) {
-
-        return String.format(
-                "%.1f%%",
-                value
-        );
+    private String formatPercentage(double value) {
+        return String.format("%.1f%%", value);
     }
 
-    private String formatNumber(
-            double value
-    ) {
-
-        return String.format(
-                "%.2f",
-                value
-        );
+    private String formatNumber(double value) {
+        return String.format("%.2f", value);
     }
 }

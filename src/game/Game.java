@@ -52,14 +52,6 @@ public class Game {
         return playlistId;
     }
 
-    public boolean hasWinner() {
-        return hasWinner;
-    }
-
-    public String getWinner() {
-        return winner;
-    }
-
     public String getArena() {
         return arena;
     }

@@ -8,11 +8,7 @@ public class Config {
     private String rocketLeagueUrl;
     private Path storagePath;
 
-    public Config(
-            String playerName,
-            String rocketLeagueUrl,
-            Path storagePath
-    ) {
+    public Config(String playerName, String rocketLeagueUrl, Path storagePath) {
         this.playerName = playerName;
         this.rocketLeagueUrl = rocketLeagueUrl;
         this.storagePath = storagePath;
@@ -21,11 +17,9 @@ public class Config {
     public String getPlayerName() {
         return playerName;
     }
-
     public String getRocketLeagueUrl() {
         return rocketLeagueUrl;
     }
-
     public Path getStoragePath() {
         return storagePath;
     }

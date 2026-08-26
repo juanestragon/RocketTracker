@@ -19,8 +19,7 @@ public class MatchLoader {
 
     public List<MatchResult> loadAll() {
 
-        List<MatchResult> matches =
-                new ArrayList<>();
+        List<MatchResult> matches = new ArrayList<>();
 
         if (!Files.exists(matchesDirectory)) {
             return matches;
@@ -28,26 +27,16 @@ public class MatchLoader {
 
         try {
 
-            try (var files =
-                         Files.list(matchesDirectory)) {
+            try (var files = Files.list(matchesDirectory)) {
 
-                files
-                        .filter(Files::isRegularFile)
-                        .filter(path ->
-                                path.toString()
-                                        .endsWith(".json")
-                        )
-                        .forEach(path ->
-                                matches.add(load(path))
-                        );
+                files.filter(Files::isRegularFile)
+                        .filter(path -> path.toString().endsWith(".json"))
+                        .forEach(path -> matches.add(load(path)));
             }
 
         } catch (IOException e) {
 
-            throw new RuntimeException(
-                    "No se pudieron leer las partidas",
-                    e
-            );
+            throw new RuntimeException("No se pudieron leer las partidas", e);
         }
 
         return matches;
@@ -57,23 +46,17 @@ public class MatchLoader {
 
         try {
 
-            String json =
-                    Files.readString(file);
+            String json = Files.readString(file);
 
-            Object parsed =
-                    JsonParser.parse(json);
+            Object parsed = JsonParser.parse(json);
 
             if (!(parsed instanceof Map<?, ?>)) {
-                throw new IllegalArgumentException(
-                        "El JSON de la partida no es un objeto"
-                );
+                throw new IllegalArgumentException("El JSON de la partida no es un objeto");
             }
 
-            Map<?, ?> root =
-                    (Map<?, ?>) parsed;
+            Map<?, ?> root = (Map<?, ?>) parsed;
 
-            Map<?, ?> metrics =
-                    getObject(root, "metrics");
+            Map<?, ?> metrics = getObject(root, "metrics");
 
             return new MatchResult(
                     getString(root, "date"),
@@ -93,98 +76,63 @@ public class MatchLoader {
                     getDouble(metrics, "boostUsedSupersonic"),
                     getDouble(metrics, "supersonicSessionPercentage"),
                     getDouble(metrics, "averageBoostToSupersonic"),
-                    getDouble(metrics, "averageSpeed")
-            );
+                    getDouble(metrics, "averageSpeed"));
 
         } catch (IOException e) {
-
-            throw new RuntimeException(
-                    "No se pudo leer la partida: " + file,
-                    e
-            );
+            throw new RuntimeException("No se pudo leer la partida: " + file, e);
         }
     }
 
-    private String getString(
-            Map<?, ?> object,
-            String key
-    ) {
+    private String getString(Map<?, ?> object, String key) {
 
         Object value = object.get(key);
 
         if (!(value instanceof String)) {
-            throw new IllegalArgumentException(
-                    "El campo '" + key
-                            + "' no es un String"
-            );
+            throw new IllegalArgumentException("El campo '" + key + "' no es un String");
         }
 
         return (String) value;
     }
 
-    private boolean getBoolean(
-            Map<?, ?> object,
-            String key
-    ) {
+    private boolean getBoolean(Map<?, ?> object, String key) {
 
         Object value = object.get(key);
 
         if (!(value instanceof Boolean)) {
-            throw new IllegalArgumentException(
-                    "El campo '" + key
-                            + "' no es un boolean"
-            );
+            throw new IllegalArgumentException("El campo '" + key + "' no es un boolean");
         }
 
         return (Boolean) value;
     }
 
-    private int getInt(
-            Map<?, ?> object,
-            String key
-    ) {
+    private int getInt(Map<?, ?> object, String key) {
 
         Object value = object.get(key);
 
         if (!(value instanceof Number)) {
-            throw new IllegalArgumentException(
-                    "El campo '" + key
-                            + "' no es un número"
-            );
+            throw new IllegalArgumentException("El campo '" + key + "' no es un número");
         }
 
         return ((Number) value).intValue();
     }
 
-    private double getDouble(
-            Map<?, ?> object,
-            String key
-    ) {
+    private double getDouble(Map<?, ?> object, String key) {
 
         Object value = object.get(key);
 
         if (!(value instanceof Number)) {
-            throw new IllegalArgumentException(
-                    "El campo '" + key
-                            + "' no es un número"
-            );
+            throw new IllegalArgumentException("El campo '" + key + "' no es un número");
         }
 
         return ((Number) value).doubleValue();
     }
 
-    private Map<?, ?> getObject(
-            Map<?, ?> object,
-            String key
-    ) {
+    private Map<?, ?> getObject(Map<?, ?> object, String key) {
 
         Object value = object.get(key);
 
         if (!(value instanceof Map<?, ?>)) {
-            throw new IllegalArgumentException(
-                    "El campo '" + key
-                            + "' no es un objeto"
-            );
+            throw new IllegalArgumentException("El campo '" + key + "' no es un objeto");
         }
 
         return (Map<?, ?>) value;

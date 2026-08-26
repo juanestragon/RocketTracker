@@ -18,46 +18,37 @@ public class RocketLeagueClient {
 
     private volatile WebSocket webSocket;
 
-    private volatile ConnectionState connectionState =
-            ConnectionState.DISCONNECTED;
+    private volatile ConnectionState connectionState = ConnectionState.DISCONNECTED;
+    private volatile ConnectionStateListener connectionStateListener;
 
     private volatile boolean running;
 
     private Thread connectionThread;
 
-    private volatile ConnectionStateListener connectionStateListener;
 
-    public RocketLeagueClient(
-            String rocketLeagueUrl,
+    public RocketLeagueClient(String rocketLeagueUrl,
             String playerName,
             MatchStorage storage,
-            MatchEventListener eventListener
-    ) {
+            MatchEventListener eventListener) {
 
         this.rocketLeagueUrl = rocketLeagueUrl;
         this.playerName = playerName;
         this.storage = storage;
         this.eventListener = eventListener;
 
-        this.httpClient =
-                HttpClient.newHttpClient();
+        this.httpClient = HttpClient.newHttpClient();
     }
 
     // ============================
     // Listener
     // ============================
 
-    public void setConnectionStateListener(
-            ConnectionStateListener listener
-    ) {
+    public void setConnectionStateListener(ConnectionStateListener listener) {
 
         this.connectionStateListener = listener;
 
         if (listener != null) {
-
-            listener.onConnectionStateChanged(
-                    connectionState
-            );
+            listener.onConnectionStateChanged(connectionState);
         }
     }
 
@@ -73,16 +64,9 @@ public class RocketLeagueClient {
 
         running = true;
 
-        setConnectionState(
-                ConnectionState.CONNECTING
-        );
+        setConnectionState(ConnectionState.CONNECTING);
 
-        connectionThread =
-                new Thread(
-                        this::connectionLoop,
-                        "RocketLeagueConnection"
-                );
-
+        connectionThread = new Thread(this::connectionLoop, "RocketLeagueConnection");
         connectionThread.setDaemon(true);
         connectionThread.start();
     }
@@ -92,31 +76,22 @@ public class RocketLeagueClient {
         running = false;
 
         if (connectionThread != null) {
-
             connectionThread.interrupt();
             connectionThread = null;
         }
 
         WebSocket socket = webSocket;
-
         webSocket = null;
 
         if (socket != null) {
 
             try {
-
-                socket.sendClose(
-                        WebSocket.NORMAL_CLOSURE,
-                        "Cliente detenido"
-                );
-
+                socket.sendClose(WebSocket.NORMAL_CLOSURE, "Cliente detenido");
             } catch (Exception ignored) {
             }
         }
 
-        setConnectionState(
-                ConnectionState.DISCONNECTED
-        );
+        setConnectionState(ConnectionState.DISCONNECTED);
     }
 
     // ============================
@@ -125,79 +100,42 @@ public class RocketLeagueClient {
 
     private void connectionLoop() {
 
-        while (
-                running &&
-                        !Thread.currentThread().isInterrupted()
-        ) {
+        while (running && !Thread.currentThread().isInterrupted()) {
 
             try {
 
-                System.out.println(
-                        "Intentando conectar con Rocket League..."
-                );
+                System.out.println("Intentando conectar con Rocket League...");
 
-                setConnectionState(
-                        ConnectionState.CONNECTING
-                );
+                setConnectionState(ConnectionState.CONNECTING);
 
-                webSocket =
-                        httpClient.newWebSocketBuilder()
-                                .buildAsync(
-                                        URI.create(
-                                                rocketLeagueUrl
-                                        ),
-                                        new RocketLeagueListener(
-                                                playerName,
-                                                storage,
-                                                eventListener,
-                                                this::handleConnectionClosed
-                                        )
-                                )
-                                .join();
+                webSocket = httpClient.newWebSocketBuilder().buildAsync(
+                        URI.create(rocketLeagueUrl),
+                        new RocketLeagueListener(playerName, storage, eventListener, this::handleConnectionClosed))
+                        .join();
 
-                /*
-                 * Si buildAsync().join() ha terminado
-                 * correctamente, el WebSocket está abierto.
-                 */
-                setConnectionState(
-                        ConnectionState.CONNECTED
-                );
 
-                /*
-                 * Esperamos mientras el socket siga
-                 * existiendo y el cliente siga activo.
-                 */
-                while (
-                        running &&
-                                webSocket != null
-                ) {
+                setConnectionState(ConnectionState.CONNECTED);
 
+                while (running && webSocket != null) {
                     Thread.sleep(500);
                 }
 
             } catch (InterruptedException e) {
-
                 Thread.currentThread().interrupt();
                 return;
 
             } catch (Exception e) {
 
                 webSocket = null;
-
                 if (!running) {
                     return;
                 }
 
-                System.out.println(
-                        "Rocket League no está disponible. Reintentando en 2 segundos..."
-                );
+                System.out.println("Rocket League no está disponible. Reintentando en 2 segundos...");
 
-                setConnectionState(
-                        ConnectionState.CONNECTING
-                );
+                setConnectionState(ConnectionState.CONNECTING);
 
                 try {
-
                     Thread.sleep(2000);
 
                 } catch (InterruptedException interruptedException) {
@@ -209,19 +147,12 @@ public class RocketLeagueClient {
         }
     }
 
-    /*
-     * Callback llamado por RocketLeagueListener cuando
-     * el WebSocket se cierra.
-     */
     private void handleConnectionClosed() {
 
         running = false;
-
         webSocket = null;
 
-        setConnectionState(
-                ConnectionState.DISCONNECTED
-        );
+        setConnectionState(ConnectionState.DISCONNECTED);
     }
 
     // ============================
@@ -236,24 +167,17 @@ public class RocketLeagueClient {
         return running;
     }
 
-    private void setConnectionState(
-            ConnectionState state
-    ) {
+    private void setConnectionState(ConnectionState state) {
 
         if (connectionState == state) {
             return;
         }
 
         connectionState = state;
-
-        ConnectionStateListener listener =
-                connectionStateListener;
+        ConnectionStateListener listener = connectionStateListener;
 
         if (listener != null) {
-
-            listener.onConnectionStateChanged(
-                    state
-            );
+            listener.onConnectionStateChanged(state);
         }
     }
 }

@@ -83,31 +83,16 @@ public class StatisticsView {
 
     private void build() {
 
-        root.getStyleClass().add(
-                "statistics-view"
-        );
+        root.getStyleClass().add("statistics-view");
 
-        Label title =
-                new Label("Statistics");
+        Label title = new Label("Statistics");
+        title.getStyleClass().add("statistics-title");
 
-        title.getStyleClass().add(
-                "statistics-title"
-        );
-
-        HBox filterBar =
-                createFilterBar();
-
-        VBox winRate =
-                createWinRate();
-
-        GridPane basicStatistics =
-                createBasicStatistics();
-
-        GridPane advancedStatistics =
-                createAdvancedStatistics();
-
-        VBox boostStatistics =
-                createBoostStatistics();
+        HBox filterBar = createFilterBar();
+        VBox winRate = createWinRate();
+        GridPane basicStatistics = createBasicStatistics();
+        GridPane advancedStatistics = createAdvancedStatistics();
+        VBox boostStatistics = createBoostStatistics();
 
         root.getChildren().addAll(
                 title,
@@ -115,8 +100,7 @@ public class StatisticsView {
                 winRate,
                 basicStatistics,
                 advancedStatistics,
-                boostStatistics
-        );
+                boostStatistics);
     }
 
     // ============================
@@ -125,26 +109,16 @@ public class StatisticsView {
 
     private HBox createFilterBar() {
 
-        HBox filterBar =
-                new HBox();
-
-        filterBar.getStyleClass().add(
-                "statistics-filter-bar"
-        );
+        HBox filterBar = new HBox();
+        filterBar.getStyleClass().add("statistics-filter-bar");
 
         configureFilterButton(allButton);
         configureFilterButton(oneVsOneButton);
         configureFilterButton(twoVsTwoButton);
         configureFilterButton(threeVsThreeButton);
 
-        matchLimitLabel.getStyleClass().add(
-                "statistics-filter-label"
-        );
-
-        matchLimitField.getStyleClass().add(
-                "statistics-match-limit"
-        );
-
+        matchLimitLabel.getStyleClass().add("statistics-filter-label");
+        matchLimitField.getStyleClass().add("statistics-match-limit");
         matchLimitField.setPrefWidth(120);
 
         filterBar.getChildren().addAll(
@@ -153,21 +127,15 @@ public class StatisticsView {
                 twoVsTwoButton,
                 threeVsThreeButton,
                 matchLimitLabel,
-                matchLimitField
-        );
+                matchLimitField);
 
         selectFilter(allButton);
 
         return filterBar;
     }
 
-    private void configureFilterButton(
-            Button button
-    ) {
-
-        button.getStyleClass().add(
-                "statistics-filter-button"
-        );
+    private void configureFilterButton(Button button) {
+        button.getStyleClass().add("statistics-filter-button");
     }
 
     public void selectFilter(Button selectedButton) {
@@ -187,32 +155,15 @@ public class StatisticsView {
 
     private VBox createWinRate() {
 
-        VBox box =
-                new VBox();
+        winPercentageLabel.getStyleClass().add("statistics-win-rate-value");
 
-        box.getStyleClass().add(
-                "statistics-win-rate"
-        );
+        Label title = new Label("Victorias");
+        title.getStyleClass().add("statistics-win-rate-title");
 
-        winPercentageLabel.getStyleClass().add(
-                "statistics-win-rate-value"
-        );
-
-        Label title =
-                new Label("Victorias");
-
-        title.getStyleClass().add(
-                "statistics-win-rate-title"
-        );
-
-        box.setAlignment(
-                Pos.CENTER
-        );
-
-        box.getChildren().addAll(
-                winPercentageLabel,
-                title
-        );
+        VBox box = new VBox();
+        box.getStyleClass().add("statistics-win-rate");
+        box.setAlignment(Pos.CENTER);
+        box.getChildren().addAll(winPercentageLabel, title);
 
         return box;
     }
@@ -223,51 +174,15 @@ public class StatisticsView {
 
     private GridPane createBasicStatistics() {
 
-        GridPane grid =
-                new GridPane();
-
-        grid.getStyleClass().add(
-                "statistics-grid"
-        );
-
+        GridPane grid = new GridPane();
+        grid.getStyleClass().add("statistics-grid");
         grid.setHgap(12);
         grid.setVgap(12);
 
-        grid.add(
-                createStatistic(
-                        "Goles",
-                        averageGoalsLabel
-                ),
-                0,
-                0
-        );
-
-        grid.add(
-                createStatistic(
-                        "Tiros",
-                        averageShotsLabel
-                ),
-                1,
-                0
-        );
-
-        grid.add(
-                createStatistic(
-                        "Salvadas",
-                        averageSavesLabel
-                ),
-                2,
-                0
-        );
-
-        grid.add(
-                createStatistic(
-                        "Asistencias",
-                        averageAssistsLabel
-                ),
-                3,
-                0
-        );
+        grid.add(createStatistic("Goles", averageGoalsLabel), 0, 0);
+        grid.add(createStatistic("Tiros", averageShotsLabel), 1, 0);
+        grid.add(createStatistic("Salvadas", averageSavesLabel), 2, 0);
+        grid.add(createStatistic("Asistencias", averageAssistsLabel), 3, 0);
 
         return grid;
     }
@@ -278,51 +193,15 @@ public class StatisticsView {
 
     private GridPane createAdvancedStatistics() {
 
-        GridPane grid =
-                new GridPane();
-
-        grid.getStyleClass().add(
-                "statistics-grid"
-        );
-
+        GridPane grid = new GridPane();
+        grid.getStyleClass().add("statistics-grid");
         grid.setHgap(12);
         grid.setVgap(12);
 
-        grid.add(
-                createStatistic(
-                        "Demos",
-                        averageDemosLabel
-                ),
-                0,
-                0
-        );
-
-        grid.add(
-                createStatistic(
-                        "Tiempo en aire",
-                        averageAirPercentageLabel
-                ),
-                1,
-                0
-        );
-
-        grid.add(
-                createStatistic(
-                        "Tiempo supersónico",
-                        averageSupersonicPercentageLabel
-                ),
-                2,
-                0
-        );
-
-        grid.add(
-                createStatistic(
-                        "Velocidad media",
-                        averageSpeedLabel
-                ),
-                3,
-                0
-        );
+        grid.add(createStatistic("Demos", averageDemosLabel), 0, 0);
+        grid.add(createStatistic("Tiempo en aire", averageAirPercentageLabel), 1, 0);
+        grid.add(createStatistic("Tiempo supersónico", averageSupersonicPercentageLabel), 2, 0);
+        grid.add(createStatistic("Velocidad media", averageSpeedLabel), 3, 0);
 
         return grid;
     }
@@ -333,89 +212,40 @@ public class StatisticsView {
 
     private VBox createBoostStatistics() {
 
-        VBox box =
-                new VBox();
-
-        box.getStyleClass().add(
-                "statistics-boost"
-        );
-
+        VBox box = new VBox();
+        box.getStyleClass().add("statistics-boost");
         box.getChildren().addAll(
-                createStatisticRow(
-                        "Boost supersónico",
-                        averageBoostUsedSupersonicLabel
-                ),
-                createStatisticRow(
-                        "Sesiones → supersónico",
-                        averageSupersonicSessionPercentageLabel
-                ),
-                createStatisticRow(
-                        "Boost → supersónico",
-                        averageBoostToSupersonicLabel
-                )
-        );
+                createStatisticRow("Boost supersónico", averageBoostUsedSupersonicLabel),
+                createStatisticRow("Sesiones → supersónico", averageSupersonicSessionPercentageLabel),
+                createStatisticRow("Boost → supersónico", averageBoostToSupersonicLabel));
 
         return box;
     }
 
-    private HBox createStatisticRow(
-            String title,
-            Label value
-    ) {
+    private HBox createStatisticRow(String title, Label value) {
 
-        HBox row =
-                new HBox();
+        value.getStyleClass().add("statistics-boost-value");
 
-        row.getStyleClass().add(
-                "statistics-boost-row"
-        );
+        Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("statistics-boost-title");
 
-        Label titleLabel =
-                new Label(title);
-
-        titleLabel.getStyleClass().add(
-                "statistics-boost-title"
-        );
-
-        value.getStyleClass().add(
-                "statistics-boost-value"
-        );
-
-        row.getChildren().addAll(
-                titleLabel,
-                value
-        );
+        HBox row = new HBox();
+        row.getStyleClass().add("statistics-boost-row");
+        row.getChildren().addAll(titleLabel, value);
 
         return row;
     }
 
-    private VBox createStatistic(
-            String title,
-            Label value
-    ) {
+    private VBox createStatistic(String title, Label value) {
 
-        VBox box =
-                new VBox();
+        value.getStyleClass().add("metric-value");
 
-        box.getStyleClass().add(
-                "statistics-card"
-        );
+        Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("metric-title");
 
-        Label titleLabel =
-                new Label(title);
-
-        titleLabel.getStyleClass().add(
-                "metric-title"
-        );
-
-        value.getStyleClass().add(
-                "metric-value"
-        );
-
-        box.getChildren().addAll(
-                titleLabel,
-                value
-        );
+        VBox box = new VBox();
+        box.getStyleClass().add("statistics-card");
+        box.getChildren().addAll(titleLabel, value);
 
         return box;
     }
@@ -453,101 +283,63 @@ public class StatisticsView {
     // ============================
 
     public void setWinPercentage(double value) {
-        winPercentageLabel.setText(
-                formatPercentage(value)
-        );
+        winPercentageLabel.setText(formatPercentage(value));
     }
 
     public void setAverageGoals(double value) {
-        averageGoalsLabel.setText(
-                formatNumber(value)
-        );
+        averageGoalsLabel.setText(formatNumber(value));
     }
 
     public void setAverageShots(double value) {
-        averageShotsLabel.setText(
-                formatNumber(value)
-        );
+        averageShotsLabel.setText(formatNumber(value));
     }
 
     public void setAverageSaves(double value) {
-        averageSavesLabel.setText(
-                formatNumber(value)
-        );
+        averageSavesLabel.setText(formatNumber(value));
     }
 
     public void setAverageAssists(double value) {
-        averageAssistsLabel.setText(
-                formatNumber(value)
-        );
+        averageAssistsLabel.setText(formatNumber(value));
     }
 
     public void setAverageDemos(double value) {
-        averageDemosLabel.setText(
-                formatNumber(value)
-        );
+        averageDemosLabel.setText(formatNumber(value));
     }
 
     public void setAverageAirPercentage(double value) {
-        averageAirPercentageLabel.setText(
-                formatPercentage(value)
-        );
+        averageAirPercentageLabel.setText(formatPercentage(value));
     }
 
     public void setAverageSupersonicPercentage(double value) {
-        averageSupersonicPercentageLabel.setText(
-                formatPercentage(value)
-        );
+        averageSupersonicPercentageLabel.setText(formatPercentage(value));
     }
 
     public void setAverageSpeed(double value) {
-        averageSpeedLabel.setText(
-                formatNumber(value)
-        );
+        averageSpeedLabel.setText(formatNumber(value));
     }
 
     public void setAverageBoostUsedSupersonic(double value) {
-        averageBoostUsedSupersonicLabel.setText(
-                formatNumber(value)
-        );
+        averageBoostUsedSupersonicLabel.setText(formatNumber(value));
     }
 
-    public void setAverageSupersonicSessionPercentage(
-            double value
-    ) {
+    public void setAverageSupersonicSessionPercentage(double value) {
 
-        averageSupersonicSessionPercentageLabel.setText(
-                formatPercentage(value)
-        );
+        averageSupersonicSessionPercentageLabel.setText(formatPercentage(value));
     }
 
     public void setAverageBoostToSupersonic(double value) {
-        averageBoostToSupersonicLabel.setText(
-                formatNumber(value)
-        );
+        averageBoostToSupersonicLabel.setText(formatNumber(value));
     }
 
     // ============================
     // Formato
     // ============================
 
-    private String formatPercentage(
-            double value
-    ) {
-
-        return String.format(
-                "%.1f%%",
-                value
-        );
+    private String formatPercentage(double value) {
+        return String.format("%.1f%%", value);
     }
 
-    private String formatNumber(
-            double value
-    ) {
-
-        return String.format(
-                "%.2f",
-                value
-        );
+    private String formatNumber(double value) {
+        return String.format("%.2f", value);
     }
 }

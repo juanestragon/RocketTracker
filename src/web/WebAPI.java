@@ -17,7 +17,6 @@ public class WebAPI {
     private boolean matchActive;
     private String currentArena;
     private int currentPlaylistId;
-    private MatchResult lastMatch;
     private final ConfigStorage configStorage;
 
     public WebAPI(ConfigStorage configStorage) {
@@ -33,7 +32,6 @@ public class WebAPI {
         this.matchActive = false;
         this.currentArena = null;
         this.currentPlaylistId = -1;
-        this.lastMatch = null;
     }
 
     // ============================
@@ -358,6 +356,4 @@ public class WebAPI {
     public double getLastWinPercentage(int n, int playlistId) {
         return statistics.getLastWinPercentage(n, playlistId);
     }
-
-
 }

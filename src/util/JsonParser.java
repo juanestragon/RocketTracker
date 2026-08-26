@@ -17,15 +17,11 @@ public class JsonParser {
 
     public static Object parse(String json) {
         JsonParser parser = new JsonParser(json);
-
         Object result = parser.parseValue();
-
         parser.skipWhitespace();
 
         if (parser.position != parser.json.length()) {
-            throw new IllegalArgumentException(
-                    "JSON inesperado en posición " + parser.position
-            );
+            throw new IllegalArgumentException("JSON inesperado en posición " + parser.position);
         }
 
         return result;
@@ -103,6 +99,7 @@ public class JsonParser {
     }
 
     private List<Object> parseArray() {
+
         List<Object> array = new ArrayList<>();
 
         position++; // [
@@ -134,6 +131,7 @@ public class JsonParser {
     }
 
     private String parseString() {
+
         if (!consume('"')) {
             throw error("Se esperaba una cadena");
         }
@@ -198,9 +196,7 @@ public class JsonParser {
                     break;
 
                 default:
-                    throw error(
-                            "Escape desconocido: \\" + escaped
-                    );
+                    throw error("Escape desconocido: \\" + escaped);
             }
         }
 
@@ -245,59 +241,48 @@ public class JsonParser {
             position++;
         }
 
-        if (position >= json.length()
-                || !Character.isDigit(json.charAt(position))) {
+        if (position >= json.length() || !Character.isDigit(json.charAt(position))) {
             throw error("Número inválido");
         }
 
         if (json.charAt(position) == '0') {
             position++;
         } else {
-            while (position < json.length()
-                    && Character.isDigit(json.charAt(position))) {
+            while (position < json.length() && Character.isDigit(json.charAt(position))) {
                 position++;
             }
         }
 
         boolean decimal = false;
 
-        if (position < json.length()
-                && json.charAt(position) == '.') {
+        if (position < json.length() && json.charAt(position) == '.') {
 
             decimal = true;
             position++;
 
-            if (position >= json.length()
-                    || !Character.isDigit(json.charAt(position))) {
+            if (position >= json.length() || !Character.isDigit(json.charAt(position))) {
                 throw error("Parte decimal inválida");
             }
 
-            while (position < json.length()
-                    && Character.isDigit(json.charAt(position))) {
+            while (position < json.length() && Character.isDigit(json.charAt(position))) {
                 position++;
             }
         }
 
-        if (position < json.length()
-                && (json.charAt(position) == 'e'
-                || json.charAt(position) == 'E')) {
+        if (position < json.length() && (json.charAt(position) == 'e' || json.charAt(position) == 'E')) {
 
             decimal = true;
             position++;
 
-            if (position < json.length()
-                    && (json.charAt(position) == '+'
-                    || json.charAt(position) == '-')) {
+            if (position < json.length() && (json.charAt(position) == '+' || json.charAt(position) == '-')) {
                 position++;
             }
 
-            if (position >= json.length()
-                    || !Character.isDigit(json.charAt(position))) {
+            if (position >= json.length() || !Character.isDigit(json.charAt(position))) {
                 throw error("Exponente inválido");
             }
 
-            while (position < json.length()
-                    && Character.isDigit(json.charAt(position))) {
+            while (position < json.length() && Character.isDigit(json.charAt(position))) {
                 position++;
             }
         }
@@ -317,15 +302,13 @@ public class JsonParser {
     }
 
     private void skipWhitespace() {
-        while (position < json.length()
-                && Character.isWhitespace(json.charAt(position))) {
+        while (position < json.length() && Character.isWhitespace(json.charAt(position))) {
             position++;
         }
     }
 
     private boolean consume(char expected) {
-        if (position < json.length()
-                && json.charAt(position) == expected) {
+        if (position < json.length() && json.charAt(position) == expected) {
 
             position++;
             return true;
@@ -343,8 +326,6 @@ public class JsonParser {
     }
 
     private IllegalArgumentException error(String message) {
-        return new IllegalArgumentException(
-                message + " en posición " + position
-        );
+        return new IllegalArgumentException(message + " en posición " + position);
     }
 }

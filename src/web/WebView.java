@@ -38,38 +38,16 @@ public class WebView {
         sidebar = new VBox();
         content = new VBox();
 
-        applicationName =
-                new Label("Rocket Tracker");
+        applicationName = new Label("Rocket Tracker");
 
-        homeButton =
-                createNavigationButton("Home");
-
-        statisticsButton =
-                createNavigationButton("Statistics");
-
-        settingsButton =
-                createNavigationButton("Settings");
-
-        connectionStatus =
-                new Label("● Desconectado");
-
-        connectionButton =
-                new Button("⏻");
-
-        connectionButton.getStyleClass().add(
-                "connection-button"
-        );
-
-        connectionBox =
-                new HBox(
-                        8,
-                        connectionButton,
-                        connectionStatus
-                );
-
-        connectionBox.setAlignment(
-                Pos.CENTER_RIGHT
-        );
+        homeButton = createNavigationButton("Home");
+        statisticsButton = createNavigationButton("Statistics");
+        settingsButton = createNavigationButton("Settings");
+        connectionStatus = new Label("● Desconectado");
+        connectionButton = new Button("⏻");
+        connectionButton.getStyleClass().add("connection-button");
+        connectionBox = new HBox(8, connectionButton, connectionStatus);
+        connectionBox.setAlignment(Pos.CENTER_RIGHT);
 
         build();
     }
@@ -91,40 +69,17 @@ public class WebView {
 
     private void buildSidebar() {
 
+        VBox navigation = new VBox(homeButton, statisticsButton, settingsButton);
+        navigation.getStyleClass().add("navigation");
+
+        connectionBox.getStyleClass().add("connection-box");
+        connectionStatus.getStyleClass().add("connection-status");
+
         sidebar.getStyleClass().add("sidebar");
+        sidebar.getChildren().addAll(applicationName, navigation);
+        sidebar.getChildren().add(connectionBox);
 
-        VBox navigation =
-                new VBox(
-                        homeButton,
-                        statisticsButton,
-                        settingsButton
-                );
-
-        navigation.getStyleClass().add(
-                "navigation"
-        );
-
-        connectionBox.getStyleClass().add(
-                "connection-box"
-        );
-
-        connectionStatus.getStyleClass().add(
-                "connection-status"
-        );
-
-        sidebar.getChildren().addAll(
-                applicationName,
-                navigation
-        );
-
-        sidebar.getChildren().add(
-                connectionBox
-        );
-
-        VBox.setVgrow(
-                navigation,
-                javafx.scene.layout.Priority.ALWAYS
-        );
+        VBox.setVgrow(navigation, javafx.scene.layout.Priority.ALWAYS);
     }
 
     public void selectNavigationButton(Button selectedButton) {
@@ -144,26 +99,14 @@ public class WebView {
     }
 
     private void buildContent() {
-
-        content.getStyleClass().add(
-                "content"
-        );
+        content.getStyleClass().add("content");
     }
 
-    private Button createNavigationButton(
-            String text
-    ) {
+    private Button createNavigationButton(String text) {
 
-        Button button =
-                new Button(text);
-
-        button.getStyleClass().add(
-                "navigation-button"
-        );
-
-        button.setMaxWidth(
-                Double.MAX_VALUE
-        );
+        Button button = new Button(text);
+        button.getStyleClass().add("navigation-button");
+        button.setMaxWidth(Double.MAX_VALUE);
 
         return button;
     }
@@ -174,87 +117,32 @@ public class WebView {
 
     public void setConnectionConnected() {
 
-        connectionStatus.setText(
-                "● Conectado"
-        );
+        connectionStatus.setText("● Conectado");
+        connectionStatus.getStyleClass().removeAll( "connecting", "disconnected");
+        connectionStatus.getStyleClass().add("connected");
 
-        connectionStatus.getStyleClass().removeAll(
-                "connected",
-                "connecting",
-                "disconnected"
-        );
-
-        connectionStatus.getStyleClass().add(
-                "connected"
-        );
-
-        connectionButton.getStyleClass().removeAll(
-                "connection-connected",
-                "connection-connecting",
-                "connection-disconnected",
-                "connection-on",
-                "connection-off"
-        );
-
-        connectionButton.getStyleClass().add(
-                "connection-connected"
-        );
+        connectionButton.getStyleClass().removeAll( "connection-connecting", "connection-disconnected");
+        connectionButton.getStyleClass().add("connection-connected");
     }
 
     public void setConnectionConnecting() {
 
-        connectionStatus.setText(
-                "● Conectando"
-        );
+        connectionStatus.setText("● Conectando");
+        connectionStatus.getStyleClass().removeAll("connected", "disconnected");
+        connectionStatus.getStyleClass().add("connecting");
 
-        connectionStatus.getStyleClass().removeAll(
-                "connected",
-                "connecting",
-                "disconnected"
-        );
-
-        connectionStatus.getStyleClass().add(
-                "connecting"
-        );
-
-        connectionButton.getStyleClass().removeAll(
-                "connection-connected",
-                "connection-connecting",
-                "connection-disconnected",
-                "connection-connected"
-        );
-
-        connectionButton.getStyleClass().add(
-                "connection-connecting"
-        );
+        connectionButton.getStyleClass().removeAll("connection-connected", "connection-disconnected");
+        connectionButton.getStyleClass().add("connection-connecting");
     }
 
     public void setConnectionDisconnected() {
 
-        connectionStatus.setText(
-                "● Desconectado"
-        );
+        connectionStatus.setText("● Desconectado");
+        connectionStatus.getStyleClass().removeAll("connected", "connecting");
+        connectionStatus.getStyleClass().add("disconnected");
 
-        connectionStatus.getStyleClass().removeAll(
-                "connected",
-                "connecting",
-                "disconnected"
-        );
-
-        connectionStatus.getStyleClass().add(
-                "disconnected"
-        );
-
-        connectionButton.getStyleClass().removeAll(
-                "connection-connected",
-                "connection-connecting",
-                "connection-disconnected",
-                "connection-connected"
-        );
-
-        connectionButton.getStyleClass().add(
-                "connection-disconnected"
-        );
+        connectionButton.getStyleClass().removeAll("connection-connected", "connection-connecting");
+        connectionButton.getStyleClass().add("connection-disconnected");
     }
 
     // ============================
@@ -293,25 +181,11 @@ public class WebView {
         return settingsView;
     }
 
-    public void setContent(
-            javafx.scene.Node node
-    ) {
+    public void setContent(javafx.scene.Node node) {
 
         content.getChildren().clear();
-
         if (node != null) {
             content.getChildren().add(node);
-        }
-    }
-
-    public void setConnectionStatus(
-            boolean connected
-    ) {
-
-        if (connected) {
-            setConnectionConnected();
-        } else {
-            setConnectionDisconnected();
         }
     }
 }

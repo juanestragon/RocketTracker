@@ -53,33 +53,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageAssists() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getAssists
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getAssists);
     }
 
     public double getAverageAssists(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getAssists
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getAssists);
     }
 
     public double getLastAverageAssists(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getAssists
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getAssists);
     }
 
     public double getLastAverageAssists(int n, int playlistId) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getAssists
-        );
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getAssists);
     }
 
 // ============================
@@ -87,33 +74,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageSaves() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getSaves
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getSaves);
     }
 
     public double getAverageSaves(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getSaves
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getSaves);
     }
 
     public double getLastAverageSaves(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getSaves
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getSaves);
     }
 
     public double getLastAverageSaves(int n, int playlistId) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getSaves
-        );
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getSaves);
     }
 
 // ============================
@@ -121,33 +95,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageShots() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getShots
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getShots);
     }
 
     public double getAverageShots(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getShots
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getShots);
     }
 
     public double getLastAverageShots(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getShots
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getShots);
     }
 
     public double getLastAverageShots(int n, int playlistId) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getShots
-        );
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getShots);
     }
 
 // ============================
@@ -155,33 +116,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageGoals() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getGoals
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getGoals);
     }
 
     public double getAverageGoals(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getGoals
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getGoals);
     }
 
     public double getLastAverageGoals(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getGoals
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getGoals);
     }
 
     public double getLastAverageGoals(int n, int playlistId) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getGoals
-        );
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getGoals);
     }
 
 // ============================
@@ -189,33 +137,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageDemos() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getDemos
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getDemos);
     }
 
     public double getAverageDemos(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getDemos
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getDemos);
     }
 
     public double getLastAverageDemos(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getDemos
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getDemos);
     }
 
     public double getLastAverageDemos(int n, int playlistId) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getDemos
-        );
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getDemos);
     }
 
 // ============================
@@ -223,33 +158,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageAirPercentage() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getAirPercentage
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getAirPercentage);
     }
 
     public double getAverageAirPercentage(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getAirPercentage
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getAirPercentage);
     }
 
     public double getLastAverageAirPercentage(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getAirPercentage
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getAirPercentage);
     }
 
     public double getLastAverageAirPercentage(int n, int playlistId) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getAirPercentage
-        );
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getAirPercentage);
     }
 
 // ============================
@@ -257,33 +179,19 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageSupersonicPercentage() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getSupersonicPercentage
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getSupersonicPercentage);
     }
 
     public double getAverageSupersonicPercentage(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getSupersonicPercentage
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getSupersonicPercentage);
     }
 
-    public double getLastAverageSupersonicPercentage(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getSupersonicPercentage
-        );
+    public double getLastAverageSupersonicPercentage(int n) {return calculateAverage(repository.getLastMatches(n), MatchResult::getSupersonicPercentage);
     }
 
     public double getLastAverageSupersonicPercentage(int n, int playlistId) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getSupersonicPercentage
-        );
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getSupersonicPercentage);
     }
 
 // ============================
@@ -291,36 +199,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageBoostUsedSupersonic() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getBoostUsedSupersonic
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getBoostUsedSupersonic);
     }
 
     public double getAverageBoostUsedSupersonic(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getBoostUsedSupersonic
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getBoostUsedSupersonic);
     }
 
     public double getLastAverageBoostUsedSupersonic(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getBoostUsedSupersonic
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getBoostUsedSupersonic);
     }
 
-    public double getLastAverageBoostUsedSupersonic(
-            int n,
-            int playlistId
-    ) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getBoostUsedSupersonic
-        );
+    public double getLastAverageBoostUsedSupersonic(int n, int playlistId) {
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getBoostUsedSupersonic);
     }
 
 // ============================
@@ -328,36 +220,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageSupersonicSessionPercentage() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getSupersonicSessionPercentage
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getSupersonicSessionPercentage);
     }
 
     public double getAverageSupersonicSessionPercentage(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getSupersonicSessionPercentage
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getSupersonicSessionPercentage);
     }
 
     public double getLastAverageSupersonicSessionPercentage(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getSupersonicSessionPercentage
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
     }
 
-    public double getLastAverageSupersonicSessionPercentage(
-            int n,
-            int playlistId
-    ) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getSupersonicSessionPercentage
-        );
+    public double getLastAverageSupersonicSessionPercentage(int n, int playlistId) {
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
     }
 
 // ============================
@@ -365,36 +241,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageBoostToSupersonic() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getAverageBoostToSupersonic
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getAverageBoostToSupersonic);
     }
 
     public double getAverageBoostToSupersonic(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getAverageBoostToSupersonic
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getAverageBoostToSupersonic);
     }
 
     public double getLastAverageBoostToSupersonic(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getAverageBoostToSupersonic
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getAverageBoostToSupersonic);
     }
 
-    public double getLastAverageBoostToSupersonic(
-            int n,
-            int playlistId
-    ) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getAverageBoostToSupersonic
-        );
+    public double getLastAverageBoostToSupersonic(int n, int playlistId) {
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getAverageBoostToSupersonic);
     }
 
 // ============================
@@ -402,33 +262,20 @@ public class MatchStatistics {
 // ============================
 
     public double getAverageSpeed() {
-        return calculateAverage(
-                repository.getAllMatches(),
-                MatchResult::getAverageSpeed
-        );
+        return calculateAverage(repository.getAllMatches(), MatchResult::getAverageSpeed);
     }
 
     public double getAverageSpeed(int playlistId) {
-        return calculateAverage(
-                repository.getMatchesByPlaylist(playlistId),
-                MatchResult::getAverageSpeed
-        );
+        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getAverageSpeed);
     }
 
     public double getLastAverageSpeed(int n) {
-        return calculateAverage(
-                repository.getLastMatches(n),
-                MatchResult::getAverageSpeed
-        );
+        return calculateAverage(repository.getLastMatches(n), MatchResult::getAverageSpeed);
     }
 
     public double getLastAverageSpeed(int n, int playlistId) {
-        return calculateAverage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n),
-                MatchResult::getAverageSpeed
-        );
+        return calculateAverage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getAverageSpeed);
     }
 
 // ============================
@@ -436,28 +283,19 @@ public class MatchStatistics {
 // ============================
 
     public double getWinPercentage() {
-        return calculateWinPercentage(
-                repository.getAllMatches()
-        );
+        return calculateWinPercentage(repository.getAllMatches());
     }
 
     public double getWinPercentage(int playlistId) {
-        return calculateWinPercentage(
-                repository.getMatchesByPlaylist(playlistId)
-        );
+        return calculateWinPercentage(repository.getMatchesByPlaylist(playlistId));
     }
 
     public double getLastWinPercentage(int n) {
-        return calculateWinPercentage(
-                repository.getLastMatches(n)
-        );
+        return calculateWinPercentage(repository.getLastMatches(n));
     }
 
     public double getLastWinPercentage(int n, int playlistId) {
-        return calculateWinPercentage(
-                new MatchRepository(
-                        repository.getMatchesByPlaylist(playlistId)
-                ).getLastMatches(n)
-        );
+        return calculateWinPercentage(new MatchRepository(
+                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n));
     }
 }

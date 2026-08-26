@@ -3,12 +3,12 @@ package app;
 import config.Config;
 import config.ConfigStorage;
 import events.GameMatchEventListener;
-import javafx.application.Application;
 import matches.MatchStorage;
 import network.RocketLeagueClient;
 import web.WebAPI;
 import web.WebApplication;
 
+import javafx.application.Application;
 import java.nio.file.Path;
 
 public class Main {
@@ -24,15 +24,12 @@ public class Main {
 
 
 
-        RocketLeagueClient client = new RocketLeagueClient(config.getRocketLeagueUrl(), config.getPlayerName(), new MatchStorage(Path.of(config.getStoragePath().toUri()
-                                )), eventListener);
-
+        RocketLeagueClient client = new RocketLeagueClient(config.getRocketLeagueUrl(), config.getPlayerName(),
+                new MatchStorage(Path.of(config.getStoragePath().toUri())), eventListener);
         client.start();
+
         WebApplication.configure(webAPI, eventListener, client);
-        Application.launch(
-                WebApplication.class,
-                args
-        );
+        Application.launch(WebApplication.class, args);
 
         client.stop();
     }

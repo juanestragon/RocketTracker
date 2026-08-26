@@ -22,11 +22,9 @@ public class MatchStorage {
             Files.createDirectories(matchesDirectory);
 
             String fileName = LocalDateTime.parse(
-                    result.getDate()).format(DateTimeFormatter.ofPattern("yy-MM-dd_H-mm-ss")
-            ) + ".json";
+                    result.getDate()).format(DateTimeFormatter.ofPattern("yy-MM-dd_H-mm-ss")) + ".json";
 
             Path file = matchesDirectory.resolve(fileName);
-
             String json = buildJson(result);
 
             Files.writeString(
@@ -39,9 +37,7 @@ public class MatchStorage {
             System.out.println("Partida guardada: " + file);
 
         } catch (IOException e) {
-
             System.err.println("No se pudo guardar la partida:");
-
             e.printStackTrace();
         }
     }
@@ -52,40 +48,13 @@ public class MatchStorage {
 
         json.append("{\n");
 
-        appendString(
-                json,
-                "date",
-                result.getDate(),
-                true
-        );
+        appendString(json, "date", result.getDate(), true);
+        appendString(json, "player", result.getPlayerName(), true);
+        appendString(json, "matchGuid", result.getMatchGuid(), true);
 
-        appendString(
-                json,
-                "player",
-                result.getPlayerName(),
-                true
-        );
+        appendNumber(json, "playlistId", result.getPlaylistId(), true);
 
-        appendString(
-                json,
-                "matchGuid",
-                result.getMatchGuid(),
-                true
-        );
-
-        appendNumber(
-                json,
-                "playlistId",
-                result.getPlaylistId(),
-                true
-        );
-
-        appendBoolean(
-                json,
-                "won",
-                result.isWon(),
-                true
-        );
+        appendBoolean(json, "won", result.isWon(), true);
 
         json.append("    \"metrics\": {\n");
 
@@ -96,15 +65,10 @@ public class MatchStorage {
         appendNumber(json, "demos", result.getDemos(), true);
 
         appendNumber(json, "airPercentage", result.getAirPercentage(), true);
-
         appendNumber(json, "supersonicPercentage", result.getSupersonicPercentage(), true);
-
         appendNumber(json, "boostUsedSupersonic", result.getBoostUsedSupersonic(), true);
-
         appendNumber(json, "supersonicSessionPercentage", result.getSupersonicSessionPercentage(), true);
-
         appendNumber(json, "averageBoostToSupersonic", result.getAverageBoostToSupersonic(), true);
-
         appendNumber(json, "averageSpeed", result.getAverageSpeed(), false);
 
         json.append("    }\n");
@@ -113,18 +77,9 @@ public class MatchStorage {
         return json.toString();
     }
 
-    private void appendString(
-            StringBuilder json,
-            String key,
-            String value,
-            boolean comma
-    ) {
+    private void appendString(StringBuilder json, String key, String value, boolean comma) {
 
-        json.append("    \"")
-                .append(key)
-                .append("\": \"")
-                .append(escape(value))
-                .append("\"");
+        json.append("    \"").append(key).append("\": \"").append(escape(value)).append("\"");
 
         if (comma) {
             json.append(",");
@@ -133,17 +88,9 @@ public class MatchStorage {
         json.append("\n");
     }
 
-    private void appendBoolean(
-            StringBuilder json,
-            String key,
-            boolean value,
-            boolean comma
-    ) {
+    private void appendBoolean(StringBuilder json, String key, boolean value, boolean comma) {
 
-        json.append("    \"")
-                .append(key)
-                .append("\": ")
-                .append(value);
+        json.append("    \"").append(key).append("\": ").append(value);
 
         if (comma) {
             json.append(",");
@@ -152,17 +99,9 @@ public class MatchStorage {
         json.append("\n");
     }
 
-    private void appendNumber(
-            StringBuilder json,
-            String key,
-            double value,
-            boolean comma
-    ) {
+    private void appendNumber(StringBuilder json, String key, double value, boolean comma) {
 
-        json.append("        \"")
-                .append(key)
-                .append("\": ")
-                .append(value);
+        json.append("        \"").append(key).append("\": ").append(value);
 
         if (comma) {
             json.append(",");
@@ -171,17 +110,9 @@ public class MatchStorage {
         json.append("\n");
     }
 
-    private void appendNumber(
-            StringBuilder json,
-            String key,
-            int value,
-            boolean comma
-    ) {
+    private void appendNumber(StringBuilder json, String key, int value, boolean comma) {
 
-        json.append("        \"")
-                .append(key)
-                .append("\": ")
-                .append(value);
+        json.append("        \"").append(key).append("\": ").append(value);
 
         if (comma) {
             json.append(",");
@@ -196,8 +127,6 @@ public class MatchStorage {
             return "";
         }
 
-        return value
-                .replace("\\", "\\\\")
-                .replace("\"", "\\\"");
+        return value.replace("\\", "\\\\").replace("\"", "\\\"");
     }
 }
