@@ -156,4 +156,17 @@ public class GameParser {
 
         return false;
     }
+
+    public static int parseTeamNum(String json) {
+
+        Object rootObject = JsonParser.parse(json);
+
+        if (!(rootObject instanceof Map<?, ?> root)) {
+            throw new IllegalArgumentException(
+                    "El JSON de MatchEnded debe ser un objeto"
+            );
+        }
+
+        return getInt(root, "WinnerTeamNum");
+    }
 }

@@ -41,7 +41,7 @@ public class RocketLeagueListener implements WebSocket.Listener {
     private boolean isCompetitive = false;
     private String matchGuid;
 
-    private int playerTeam = -1;
+    private int playerTeam = 1;
     private int playerTime = 0;
     private volatile long lastMessageTime;
     private boolean playerFound = false;
@@ -121,7 +121,7 @@ public class RocketLeagueListener implements WebSocket.Listener {
                     handleGameUpdate(message);
 
             case "MatchEnded" ->
-                    handleMatchEnded();
+                    handleMatchEnded(message);
 
             case "MatchDestroyed" ->
                     handleMatchDestroyed();
@@ -264,18 +264,17 @@ public class RocketLeagueListener implements WebSocket.Listener {
         return null;
     }
 
-    private void handleMatchEnded() {
+    private void handleMatchEnded(StatsMessage message) {
 
         if (!matchActive) {
             return;
         }
 
-        System.out.println(
-                "Partida finalizada"
-        );
+        System.out.println("Partida finalizada");
 
         matchActive = false;
-
+        boolean won = GameParser.parseTeamNum(message.getData()) == playerTeam;
+        System.out.println(won);
         if (
                 !playerFound
                         || analyzer == null
@@ -287,8 +286,6 @@ public class RocketLeagueListener implements WebSocket.Listener {
             return;
         }
 
-        boolean won =
-                determineWinner(game);
 
         analyzer.finish();
 
@@ -354,24 +351,6 @@ public class RocketLeagueListener implements WebSocket.Listener {
         playerFound = false;
         matchActive = false;
         isCompetitive = false;
-    }
-
-    private boolean determineWinner(Game game) {
-
-        if (!game.hasWinner()) {
-            return false;
-        }
-
-        String winner =
-                game.getWinner();
-
-        if (winner == null) {
-            return false;
-        }
-
-        return winner.equals(
-                String.valueOf(playerTeam)
-        );
     }
 
     @Override
