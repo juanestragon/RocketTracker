@@ -245,8 +245,8 @@ public class HomeView {
 
         basicMetrics.getChildren().addAll(
                 createMetric(
-                        "Asistencias",
-                        assistsLabel
+                        "Goles",
+                        goalsLabel
                 ),
                 createMetric(
                         "Salvadas",
@@ -257,8 +257,8 @@ public class HomeView {
                         shotsLabel
                 ),
                 createMetric(
-                        "Goles",
-                        goalsLabel
+                        "Asistencias",
+                        assistsLabel
                 ),
                 createMetric(
                         "Demos",
@@ -283,16 +283,16 @@ public class HomeView {
                         supersonicPercentageLabel
                 ),
                 createMetric(
+                        "Boost hasta supersónico",
+                        averageBoostToSupersonicLabel
+                ),
+                createMetric(
                         "Boost supersónico",
                         boostUsedSupersonicLabel
                 ),
                 createMetric(
-                        "Sesiones supersónicas",
+                        "Boost que alcanzó supersónicas",
                         supersonicSessionPercentageLabel
-                ),
-                createMetric(
-                        "Boost hasta supersónico",
-                        averageBoostToSupersonicLabel
                 ),
                 createMetric(
                         "Velocidad media",

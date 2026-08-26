@@ -88,7 +88,7 @@ public class ConfigStorage {
         return new Config(
                 "",
                 "ws://127.0.0.1:49124",
-                Path.of("example", "path")
+                Path.of("data", "matches")
         );
     }
 
