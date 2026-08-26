@@ -8,6 +8,7 @@ data/
 .kotlin
 build/
 lib/
+update.sh
 
 ### Eclipse ###
 .apt_generated
