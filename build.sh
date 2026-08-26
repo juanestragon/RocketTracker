@@ -17,7 +17,7 @@ echo "========================================"
 # Limpiar
 # ============================
 
-echo "[1/6] Limpiando..."
+echo "[1/5] Limpiando..."
 
 rm -rf "$BUILD"
 rm -rf "$RELEASE"
@@ -30,7 +30,7 @@ mkdir -p "$RELEASE"
 # Compilar
 # ============================
 
-echo "[2/6] Compilando Java..."
+echo "[2/5] Compilando Java..."
 
 find "$PROJECT_DIR/src" \
     -name "*.java" \
@@ -46,7 +46,7 @@ javac \
 # Recursos
 # ============================
 
-echo "[3/6] Copiando recursos..."
+echo "[3/5] Copiando recursos..."
 
 if [ -d "$PROJECT_DIR/res" ]; then
     cp -r "$PROJECT_DIR/res/"* "$BUILD/classes/"
@@ -56,7 +56,7 @@ fi
 # JAR
 # ============================
 
-echo "[4/6] Creando JAR..."
+echo "[4/5] Creando JAR..."
 
 printf 'Main-Class: app.Main\n' > "$BUILD/MANIFEST.MF"
 
@@ -70,7 +70,7 @@ jar \
 # jpackage
 # ============================
 
-echo "[5/6] Ejecutando jpackage..."
+echo "[5/5] Ejecutando jpackage..."
 
 jpackage \
     --type app-image \
@@ -79,21 +79,59 @@ jpackage \
     --main-jar RocketTracker.jar \
     --main-class app.Main \
     --module-path "$JAVAFX/lib" \
-    --add-modules javafx.controls \
+    --add-modules javafx.controls,javafx.fxml,javafx.graphics,java.net.http \
+    --java-options "-Djava.library.path=$JAVAFX/lib" \
     --dest "$RELEASE"
 
+cd "$RELEASE/RocketTracker"
+ln -sf "bin/RocketTracker" "RocketTracker"
+chmod +x "RocketTracker"
+
 # ============================
-# Data
+# ZIP
 # ============================
 
-echo "[6/6] Copiando data..."
 
-mkdir -p "$RELEASE/RocketTracker/data/matches"
+read -p "¿Deseas comprimir la aplicación? (y/n): " respuesta
 
-if [ -f "$PROJECT_DIR/data/config.json" ]; then
-    cp "$PROJECT_DIR/data/config.json" \
-       "$RELEASE/RocketTracker/data/config.json"
-fi
+case "$respuesta" in
+    [Yy]* )
+        echo "Comprimiendo paquete..."
+        cd ".."
+        rm -f "RocketTracker-Linux.zip"
+        zip -r \
+            "RocketTracker-Linux.zip" \
+            "RocketTracker" \
+            > /dev/null
+        echo
+        echo "ZIP creado:"
+        echo "$RELEASE/RocketTracker-Linux.zip"
+        echo
+        read -p "¿Deseas borrar la aplicación no comprimida? (y/n): " respuesta2
+        case "$respuesta2" in
+            [Yy]* )
+                echo "Borrando carpeta..."
+                rm -rf "$RELEASE/RocketTracker"
+                ;;
+            [Nn]* )
+                echo "Operación omitida."
+                # Pon aquí los comandos si responde No
+                ;;
+            * )
+                echo "Respuesta no válida. Cancelando."
+                ;;
+        esac
+        ;;
+    [Nn]* )
+        echo "Operación omitida."
+        # Pon aquí los comandos si responde No
+        ;;
+    * )
+        echo "Respuesta no válida. Cancelando."
+        ;;
+esac
+
+
 
 echo
 echo "========================================"
@@ -104,32 +142,12 @@ echo "Aplicación:"
 echo "$RELEASE/RocketTracker/"
 echo
 
-# ============================
-# ZIP
-# ============================
+## ============================
+## Limpieza
+## ============================
 
-echo "Comprimiendo..."
-
-cd "$RELEASE"
-
-rm -f "RocketTracker-Linux.zip"
-
-zip -r \
-    "RocketTracker-Linux.zip" \
-    "RocketTracker" \
-    > /dev/null
-
-echo
-echo "ZIP creado:"
-echo "$RELEASE/RocketTracker-Linux.zip"
-echo
-
-# ============================
-# Limpieza
-# ============================
 echo "Limpiando... "
 
-rm -rf "$RELEASE/RocketTracker"
 rm -rf "$BUILD"
 
 echo "Se han eliminado los archivos temporales"
