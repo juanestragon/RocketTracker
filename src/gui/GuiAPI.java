@@ -97,22 +97,6 @@ public class GuiAPI {
         return repository.getLosses();
     }
 
-    public List<MatchResult> getMatchesByPlaylist(int playlistId) {
-        return repository.getMatchesByPlaylist(playlistId);
-    }
-
-    public List<MatchResult> getWinsByPlaylist(int playlistId) {
-        return repository.getWinsByPlaylist(playlistId);
-    }
-
-    public List<MatchResult> getLossesByPlaylist(int playlistId) {
-        return repository.getLossesByPlaylist(playlistId);
-    }
-
-    public List<MatchResult> getTodayMatchesByPlaylist(int playlistId) {
-        return repository.getTodayMatchesByPlaylist(playlistId);
-    }
-
     public int getPlayedGames(int playListId) {
         return statistics.getPlayedGames(playListId);
     }
@@ -141,6 +125,10 @@ public class GuiAPI {
         return statistics.getLastAverageAssists(n, playlistId);
     }
 
+    public double getTodayAverageAssists(int playlistId) {
+        return statistics.getTodayAverageAssits(playlistId);
+    }
+
 // ============================
 // Paradas
 // ============================
@@ -159,6 +147,10 @@ public class GuiAPI {
 
     public double getLastAverageSaves(int n, int playlistId) {
         return statistics.getLastAverageSaves(n, playlistId);
+    }
+
+    public double getTodayAverageSaves(int playlistId) {
+        return statistics.getTodayAverageSaves(playlistId);
     }
 
 // ============================
@@ -181,6 +173,10 @@ public class GuiAPI {
         return statistics.getLastAverageShots(n, playlistId);
     }
 
+    public double getTodayAverageShots(int playlistId) {
+        return statistics.getTodayAverageShots(playlistId);
+    }
+
 // ============================
 // Goles
 // ============================
@@ -199,6 +195,10 @@ public class GuiAPI {
 
     public double getLastAverageGoals(int n, int playlistId) {
         return statistics.getLastAverageGoals(n, playlistId);
+    }
+
+    public double getTodayAverageGoals(int playlistId) {
+        return statistics.getTodayAverageGoals(playlistId);
     }
 
 // ============================
@@ -221,6 +221,10 @@ public class GuiAPI {
         return statistics.getLastAverageDemos(n, playlistId);
     }
 
+    public double getTodayAverageDemos(int playlistId) {
+        return statistics.getTodayAverageDemos(playlistId);
+    }
+
 // ============================
 // Tiempo de aire
 // ============================
@@ -239,6 +243,10 @@ public class GuiAPI {
 
     public double getLastAverageAirPercentage(int n, int playlistId) {
         return statistics.getLastAverageAirPercentage(n, playlistId);
+    }
+
+    public double getTodayAverageAirPercentage(int playlistId) {
+        return statistics.getTodayAverageAirPercentage(playlistId);
     }
 
 // ============================
@@ -261,6 +269,10 @@ public class GuiAPI {
         return statistics.getLastAverageSupersonicPercentage(n, playlistId);
     }
 
+    public double getTodayAverageSupersonicPercentage(int playlistId) {
+        return statistics.getTodayAverageSupersonicPercentage(playlistId);
+    }
+
 // ============================
 // Boost supersónico
 // ============================
@@ -279,6 +291,10 @@ public class GuiAPI {
 
     public double getLastAverageBoostUsedSupersonic(int n, int playlistId) {
         return statistics.getLastAverageBoostUsedSupersonic(n, playlistId);
+    }
+
+    public double getTodayAverageBoostUsedSupersonic(int playlistId) {
+        return statistics.getTodayAverageBoostUsedSupersonic(playlistId);
     }
 
 // ============================
@@ -301,6 +317,10 @@ public class GuiAPI {
         return statistics.getLastAverageSupersonicSessionPercentage(n, playlistId);
     }
 
+    public double getTodayAverageSupersonicSessionPercentage(int playlistId) {
+        return statistics.getTodayAverageSupersonicSessionPercentage(playlistId);
+    }
+
 // ============================
 // Boost → supersónico
 // ============================
@@ -319,6 +339,10 @@ public class GuiAPI {
 
     public double getLastAverageBoostToSupersonic(int n, int playlistId) {
         return statistics.getLastAverageBoostToSupersonic(n, playlistId);
+    }
+
+    public double getTodayAverageBoostToSupersonic(int playlistId) {
+        return statistics.getTodayAverageBoostToSupersonic(playlistId);
     }
 
 // ============================
@@ -341,6 +365,10 @@ public class GuiAPI {
         return statistics.getLastAverageSpeed(n, playlistId);
     }
 
+    public double getTodayAverageSpeed(int playlistId) {
+        return statistics.getTodayAverageSpeed(playlistId);
+    }
+
 // ============================
 // Victorias
 // ============================
@@ -359,5 +387,9 @@ public class GuiAPI {
 
     public double getLastWinPercentage(int n, int playlistId) {
         return statistics.getLastWinPercentage(n, playlistId);
+    }
+
+    public double getTodayWinPercentage(int playlistId) {
+        return statistics.getTodayWinPercentage(playlistId);
     }
 }

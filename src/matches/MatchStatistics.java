@@ -108,6 +108,15 @@ public class MatchStatistics {
         };
     }
 
+    public double getTodayAverageAssits(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getAssists);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getAssists);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getAssists);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getAssists);
+        };
+    }
+
 // ============================
 // Paradas
 // ============================
@@ -136,6 +145,15 @@ public class MatchStatistics {
         };
     }
 
+    public double getTodayAverageSaves(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getSaves);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getSaves);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getSaves);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getSaves);
+        };
+    }
+
 // ============================
 // Tiros
 // ============================
@@ -161,7 +179,15 @@ public class MatchStatistics {
             case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getShots);
             case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getShots);
             case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getShots);
-            default -> 0.0;
+        };
+    }
+
+    public double getTodayAverageShots(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getShots);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getShots);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getShots);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getShots);
         };
     }
 
@@ -193,6 +219,15 @@ public class MatchStatistics {
         };
     }
 
+    public double getTodayAverageGoals(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getGoals);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getGoals);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getGoals);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getGoals);
+        };
+    }
+
 // ============================
 // Demoliciones
 // ============================
@@ -218,6 +253,15 @@ public class MatchStatistics {
             case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getDemos);
             case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getDemos);
             case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getDemos);
+        };
+    }
+
+    public double getTodayAverageDemos(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getDemos);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getDemos);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getDemos);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getDemos);
         };
     }
 
@@ -249,6 +293,15 @@ public class MatchStatistics {
         };
     }
 
+    public double getTodayAverageAirPercentage(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getAirPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getAirPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getAirPercentage);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getAirPercentage);
+        };
+    }
+
 // ============================
 // Tiempo supersónico
 // ============================
@@ -273,6 +326,15 @@ public class MatchStatistics {
             case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getSupersonicPercentage);
             case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getSupersonicPercentage);
             case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getSupersonicPercentage);
+        };
+    }
+
+    public double getTodayAverageSupersonicPercentage(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getSupersonicPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getSupersonicPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getSupersonicPercentage);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getSupersonicPercentage);
         };
     }
 
@@ -304,6 +366,15 @@ public class MatchStatistics {
         };
     }
 
+    public double getTodayAverageBoostUsedSupersonic(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getBoostUsedSupersonic);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getBoostUsedSupersonic);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getBoostUsedSupersonic);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getBoostUsedSupersonic);
+        };
+    }
+
 // ============================
 // Sesiones → supersónico
 // ============================
@@ -329,6 +400,15 @@ public class MatchStatistics {
             case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
             case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
             case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
+        };
+    }
+
+    public double getTodayAverageSupersonicSessionPercentage(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getSupersonicSessionPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getSupersonicSessionPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getSupersonicSessionPercentage);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getSupersonicSessionPercentage);
         };
     }
 
@@ -360,6 +440,15 @@ public class MatchStatistics {
         };
     }
 
+    public double getTodayAverageBoostToSupersonic(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getAverageBoostToSupersonic);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getAverageBoostToSupersonic);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getAverageBoostToSupersonic);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getAverageBoostToSupersonic);
+        };
+    }
+
 // ============================
 // Velocidad
 // ============================
@@ -388,6 +477,15 @@ public class MatchStatistics {
         };
     }
 
+    public double getTodayAverageSpeed(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getTodayMatches(), MatchResult::getAverageSpeed);
+            case DOUBLES -> calculateAverage(doublesRepository.getTodayMatches(), MatchResult::getAverageSpeed);
+            case STANDARD -> calculateAverage(standardRepository.getTodayMatches(), MatchResult::getAverageSpeed);
+            case null -> calculateAverage(repository.getTodayMatches(), MatchResult::getAverageSpeed);
+        };
+    }
+
 // ============================
 // Victorias
 // ============================
@@ -412,6 +510,15 @@ public class MatchStatistics {
             case DUELS -> calculateWinPercentage(duelsRepository.getLastMatches(n));
             case DOUBLES -> calculateWinPercentage(doublesRepository.getLastMatches(n));
             case STANDARD -> calculateWinPercentage(standardRepository.getLastMatches(n));
+        };
+    }
+
+    public double getTodayWinPercentage(int playlistId) {
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateWinPercentage(duelsRepository.getTodayMatches());
+            case DOUBLES -> calculateWinPercentage(doublesRepository.getTodayMatches());
+            case STANDARD -> calculateWinPercentage(standardRepository.getTodayMatches());
+            case null -> calculateWinPercentage(repository.getTodayMatches());
         };
     }
 }

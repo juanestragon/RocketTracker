@@ -20,6 +20,7 @@ public class StatisticsView {
     private final Button oneVsOneButton;
     private final Button twoVsTwoButton;
     private final Button threeVsThreeButton;
+    private final Button todayMatchesButton;
 
     private final Label matchLimitLabel;
     private final TextField matchLimitField;
@@ -52,11 +53,12 @@ public class StatisticsView {
         oneVsOneButton = new Button("1v1");
         twoVsTwoButton = new Button("2v2");
         threeVsThreeButton = new Button("3v3");
+        todayMatchesButton = new Button("Hoy");
 
         matchLimitLabel = new Label("Últimas partidas:");
 
         matchLimitField = new TextField();
-        matchLimitField.setPromptText("Todas");
+        matchLimitField.setPromptText("No disponible");
 
         winPercentageLabel = new Label("-");
 
@@ -116,6 +118,7 @@ public class StatisticsView {
         configureFilterButton(oneVsOneButton);
         configureFilterButton(twoVsTwoButton);
         configureFilterButton(threeVsThreeButton);
+        configureFilterButton(todayMatchesButton);
 
         matchLimitLabel.getStyleClass().add("statistics-filter-label");
         matchLimitField.getStyleClass().add("statistics-match-limit");
@@ -127,7 +130,8 @@ public class StatisticsView {
                 twoVsTwoButton,
                 threeVsThreeButton,
                 matchLimitLabel,
-                matchLimitField);
+                matchLimitField,
+                todayMatchesButton);
 
         selectFilter(allButton);
 
@@ -144,9 +148,19 @@ public class StatisticsView {
         oneVsOneButton.getStyleClass().remove("selected");
         twoVsTwoButton.getStyleClass().remove("selected");
         threeVsThreeButton.getStyleClass().remove("selected");
-        selectedButton.getStyleClass().add("selected");
 
-        matchLimitField.setDisable(false);
+        selectedButton.getStyleClass().add("selected");
+    }
+
+    public void selectToday() {
+        if (todayMatchesButton.getStyleClass().contains("selected")) {
+            todayMatchesButton.getStyleClass().removeAll("selected");
+            matchLimitField.setDisable(false);
+        } else {
+            todayMatchesButton.getStyleClass().add("selected");
+            matchLimitField.setText("");
+            matchLimitField.setDisable(true);
+        }
     }
 
     // ============================
@@ -272,6 +286,10 @@ public class StatisticsView {
 
     public Button getThreeVsThreeButton() {
         return threeVsThreeButton;
+    }
+
+    public Button getTodayMatchesButton(){
+        return todayMatchesButton;
     }
 
     public TextField getMatchLimitField() {

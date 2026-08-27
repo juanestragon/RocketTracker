@@ -131,6 +131,11 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
             updateStatistics();
         });
 
+        statisticsView.getTodayMatchesButton().setOnAction(event -> {
+            statisticsView.selectToday();
+            updateStatistics();
+        });
+
         statisticsView.getMatchLimitField().setOnAction(event -> {
             updateStatistics();
             max = getMatchLimit() == null;
@@ -149,21 +154,25 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
 
         Platform.runLater(() -> {
 
-            if (max) {
+            if (max && !statisticsView.getTodayMatchesButton().getStyleClass().contains("selected")) {
+
                 statisticsView.getMatchLimitField().setText("" + guiAPI.getPlayedGames(playlistId));
+
                 if (playlistId == -1) {
                     updateStatisticsAll();
                 } else {
                     updateStatisticsPlaylist(playlistId);
                 }
 
-            } else {
+            } else if (!statisticsView.getTodayMatchesButton().getStyleClass().contains("selected")){
 
                 if (playlistId == -1) {
                     updateStatisticsLast(limit);
                 } else {
                     updateStatisticsLast(limit, playlistId);
                 }
+            } else {
+                updateStatisticsToday(playlistId);
             }
         });
     }
@@ -219,6 +228,21 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
 
             return null;
         }
+    }
+
+    private void updateStatisticsToday(int playlistId) {
+        statisticsView.setWinPercentage(guiAPI.getTodayWinPercentage(playlistId));
+        statisticsView.setAverageGoals(guiAPI.getTodayAverageGoals(playlistId));
+        statisticsView.setAverageShots(guiAPI.getTodayAverageShots(playlistId));
+        statisticsView.setAverageSaves(guiAPI.getTodayAverageSaves(playlistId));
+        statisticsView.setAverageAssists(guiAPI.getTodayAverageAssists(playlistId));
+        statisticsView.setAverageDemos(guiAPI.getTodayAverageDemos(playlistId));
+        statisticsView.setAverageAirPercentage(guiAPI.getTodayAverageAirPercentage(playlistId));
+        statisticsView.setAverageSupersonicPercentage(guiAPI.getTodayAverageSupersonicPercentage(playlistId));
+        statisticsView.setAverageSpeed(guiAPI.getTodayAverageSpeed(playlistId));
+        statisticsView.setAverageBoostUsedSupersonic(guiAPI.getTodayAverageBoostUsedSupersonic(playlistId));
+        statisticsView.setAverageSupersonicSessionPercentage(guiAPI.getTodayAverageSupersonicSessionPercentage(playlistId));
+        statisticsView.setAverageBoostToSupersonic(guiAPI.getTodayAverageBoostToSupersonic(playlistId));
     }
 
     private void updateStatisticsPlaylist(int playlistId) {
