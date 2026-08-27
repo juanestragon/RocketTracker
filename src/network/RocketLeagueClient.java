@@ -1,5 +1,7 @@
 package network;
 
+import config.Config;
+import config.ConfigStorage;
 import events.MatchEventListener;
 import matches.MatchStorage;
 
@@ -9,9 +11,6 @@ import java.net.http.WebSocket;
 
 public class RocketLeagueClient {
 
-    private final String rocketLeagueUrl;
-    private final String playerName;
-    private final MatchStorage storage;
     private final MatchEventListener eventListener;
 
     private final HttpClient httpClient;
@@ -22,18 +21,12 @@ public class RocketLeagueClient {
     private volatile ConnectionStateListener connectionStateListener;
 
     private volatile boolean running;
-
+    private ConfigStorage configStorage;
     private Thread connectionThread;
+    private Config config;
 
-
-    public RocketLeagueClient(String rocketLeagueUrl,
-            String playerName,
-            MatchStorage storage,
-            MatchEventListener eventListener) {
-
-        this.rocketLeagueUrl = rocketLeagueUrl;
-        this.playerName = playerName;
-        this.storage = storage;
+    public RocketLeagueClient(ConfigStorage configStorage, MatchEventListener eventListener) {
+        this.configStorage = configStorage;
         this.eventListener = eventListener;
 
         this.httpClient = HttpClient.newHttpClient();
@@ -105,12 +98,12 @@ public class RocketLeagueClient {
             try {
 
                 System.out.println("Intentando conectar con Rocket League...");
-
+                config = configStorage.load();
                 setConnectionState(ConnectionState.CONNECTING);
 
                 webSocket = httpClient.newWebSocketBuilder().buildAsync(
-                        URI.create(rocketLeagueUrl),
-                        new RocketLeagueListener(playerName, storage, eventListener, this::handleConnectionClosed))
+                        URI.create(config.getRocketLeagueUrl()),
+                        new RocketLeagueListener(config.getPlayerName(), new MatchStorage(config.getStoragePath()),  eventListener, this::handleConnectionClosed))
                         .join();
 
 

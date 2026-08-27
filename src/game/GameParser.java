@@ -23,16 +23,9 @@ public class GameParser {
         }
 
         int playlistId = getInt(game, "PlaylistId");
-        int timeSeconds = getInt(game, "TimeSeconds");
-
-        boolean overtime = getBoolean(game, "bOvertime");
-        boolean replay = getBoolean(game, "bReplay");
-        boolean hasWinner = getBoolean(game, "bHasWinner");
-
-        String winner = getString(game, "Winner");
         String arena = getString(game, "Arena");
 
-        return new Game(matchGuid, players, playlistId, timeSeconds, overtime, replay, hasWinner, winner, arena);
+        return new Game(matchGuid, players, playlistId, arena);
     }
 
     private static List<Player> parsePlayers(Map<?, ?> root) {
@@ -58,15 +51,13 @@ public class GameParser {
                     getInt(player, "Shots"),
                     getInt(player, "Assists"),
                     getInt(player, "Saves"),
-                    getInt(player, "Touches"),
-                    getInt(player, "CarTouches"),
                     getInt(player, "Demos"),
 
                     getBoolean(player, "bHasCar"),
                     getDouble(player, "Speed"),
                     getDouble(player, "Boost"),
-                    getBoolean(player, "bSupersonic"),
 
+                    getBoolean(player, "bSupersonic"),
                     getBoolean(player, "bBoosting"),
                     getBoolean(player, "bOnGround"),
                     getBoolean(player, "bOnWall"),

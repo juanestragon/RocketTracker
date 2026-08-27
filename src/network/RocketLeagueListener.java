@@ -3,7 +3,7 @@ package network;
 import events.MatchEventListener;
 import game.Game;
 import game.GameParser;
-import game.MatchAnalyzer;
+import game.GameAnalyzer;
 import game.Player;
 import matches.MatchResult;
 import matches.MatchStorage;
@@ -28,7 +28,7 @@ public class RocketLeagueListener implements WebSocket.Listener {
      */
     private final Runnable connectionClosedCallback;
 
-    private MatchAnalyzer analyzer;
+    private GameAnalyzer analyzer;
     private static final int PLAYLIST_1V1 = 10;
     private static final int PLAYLIST_2V2 = 11;
     private static final int PLAYLIST_3V3 = 13;
@@ -36,6 +36,7 @@ public class RocketLeagueListener implements WebSocket.Listener {
 
     private Game game = null;
 
+    private boolean inReplay = false;
     private boolean isCompetitive = false;
     private String matchGuid;
 
@@ -88,8 +89,10 @@ public class RocketLeagueListener implements WebSocket.Listener {
 
         switch (message.getEvent()) {
 
+            case "GoalReplayStart" -> inReplay = true;
+            case "GoalReplayEnd" -> inReplay = false;
             case "MatchCreated" -> handleMatchCreated();
-            case "UpdateState" -> handleGameUpdate(message);
+            case "UpdateState" -> {if (!inReplay) handleGameUpdate(message);}
             case "MatchEnded" -> handleMatchEnded(message);
             case "MatchDestroyed" -> handleMatchDestroyed();
 
@@ -160,7 +163,7 @@ public class RocketLeagueListener implements WebSocket.Listener {
 
             playerTeam = player.getTeamNum();
             matchGuid = game.getMatchGuid();
-            analyzer = new MatchAnalyzer(player.getPrimaryId());
+            analyzer = new GameAnalyzer(player.getPrimaryId());
         }
 
         if (!playerFound || !isCompetitive) {

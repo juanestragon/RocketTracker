@@ -87,8 +87,14 @@ cd "$RELEASE/RocketTracker"
 
 mkdir "data"
 mkdir "data/matches"
-ln -sf "bin/RocketTracker" "RocketTracker"
-chmod +x "RocketTracker"
+
+cat > RocketTracker <<'EOF'
+#!/bin/sh
+cd "$(dirname "$0")"
+exec ./bin/RocketTracker
+EOF
+
+chmod +x RocketTracker
 
 # ============================
 # ZIP

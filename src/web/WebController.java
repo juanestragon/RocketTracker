@@ -303,6 +303,7 @@ public class WebController implements WebEventListener, ConnectionStateListener 
         String playerName = view.getSettingsView().getPlayerName();
 
         String storagePath = view.getSettingsView().getStoragePath();
+
         if (playerName.isBlank()) {
             view.getSettingsView().setStatus("El nombre del jugador no puede estar vacío.");
             return;

@@ -18,14 +18,10 @@ public class Main {
     public static void main(String[] args) {
 
         ConfigStorage configStorage = new ConfigStorage(Path.of("data", "config.json"));
-        Config config = configStorage.load();
         WebAPI webAPI = new WebAPI(configStorage);
         GameMatchEventListener eventListener = new GameMatchEventListener(webAPI);
 
-
-
-        RocketLeagueClient client = new RocketLeagueClient(config.getRocketLeagueUrl(), config.getPlayerName(),
-                new MatchStorage(Path.of(config.getStoragePath().toUri())), eventListener);
+        RocketLeagueClient client = new RocketLeagueClient(configStorage, eventListener);
         client.start();
 
         WebApplication.configure(webAPI, eventListener, client);

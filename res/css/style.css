@@ -541,3 +541,112 @@
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }
+
+/* ============================
+   Settings
+   ============================ */
+
+.settings-view {
+    -fx-background-color: transparent;
+}
+
+.settings-title {
+    -fx-text-fill: #f2f2f2;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.settings-label {
+    -fx-text-fill: #8e8e8e;
+    -fx-font-size: 13px;
+    -fx-padding: 0 0 0 18px;
+}
+
+/* ============================
+   Text fields
+   ============================ */
+
+.settings-view .text-field {
+    -fx-background-color: #252525;
+    -fx-text-fill: #f2f2f2;
+    -fx-prompt-text-fill: #6f6f6f;
+
+    -fx-border-color: #353535;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+
+    -fx-padding: 0 12px;
+    -fx-pref-height: 38px;
+}
+
+.settings-view .text-field:focused {
+    -fx-border-color: #555555;
+    -fx-background-color: #292929;
+}
+
+/* ============================
+   Browse button
+   ============================ */
+
+.settings-browse-button {
+    -fx-pref-height: 38px;
+    -fx-padding: 0 16px;
+
+    -fx-background-color: #292929;
+    -fx-text-fill: #d8d8d8;
+
+    -fx-border-color: #383838;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+
+    -fx-cursor: hand;
+}
+
+.settings-browse-button:hover {
+    -fx-background-color: #333333;
+    -fx-border-color: #454545;
+}
+
+.settings-browse-button:pressed {
+    -fx-background-color: #202020;
+}
+
+/* ============================
+   Save button
+   ============================ */
+
+.settings-save-button {
+    -fx-pref-height: 40px;
+    -fx-padding: 0 24px;
+
+    -fx-background-color: #353535;
+    -fx-text-fill: #f2f2f2;
+
+    -fx-border-color: #454545;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.settings-save-button:hover {
+    -fx-background-color: #414141;
+    -fx-border-color: #555555;
+}
+
+.settings-save-button:pressed {
+    -fx-background-color: #2a2a2a;
+}
+
+/* ============================
+   Status
+   ============================ */
+
+.settings-status {
+    -fx-text-fill: #8e8e8e;
+    -fx-font-size: 13px;
+}

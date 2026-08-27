@@ -1,10 +1,8 @@
 package game;
 
-public class MatchAnalyzer {
-
-    private static final double SAMPLE_INTERVAL = 0.1;
-
+public class GameAnalyzer {
     private final String playerId;
+    private int samples;
 
     // ============================
     // Métricas básicas
@@ -62,8 +60,9 @@ public class MatchAnalyzer {
     private double boostToSupersonicTotal = 0.0;
     private double previousBoost = -1.0;
 
-    public MatchAnalyzer(String playerId) {
+    public GameAnalyzer(String playerId) {
         this.playerId = playerId;
+        this.samples = 0;
     }
 
     // =========================================================
@@ -96,6 +95,8 @@ public class MatchAnalyzer {
             return;
         }
 
+        samples++;
+
         updateSpeed(player);
         updateAirTime(player);
         updateBoost(player);
@@ -108,14 +109,7 @@ public class MatchAnalyzer {
     // =========================================================
 
     private void updateSpeed(Player player) {
-
-        double speed = player.getSpeed();
-
-        if (speed < 0.0) {
-            return;
-        }
-
-        speedSum += speed;
+        speedSum += player.getSpeed();
         speedSamples++;
     }
 
@@ -124,9 +118,8 @@ public class MatchAnalyzer {
     // =========================================================
 
     private void updateAirTime(Player player) {
-
         if (!player.isOnGround() && !player.isOnWall()) {
-            airTime += SAMPLE_INTERVAL;
+            airTime += 1;
         }
     }
 
@@ -136,11 +129,9 @@ public class MatchAnalyzer {
 
     private void updateSupersonic(Player player) {
 
-        boolean supersonic = player.isSupersonic();
+        if (player.isSupersonic()) {
 
-        if (supersonic) {
-
-            supersonicTime += SAMPLE_INTERVAL;
+            supersonicTime += 1;
 
             if (!wasSupersonic) {
 
@@ -152,7 +143,7 @@ public class MatchAnalyzer {
             }
         }
 
-        wasSupersonic = supersonic;
+        wasSupersonic = player.isSupersonic();
     }
 
     // =========================================================
@@ -162,35 +153,27 @@ public class MatchAnalyzer {
     private void updateBoost(Player player) {
 
         double currentBoost = player.getBoost();
-        boostSamples++;
+        double difference = previousBoost < 0 ? 0.0 : previousBoost - currentBoost;
 
-        if (previousBoost < 0.0) {
-            previousBoost = currentBoost;
+        if (player.isBoosting()) {
+            boostSamples = 0;
+        } else if (boostSamples > MAX_BOOST_SAMPLES) {
+            boostSamples = 0;
+            finishBoostSession();
+            return;
+        } else {
+            boostSamples++;
             return;
         }
 
-        double difference = previousBoost - currentBoost;
 
-        if (difference <= 0.0) {
-
-            if (player.isOnGround()) {
-                airborneBoostSamples = 0;
-            }
-
-            previousBoost = currentBoost;
-            if (boostSamples > MAX_BOOST_SAMPLES) {
-                finishBoostSession();
-            }
-
-            return;
-        }
         if (wasSupersonic) {
             boostUsedSupersonic += difference;
+        }
 
-        } else if (player.isOnGround()) {
-            boostSamples = 0;
+        if (player.isOnGround() || player.isOnWall()) {
+
             if (!wasGroundBoosting) {
-
                 groundBoostSessions++;
                 wasGroundBoosting = true;
                 currentBoostSession = 0.0;
@@ -207,17 +190,14 @@ public class MatchAnalyzer {
 
                 if (airborneBoostSamples <= MAX_AIRBORNE_BOOST_SAMPLES) {
                     currentBoostSession += difference;
-
                 } else {
 
                     finishBoostSession();
-
+                    wasGroundBoosting = 1 != 1;
                     airborneBoostSamples = 0;
                 }
             }
         }
-
-        previousBoost = currentBoost;
     }
 
     private void finishBoostSession() {
@@ -325,10 +305,7 @@ public class MatchAnalyzer {
     // =========================================================
 
     public double getAirPercentage() {
-
-        double totalTime = speedSamples * SAMPLE_INTERVAL;
-
-        return totalTime <= 0.0 ? 0.0 : airTime / totalTime * 100.0;
+        return airTime / samples * 100.0;
     }
 
     // =========================================================
@@ -336,10 +313,7 @@ public class MatchAnalyzer {
     // =========================================================
 
     public double getSupersonicPercentage() {
-
-        double totalTime = speedSamples * SAMPLE_INTERVAL;
-
-        return totalTime <= 0.0 ? 0.0 : supersonicTime / totalTime * 100.0;
+        return supersonicTime / samples * 100.0;
     }
 
     // =========================================================

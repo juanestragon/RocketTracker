@@ -25,16 +25,17 @@ public class Player {
             String name,
             String primaryId,
             int teamNum,
+
             int goals,
             int shots,
             int assists,
             int saves,
-            int touches,
-            int carTouches,
             int demos,
+
             boolean hasCar,
             double speed,
             double boost,
+
             boolean supersonic,
             boolean boosting,
             boolean onGround,
@@ -117,5 +118,9 @@ public class Player {
 
     public boolean isDemolished() {
         return demolished;
+    }
+
+    public boolean isBoosting() {
+        return boosting;
     }
 }

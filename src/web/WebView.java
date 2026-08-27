@@ -153,10 +153,6 @@ public class WebView {
         return root;
     }
 
-    public VBox getContent() {
-        return content;
-    }
-
     public Button getHomeButton() {
         return homeButton;
     }
@@ -171,10 +167,6 @@ public class WebView {
 
     public Button getConnectionButton() {
         return connectionButton;
-    }
-
-    public Label getConnectionStatus() {
-        return connectionStatus;
     }
 
     public SettingsView getSettingsView() {

@@ -9,34 +9,12 @@ public class Game {
     private final List<Player> players;
 
     private final int playlistId;
-    private final int timeSeconds;
-
-    private final boolean overtime;
-    private final boolean replay;
-    private final boolean hasWinner;
-
-    private final String winner;
     private final String arena;
 
-    public Game(
-            String matchGuid,
-            List<Player> players,
-            int playlistId,
-            int timeSeconds,
-            boolean overtime,
-            boolean replay,
-            boolean hasWinner,
-            String winner,
-            String arena
-    ) {
+    public Game(String matchGuid, List<Player> players, int playlistId, String arena) {
         this.matchGuid = matchGuid;
         this.players = players;
         this.playlistId = playlistId;
-        this.timeSeconds = timeSeconds;
-        this.overtime = overtime;
-        this.replay = replay;
-        this.hasWinner = hasWinner;
-        this.winner = winner;
         this.arena = arena;
     }
 
