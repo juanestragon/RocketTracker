@@ -3,10 +3,13 @@ package web;
 import config.Config;
 import config.ConfigStorage;
 import events.WebEventListener;
-import javafx.application.Platform;
 import network.ConnectionState;
 import network.ConnectionStateListener;
 import network.RocketLeagueClient;
+
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.util.Duration;
 
 import java.nio.file.Path;
 
@@ -331,10 +334,18 @@ public class WebController implements WebEventListener, ConnectionStateListener 
 
             view.getSettingsView().setStatus("Configuración guardada.");
 
-            if (client.isRunning()) {
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            if(client.isRunning()) {
                 client.stop();
-                client.start();
+                pause.setOnFinished(event -> {
+                    view.getSettingsView().setStatus("");
+                    client.start();
+                });
+            } else{
+                pause.setOnFinished(event -> view.getSettingsView().setStatus(""));
             }
+            pause.play();
+
 
         } catch (NumberFormatException e) {
             view.getSettingsView().setStatus("El ratio de paquetes debe ser un entero");
