@@ -412,7 +412,7 @@ public class HomeView {
             case "CHN_Stadium_P", "CHN_Stadium_Day_P", "FNI_Stadium_P" -> "Forbidden Temple";
             case "UF_Day_P" -> "Futura Garden";
             case "EuroStadium_P", "EuroStadium_Dusk_P", "EuroStadium_Night_P",
-                 "EuroStadium_SnowNight_P", "EuroStadium_Rainy_P" -> "Mannfield";
+                 "EuroStadium_SnowNight_P", "EuroStadium_Rainy_P", "Labs_4v4_Arena15_EuroStadium_Night_P" -> "Mannfield";
             case "NeoTokyo_Standard_P", "NeoTokyo_Toon_P", "NeoTokyo_Hax_P", "NeoTokyo_Arcade_P",
                  "NeoTokyo_Hax_Signs_P", "NeoTokyo_Hax_Signs_Off_P" -> "Neo Tokyo";
             case "Music_P" -> "Neon Fields";
@@ -424,6 +424,7 @@ public class HomeView {
             case "UtopiaStadium_P", "UtopiaStadium_Dusk_P", "UtopiaStadium_Lux_P", "UtopiaStadium_Snow_P" -> "Utopia Coliseum";
             case "Wasteland_S_P", "Wasteland_Night_S_P", "Wasteland_GRS_P" -> "Wasteland";
             case "Paname_Dusk_P" -> "Parc de Paris";
+            case "Mall__Day_P" -> "Boostfield Mall";
 
             // NON STANDARD
 
@@ -456,6 +457,9 @@ public class HomeView {
             case "HoopsStadium_P" -> "Dunk House";
 
             case "ShatterShot_P" -> "Core 707";
+
+            case "Labs_4v4_Arena15_Blackout_P" -> "Midnight Metro";
+            case "Labs_4v4_Arena15_Retro_P" -> "Sunset Dunes";
 
             case "KO_Calavera_P" -> "Calavera";
             case "KO_Carbon_P" -> "Carbon";
