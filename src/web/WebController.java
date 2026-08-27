@@ -330,6 +330,12 @@ public class WebController implements WebEventListener, ConnectionStateListener 
             configStorage.save(config);
 
             view.getSettingsView().setStatus("Configuración guardada.");
+
+            if (client.isRunning()) {
+                client.stop();
+                client.start();
+            }
+
         } catch (NumberFormatException e) {
             view.getSettingsView().setStatus("El ratio de paquetes debe ser un entero");
         }
