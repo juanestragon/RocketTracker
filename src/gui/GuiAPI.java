@@ -113,7 +113,11 @@ public class GuiAPI {
         return repository.getTodayMatchesByPlaylist(playlistId);
     }
 
-    // ============================
+    public int getPlayedGames(int playListId) {
+        return statistics.getPlayedGames(playListId);
+    }
+
+// ============================
 // Estadísticas
 // ============================
 

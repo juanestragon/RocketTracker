@@ -194,7 +194,7 @@ public class RocketLeagueListener implements WebSocket.Listener {
         }
 
         System.out.println("Partida finalizada");
-        if (!playerFound || analyzer == null || game == null || !isCompetitive) {
+        if (!playerFound || analyzer == null || game == null || !isCompetitive || game.getTimeSeconds() >= 300 || game.getTimeSeconds() < 0) {
             resetMatch();
             return;
         }

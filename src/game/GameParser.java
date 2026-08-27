@@ -22,10 +22,12 @@ public class GameParser {
             throw new IllegalArgumentException("GameState no contiene un objeto Game válido");
         }
 
+        int timeSeconds = getInt(game, "TimeSeconds");
         int playlistId = getInt(game, "PlaylistId");
         String arena = getString(game, "Arena");
 
-        return new Game(matchGuid, players, playlistId, arena);
+
+        return new Game(matchGuid, players, playlistId, arena, timeSeconds);
     }
 
     private static List<Player> parsePlayers(Map<?, ?> root) {

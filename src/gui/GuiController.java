@@ -23,6 +23,8 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
     private final StatisticsView statisticsView;
     private final ConfigStorage configStorage;
 
+    private boolean max = true;
+
     public GuiController(GuiAPI guiAPI, GuiView view, RocketLeagueClient client, ConfigStorage configStorage) {
         this.configStorage = configStorage;
         this.guiAPI = guiAPI;
@@ -107,25 +109,33 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
 
         statisticsView.getAllButton().setOnAction(event -> {
             statisticsView.selectFilter(statisticsView.getAllButton());
+            max = true;
             updateStatistics();
         });
 
         statisticsView.getOneVsOneButton().setOnAction(event -> {
             statisticsView.selectFilter(statisticsView.getOneVsOneButton());
+            max = true;
             updateStatistics();
         });
 
         statisticsView.getTwoVsTwoButton().setOnAction(event -> {
             statisticsView.selectFilter(statisticsView.getTwoVsTwoButton());
+            max = true;
             updateStatistics();
         });
 
         statisticsView.getThreeVsThreeButton().setOnAction(event -> {
             statisticsView.selectFilter(statisticsView.getThreeVsThreeButton());
+            max = true;
             updateStatistics();
         });
 
-        statisticsView.getMatchLimitField().setOnAction(event -> updateStatistics());
+        statisticsView.getMatchLimitField().setOnAction(event -> {
+            updateStatistics();
+            max = getMatchLimit() == null;
+
+        });
     }
 
 // ============================
@@ -139,8 +149,8 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
 
         Platform.runLater(() -> {
 
-            if (limit == null) {
-
+            if (max) {
+                statisticsView.getMatchLimitField().setText("" + guiAPI.getPlayedGames(playlistId));
                 if (playlistId == -1) {
                     updateStatisticsAll();
                 } else {

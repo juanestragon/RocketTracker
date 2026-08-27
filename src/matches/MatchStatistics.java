@@ -6,9 +6,21 @@ import java.util.function.ToDoubleFunction;
 public class MatchStatistics {
 
     private final MatchRepository repository;
+    private final MatchRepository duelsRepository;
+    private final MatchRepository doublesRepository;
+    private final MatchRepository standardRepository;
+
+    enum PlayListName{
+        DUELS,
+        DOUBLES,
+        STANDARD
+    }
 
     public MatchStatistics(MatchRepository repository) {
         this.repository = repository;
+        duelsRepository = new MatchRepository(repository.getMatchesByPlaylist(10));
+        doublesRepository = new MatchRepository(repository.getMatchesByPlaylist(11));
+        standardRepository = new MatchRepository(repository.getMatchesByPlaylist(13));
     }
 
     // ============================
@@ -48,6 +60,26 @@ public class MatchStatistics {
         return (double) wins / matches.size() * 100.0;
     }
 
+    private PlayListName getPlaylistName(int playListId) {
+        return switch (playListId) {
+            case 10 -> PlayListName.DUELS;
+            case 11 -> PlayListName.DOUBLES;
+            case 13 -> PlayListName.STANDARD;
+
+            default -> null;
+        };
+    }
+
+    public int getPlayedGames(int playListId) {
+        return switch(getPlaylistName(playListId)) {
+            case DUELS -> duelsRepository.getAllMatches().size();
+            case DOUBLES -> doublesRepository.getAllMatches().size();
+            case STANDARD -> standardRepository.getAllMatches().size();
+
+            case null -> repository.getAllMatches().size();
+        };
+    }
+
 // ============================
 // Asistencias
 // ============================
@@ -57,7 +89,11 @@ public class MatchStatistics {
     }
 
     public double getAverageAssists(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getAssists);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getAssists);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getAssists);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getAssists);
+        };
     }
 
     public double getLastAverageAssists(int n) {
@@ -65,8 +101,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageAssists(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getAssists);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getAssists);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getAssists);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getAssists);
+        };
     }
 
 // ============================
@@ -78,7 +117,11 @@ public class MatchStatistics {
     }
 
     public double getAverageSaves(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getSaves);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getSaves);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getSaves);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getSaves);
+        };
     }
 
     public double getLastAverageSaves(int n) {
@@ -86,8 +129,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageSaves(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getSaves);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getSaves);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getSaves);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getSaves);
+        };
     }
 
 // ============================
@@ -99,7 +145,11 @@ public class MatchStatistics {
     }
 
     public double getAverageShots(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getShots);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getShots);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getShots);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getShots);
+        };
     }
 
     public double getLastAverageShots(int n) {
@@ -107,8 +157,12 @@ public class MatchStatistics {
     }
 
     public double getLastAverageShots(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getShots);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getShots);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getShots);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getShots);
+            default -> 0.0;
+        };
     }
 
 // ============================
@@ -120,7 +174,11 @@ public class MatchStatistics {
     }
 
     public double getAverageGoals(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getGoals);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getGoals);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getGoals);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getGoals);
+        };
     }
 
     public double getLastAverageGoals(int n) {
@@ -128,8 +186,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageGoals(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getGoals);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getGoals);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getGoals);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getGoals);
+        };
     }
 
 // ============================
@@ -141,7 +202,11 @@ public class MatchStatistics {
     }
 
     public double getAverageDemos(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getDemos);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getDemos);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getDemos);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getDemos);
+        };
     }
 
     public double getLastAverageDemos(int n) {
@@ -149,8 +214,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageDemos(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getDemos);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getDemos);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getDemos);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getDemos);
+        };
     }
 
 // ============================
@@ -162,7 +230,11 @@ public class MatchStatistics {
     }
 
     public double getAverageAirPercentage(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getAirPercentage);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getAirPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getAirPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getAirPercentage);
+        };
     }
 
     public double getLastAverageAirPercentage(int n) {
@@ -170,8 +242,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageAirPercentage(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getAirPercentage);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getAirPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getAirPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getAirPercentage);
+        };
     }
 
 // ============================
@@ -183,15 +258,22 @@ public class MatchStatistics {
     }
 
     public double getAverageSupersonicPercentage(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getSupersonicPercentage);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getSupersonicPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getSupersonicPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getSupersonicPercentage);
+        };
     }
 
     public double getLastAverageSupersonicPercentage(int n) {return calculateAverage(repository.getLastMatches(n), MatchResult::getSupersonicPercentage);
     }
 
     public double getLastAverageSupersonicPercentage(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getSupersonicPercentage);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getSupersonicPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getSupersonicPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getSupersonicPercentage);
+        };
     }
 
 // ============================
@@ -203,7 +285,11 @@ public class MatchStatistics {
     }
 
     public double getAverageBoostUsedSupersonic(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getBoostUsedSupersonic);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getBoostUsedSupersonic);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getBoostUsedSupersonic);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getBoostUsedSupersonic);
+        };
     }
 
     public double getLastAverageBoostUsedSupersonic(int n) {
@@ -211,8 +297,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageBoostUsedSupersonic(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getBoostUsedSupersonic);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getBoostUsedSupersonic);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getBoostUsedSupersonic);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getBoostUsedSupersonic);
+        };
     }
 
 // ============================
@@ -224,7 +313,11 @@ public class MatchStatistics {
     }
 
     public double getAverageSupersonicSessionPercentage(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getSupersonicSessionPercentage);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getSupersonicSessionPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getSupersonicSessionPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getSupersonicSessionPercentage);
+        };
     }
 
     public double getLastAverageSupersonicSessionPercentage(int n) {
@@ -232,8 +325,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageSupersonicSessionPercentage(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getSupersonicSessionPercentage);
+        };
     }
 
 // ============================
@@ -245,7 +341,11 @@ public class MatchStatistics {
     }
 
     public double getAverageBoostToSupersonic(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getAverageBoostToSupersonic);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getAverageBoostToSupersonic);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getAverageBoostToSupersonic);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getAverageBoostToSupersonic);
+        };
     }
 
     public double getLastAverageBoostToSupersonic(int n) {
@@ -253,8 +353,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageBoostToSupersonic(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getAverageBoostToSupersonic);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getAverageBoostToSupersonic);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getAverageBoostToSupersonic);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getAverageBoostToSupersonic);
+        };
     }
 
 // ============================
@@ -266,7 +369,11 @@ public class MatchStatistics {
     }
 
     public double getAverageSpeed(int playlistId) {
-        return calculateAverage(repository.getMatchesByPlaylist(playlistId), MatchResult::getAverageSpeed);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getAllMatches(), MatchResult::getAverageSpeed);
+            case DOUBLES -> calculateAverage(doublesRepository.getAllMatches(), MatchResult::getAverageSpeed);
+            case STANDARD -> calculateAverage(standardRepository.getAllMatches(), MatchResult::getAverageSpeed);
+        };
     }
 
     public double getLastAverageSpeed(int n) {
@@ -274,8 +381,11 @@ public class MatchStatistics {
     }
 
     public double getLastAverageSpeed(int n, int playlistId) {
-        return calculateAverage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n), MatchResult::getAverageSpeed);
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateAverage(duelsRepository.getLastMatches(n), MatchResult::getAverageSpeed);
+            case DOUBLES -> calculateAverage(doublesRepository.getLastMatches(n), MatchResult::getAverageSpeed);
+            case STANDARD -> calculateAverage(standardRepository.getLastMatches(n), MatchResult::getAverageSpeed);
+        };
     }
 
 // ============================
@@ -287,15 +397,21 @@ public class MatchStatistics {
     }
 
     public double getWinPercentage(int playlistId) {
-        return calculateWinPercentage(repository.getMatchesByPlaylist(playlistId));
-    }
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateWinPercentage(duelsRepository.getAllMatches());
+            case DOUBLES -> calculateWinPercentage(doublesRepository.getAllMatches());
+            case STANDARD -> calculateWinPercentage(standardRepository.getAllMatches());
+        };    }
 
     public double getLastWinPercentage(int n) {
         return calculateWinPercentage(repository.getLastMatches(n));
     }
 
     public double getLastWinPercentage(int n, int playlistId) {
-        return calculateWinPercentage(new MatchRepository(
-                repository.getMatchesByPlaylist(playlistId)).getLastMatches(n));
+        return switch (getPlaylistName(playlistId)) {
+            case DUELS -> calculateWinPercentage(duelsRepository.getLastMatches(n));
+            case DOUBLES -> calculateWinPercentage(doublesRepository.getLastMatches(n));
+            case STANDARD -> calculateWinPercentage(standardRepository.getLastMatches(n));
+        };
     }
 }

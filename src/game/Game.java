@@ -10,12 +10,14 @@ public class Game {
 
     private final int playlistId;
     private final String arena;
+    private final int timeSeconds;
 
-    public Game(String matchGuid, List<Player> players, int playlistId, String arena) {
+    public Game(String matchGuid, List<Player> players, int playlistId, String arena, int timeSeconds) {
         this.matchGuid = matchGuid;
         this.players = players;
         this.playlistId = playlistId;
         this.arena = arena;
+        this.timeSeconds = timeSeconds;
     }
 
     public String getMatchGuid() {
@@ -32,5 +34,9 @@ public class Game {
 
     public String getArena() {
         return arena;
+    }
+
+    public int getTimeSeconds() {
+        return timeSeconds;
     }
 }
