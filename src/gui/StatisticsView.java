@@ -1,4 +1,4 @@
-package web;
+package gui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

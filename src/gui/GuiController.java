@@ -1,8 +1,8 @@
-package web;
+package gui;
 
 import config.Config;
 import config.ConfigStorage;
-import events.WebEventListener;
+import events.GuiEventListener;
 import network.ConnectionState;
 import network.ConnectionStateListener;
 import network.RocketLeagueClient;
@@ -13,19 +13,19 @@ import javafx.util.Duration;
 
 import java.nio.file.Path;
 
-public class WebController implements WebEventListener, ConnectionStateListener {
+public class GuiController implements GuiEventListener, ConnectionStateListener {
 
-    private final WebAPI webAPI;
-    private final WebView view;
+    private final GuiAPI guiAPI;
+    private final GuiView view;
     private final RocketLeagueClient client;
 
     private final HomeView homeView;
     private final StatisticsView statisticsView;
     private final ConfigStorage configStorage;
 
-    public WebController(WebAPI webAPI, WebView view, RocketLeagueClient client, ConfigStorage configStorage) {
+    public GuiController(GuiAPI guiAPI, GuiView view, RocketLeagueClient client, ConfigStorage configStorage) {
         this.configStorage = configStorage;
-        this.webAPI = webAPI;
+        this.guiAPI = guiAPI;
         this.view = view;
         this.client = client;
 
@@ -160,18 +160,18 @@ public class WebController implements WebEventListener, ConnectionStateListener 
 
     private void updateStatisticsAll() {
 
-        statisticsView.setWinPercentage(webAPI.getWinPercentage());
-        statisticsView.setAverageGoals(webAPI.getAverageGoals());
-        statisticsView.setAverageShots(webAPI.getAverageShots());
-        statisticsView.setAverageSaves(webAPI.getAverageSaves());
-        statisticsView.setAverageAssists(webAPI.getAverageAssists());
-        statisticsView.setAverageDemos(webAPI.getAverageDemos());
-        statisticsView.setAverageAirPercentage(webAPI.getAverageAirPercentage());
-        statisticsView.setAverageSupersonicPercentage(webAPI.getAverageSupersonicPercentage());
-        statisticsView.setAverageSpeed(webAPI.getAverageSpeed());
-        statisticsView.setAverageBoostUsedSupersonic(webAPI.getAverageBoostUsedSupersonic());
-        statisticsView.setAverageSupersonicSessionPercentage(webAPI.getAverageSupersonicSessionPercentage());
-        statisticsView.setAverageBoostToSupersonic(webAPI.getAverageBoostToSupersonic());
+        statisticsView.setWinPercentage(guiAPI.getWinPercentage());
+        statisticsView.setAverageGoals(guiAPI.getAverageGoals());
+        statisticsView.setAverageShots(guiAPI.getAverageShots());
+        statisticsView.setAverageSaves(guiAPI.getAverageSaves());
+        statisticsView.setAverageAssists(guiAPI.getAverageAssists());
+        statisticsView.setAverageDemos(guiAPI.getAverageDemos());
+        statisticsView.setAverageAirPercentage(guiAPI.getAverageAirPercentage());
+        statisticsView.setAverageSupersonicPercentage(guiAPI.getAverageSupersonicPercentage());
+        statisticsView.setAverageSpeed(guiAPI.getAverageSpeed());
+        statisticsView.setAverageBoostUsedSupersonic(guiAPI.getAverageBoostUsedSupersonic());
+        statisticsView.setAverageSupersonicSessionPercentage(guiAPI.getAverageSupersonicSessionPercentage());
+        statisticsView.setAverageBoostToSupersonic(guiAPI.getAverageBoostToSupersonic());
     }
 
     private int getSelectedPlaylistId() {
@@ -213,50 +213,50 @@ public class WebController implements WebEventListener, ConnectionStateListener 
 
     private void updateStatisticsPlaylist(int playlistId) {
 
-        statisticsView.setWinPercentage(webAPI.getWinPercentage(playlistId));
-        statisticsView.setAverageGoals(webAPI.getAverageGoals(playlistId));
-        statisticsView.setAverageShots(webAPI.getAverageShots(playlistId));
-        statisticsView.setAverageSaves(webAPI.getAverageSaves(playlistId));
-        statisticsView.setAverageAssists(webAPI.getAverageAssists(playlistId));
-        statisticsView.setAverageDemos(webAPI.getAverageDemos(playlistId));
-        statisticsView.setAverageAirPercentage(webAPI.getAverageAirPercentage(playlistId));
-        statisticsView.setAverageSupersonicPercentage(webAPI.getAverageSupersonicPercentage(playlistId));
-        statisticsView.setAverageSpeed(webAPI.getAverageSpeed(playlistId));
-        statisticsView.setAverageBoostUsedSupersonic(webAPI.getAverageBoostUsedSupersonic(playlistId));
-        statisticsView.setAverageSupersonicSessionPercentage(webAPI.getAverageSupersonicSessionPercentage(playlistId));
-        statisticsView.setAverageBoostToSupersonic(webAPI.getAverageBoostToSupersonic(playlistId));
+        statisticsView.setWinPercentage(guiAPI.getWinPercentage(playlistId));
+        statisticsView.setAverageGoals(guiAPI.getAverageGoals(playlistId));
+        statisticsView.setAverageShots(guiAPI.getAverageShots(playlistId));
+        statisticsView.setAverageSaves(guiAPI.getAverageSaves(playlistId));
+        statisticsView.setAverageAssists(guiAPI.getAverageAssists(playlistId));
+        statisticsView.setAverageDemos(guiAPI.getAverageDemos(playlistId));
+        statisticsView.setAverageAirPercentage(guiAPI.getAverageAirPercentage(playlistId));
+        statisticsView.setAverageSupersonicPercentage(guiAPI.getAverageSupersonicPercentage(playlistId));
+        statisticsView.setAverageSpeed(guiAPI.getAverageSpeed(playlistId));
+        statisticsView.setAverageBoostUsedSupersonic(guiAPI.getAverageBoostUsedSupersonic(playlistId));
+        statisticsView.setAverageSupersonicSessionPercentage(guiAPI.getAverageSupersonicSessionPercentage(playlistId));
+        statisticsView.setAverageBoostToSupersonic(guiAPI.getAverageBoostToSupersonic(playlistId));
     }
 
     private void updateStatisticsLast(int n, int playlistId) {
 
-        statisticsView.setWinPercentage(webAPI.getLastWinPercentage(n, playlistId));
-        statisticsView.setAverageGoals(webAPI.getLastAverageGoals(n, playlistId));
-        statisticsView.setAverageShots(webAPI.getLastAverageShots(n, playlistId));
-        statisticsView.setAverageSaves(webAPI.getLastAverageSaves(n, playlistId));
-        statisticsView.setAverageAssists(webAPI.getLastAverageAssists(n, playlistId));
-        statisticsView.setAverageDemos(webAPI.getLastAverageDemos(n, playlistId));
-        statisticsView.setAverageAirPercentage(webAPI.getLastAverageAirPercentage(n, playlistId));
-        statisticsView.setAverageSupersonicPercentage(webAPI.getLastAverageSupersonicPercentage(n, playlistId));
-        statisticsView.setAverageSpeed(webAPI.getLastAverageSpeed(n, playlistId));
-        statisticsView.setAverageBoostUsedSupersonic(webAPI.getLastAverageBoostUsedSupersonic(n, playlistId));
-        statisticsView.setAverageSupersonicSessionPercentage(webAPI.getLastAverageSupersonicSessionPercentage(n, playlistId));
-        statisticsView.setAverageBoostToSupersonic(webAPI.getLastAverageBoostToSupersonic(n, playlistId));
+        statisticsView.setWinPercentage(guiAPI.getLastWinPercentage(n, playlistId));
+        statisticsView.setAverageGoals(guiAPI.getLastAverageGoals(n, playlistId));
+        statisticsView.setAverageShots(guiAPI.getLastAverageShots(n, playlistId));
+        statisticsView.setAverageSaves(guiAPI.getLastAverageSaves(n, playlistId));
+        statisticsView.setAverageAssists(guiAPI.getLastAverageAssists(n, playlistId));
+        statisticsView.setAverageDemos(guiAPI.getLastAverageDemos(n, playlistId));
+        statisticsView.setAverageAirPercentage(guiAPI.getLastAverageAirPercentage(n, playlistId));
+        statisticsView.setAverageSupersonicPercentage(guiAPI.getLastAverageSupersonicPercentage(n, playlistId));
+        statisticsView.setAverageSpeed(guiAPI.getLastAverageSpeed(n, playlistId));
+        statisticsView.setAverageBoostUsedSupersonic(guiAPI.getLastAverageBoostUsedSupersonic(n, playlistId));
+        statisticsView.setAverageSupersonicSessionPercentage(guiAPI.getLastAverageSupersonicSessionPercentage(n, playlistId));
+        statisticsView.setAverageBoostToSupersonic(guiAPI.getLastAverageBoostToSupersonic(n, playlistId));
     }
 
     private void updateStatisticsLast(int n) {
 
-        statisticsView.setWinPercentage(webAPI.getLastWinPercentage(n));
-        statisticsView.setAverageGoals(webAPI.getLastAverageGoals(n));
-        statisticsView.setAverageShots(webAPI.getLastAverageShots(n));
-        statisticsView.setAverageSaves(webAPI.getLastAverageSaves(n));
-        statisticsView.setAverageAssists(webAPI.getLastAverageAssists(n));
-        statisticsView.setAverageDemos(webAPI.getLastAverageDemos(n));
-        statisticsView.setAverageAirPercentage(webAPI.getLastAverageAirPercentage(n));
-        statisticsView.setAverageSupersonicPercentage(webAPI.getLastAverageSupersonicPercentage(n));
-        statisticsView.setAverageSpeed(webAPI.getLastAverageSpeed(n));
-        statisticsView.setAverageBoostUsedSupersonic(webAPI.getLastAverageBoostUsedSupersonic(n));
-        statisticsView.setAverageSupersonicSessionPercentage(webAPI.getLastAverageSupersonicSessionPercentage(n));
-        statisticsView.setAverageBoostToSupersonic(webAPI.getLastAverageBoostToSupersonic(n));
+        statisticsView.setWinPercentage(guiAPI.getLastWinPercentage(n));
+        statisticsView.setAverageGoals(guiAPI.getLastAverageGoals(n));
+        statisticsView.setAverageShots(guiAPI.getLastAverageShots(n));
+        statisticsView.setAverageSaves(guiAPI.getLastAverageSaves(n));
+        statisticsView.setAverageAssists(guiAPI.getLastAverageAssists(n));
+        statisticsView.setAverageDemos(guiAPI.getLastAverageDemos(n));
+        statisticsView.setAverageAirPercentage(guiAPI.getLastAverageAirPercentage(n));
+        statisticsView.setAverageSupersonicPercentage(guiAPI.getLastAverageSupersonicPercentage(n));
+        statisticsView.setAverageSpeed(guiAPI.getLastAverageSpeed(n));
+        statisticsView.setAverageBoostUsedSupersonic(guiAPI.getLastAverageBoostUsedSupersonic(n));
+        statisticsView.setAverageSupersonicSessionPercentage(guiAPI.getLastAverageSupersonicSessionPercentage(n));
+        statisticsView.setAverageBoostToSupersonic(guiAPI.getLastAverageBoostToSupersonic(n));
     }
 
     // ============================
@@ -267,8 +267,8 @@ public class WebController implements WebEventListener, ConnectionStateListener 
 
         Platform.runLater(() -> {
 
-            if (webAPI.isMatchActive()) {
-                homeView.setCurrentMatch(webAPI.getCurrentArena(), webAPI.getCurrentPlaylistId());
+            if (guiAPI.isMatchActive()) {
+                homeView.setCurrentMatch(guiAPI.getCurrentArena(), guiAPI.getCurrentPlaylistId());
             } else {
                 homeView.clearCurrentMatch();
             }
@@ -279,8 +279,8 @@ public class WebController implements WebEventListener, ConnectionStateListener 
 
     private void updateHomeMatches() {
 
-        homeView.setLastMatch(webAPI.getLastMatch());
-        homeView.setRecentMatches(webAPI.getLastMatches(10));
+        homeView.setLastMatch(guiAPI.getLastMatch());
+        homeView.setRecentMatches(guiAPI.getLastMatches(10));
     }
 
     // ============================
@@ -387,7 +387,7 @@ public class WebController implements WebEventListener, ConnectionStateListener 
     public void onMatchStarted() {
 
         Platform.runLater(() -> {
-            homeView.setCurrentMatch(webAPI.getCurrentArena(), webAPI.getCurrentPlaylistId());
+            homeView.setCurrentMatch(guiAPI.getCurrentArena(), guiAPI.getCurrentPlaylistId());
         });
     }
 

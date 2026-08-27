@@ -1,4 +1,4 @@
-package web;
+package gui;
 
 import events.GameMatchEventListener;
 import network.RocketLeagueClient;
@@ -7,26 +7,26 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class WebApplication extends Application {
+public class GuiApplication extends Application {
 
-    private static WebAPI webAPI;
-    private static GameMatchEventListener webMatchEventListener;
+    private static GuiAPI guiAPI;
+    private static GameMatchEventListener guiMatchEventListener;
     private static RocketLeagueClient client;
 
-    public static void configure(WebAPI webAPI, GameMatchEventListener webMatchEventListener, RocketLeagueClient client) {
-        WebApplication.webAPI = webAPI;
-        WebApplication.webMatchEventListener = webMatchEventListener;
-        WebApplication.client = client;
+    public static void configure(GuiAPI guiAPI, GameMatchEventListener guiMatchEventListener, RocketLeagueClient client) {
+        GuiApplication.guiAPI = guiAPI;
+        GuiApplication.guiMatchEventListener = guiMatchEventListener;
+        GuiApplication.client = client;
     }
 
     @Override
     public void start(Stage stage) {
 
-        WebView view = new WebView();
+        GuiView view = new GuiView();
 
-        WebController controller = new WebController(webAPI, view, client, webAPI.getConfigStorage());
+        GuiController controller = new GuiController(guiAPI, view, client, guiAPI.getConfigStorage());
 
-        webMatchEventListener.setListener(controller);
+        guiMatchEventListener.setListener(controller);
 
 
         client.setConnectionStateListener(controller);

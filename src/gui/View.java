@@ -1,4 +1,4 @@
-package web;
+package gui;
 
 enum View {
     HOME,

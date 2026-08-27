@@ -1,4 +1,4 @@
-package web;
+package gui;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public class WebView {
+public class GuiView {
 
     private final BorderPane root;
 
@@ -29,7 +29,7 @@ public class WebView {
     private View currentView;
 
 
-    public WebView() {
+    public GuiView() {
 
         settingsView = new SettingsView();
 

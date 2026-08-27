@@ -1,25 +1,25 @@
 package events;
 
 import matches.MatchResult;
-import web.WebAPI;
+import gui.GuiAPI;
 
 public class GameMatchEventListener implements MatchEventListener {
 
-    private final WebAPI webAPI;
+    private final GuiAPI guiAPI;
 
-    private WebEventListener listener;
+    private GuiEventListener listener;
 
-    public GameMatchEventListener(WebAPI webAPI) {
-        this.webAPI = webAPI;
+    public GameMatchEventListener(GuiAPI guiAPI) {
+        this.guiAPI = guiAPI;
     }
 
-    public void setListener(WebEventListener listener) {
+    public void setListener(GuiEventListener listener) {
         this.listener = listener;
     }
 
     @Override
     public void onMatchStarted(String arena, int playlistId) {
-        webAPI.onMatchStarted(arena, playlistId);
+        guiAPI.onMatchStarted(arena, playlistId);
         if (listener != null) {
             listener.onMatchStarted();
         }
@@ -28,7 +28,7 @@ public class GameMatchEventListener implements MatchEventListener {
     @Override
     public void onMatchFinished(MatchResult result) {
 
-        webAPI.onMatchFinished(result);
+        guiAPI.onMatchFinished(result);
         if (listener != null) {
             listener.onMatchFinished();
         }

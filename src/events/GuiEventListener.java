@@ -1,6 +1,6 @@
 package events;
 
-public interface WebEventListener {
+public interface GuiEventListener {
 
     void onMatchStarted();
 

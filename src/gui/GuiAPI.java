@@ -1,4 +1,4 @@
-package web;
+package gui;
 
 import config.ConfigStorage;
 import matches.MatchLoader;
@@ -8,7 +8,7 @@ import matches.MatchStatistics;
 
 import java.util.List;
 
-public class WebAPI {
+public class GuiAPI {
 
     private final MatchLoader loader;
 
@@ -19,7 +19,7 @@ public class WebAPI {
     private int currentPlaylistId;
     private final ConfigStorage configStorage;
 
-    public WebAPI(ConfigStorage configStorage) {
+    public GuiAPI(ConfigStorage configStorage) {
         if (configStorage == null) {
             throw new IllegalArgumentException("ConfigStorage no puede ser null.");
         }
