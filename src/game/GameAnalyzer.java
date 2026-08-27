@@ -64,7 +64,7 @@ public class GameAnalyzer {
         this.playerId = playerId;
         this.samples = 0;
         this.MAX_AIRBORNE_BOOST_SAMPLES = 2 * packetSendRate;
-        this.MAX_BOOST_SAMPLES = 1 * packetSendRate;
+        this.MAX_BOOST_SAMPLES = packetSendRate;
     }
 
     // =========================================================
@@ -155,9 +155,10 @@ public class GameAnalyzer {
     private void updateBoost(Player player) {
 
         double currentBoost = player.getBoost();
-        double difference = previousBoost < 0 ? 0.0 : previousBoost - currentBoost;
+        double difference = previousBoost < 0.0 ? 0.0 : previousBoost - currentBoost;
+        previousBoost = currentBoost;
 
-        if (player.isBoosting()) {
+        if (difference > 0) {
             boostSamples = 0;
         } else if (boostSamples > MAX_BOOST_SAMPLES) {
             boostSamples = 0;
