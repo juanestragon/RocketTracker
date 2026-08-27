@@ -39,17 +39,19 @@ public class RocketLeagueListener implements WebSocket.Listener {
     private boolean inReplay = false;
     private boolean isCompetitive = false;
     private String matchGuid;
+    private final int packetSendRate;
 
     private int playerTeam = -1;
     private int playerTime = 0;
     private boolean playerFound = false;
     private boolean matchActive = false;
 
-    public RocketLeagueListener(String playerName, MatchStorage storage,
+    public RocketLeagueListener(String playerName, MatchStorage storage, int packetSendRate,
             MatchEventListener listener, Runnable connectionClosedCallback) {
 
         this.playerName = playerName;
         this.storage = storage;
+        this.packetSendRate = packetSendRate;
         this.listener = listener;
         this.connectionClosedCallback = connectionClosedCallback;
     }
@@ -163,7 +165,7 @@ public class RocketLeagueListener implements WebSocket.Listener {
 
             playerTeam = player.getTeamNum();
             matchGuid = game.getMatchGuid();
-            analyzer = new GameAnalyzer(player.getPrimaryId());
+            analyzer = new GameAnalyzer(player.getPrimaryId(), packetSendRate);
         }
 
         if (!playerFound || !isCompetitive) {

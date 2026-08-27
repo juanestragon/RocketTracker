@@ -14,6 +14,7 @@ public class SettingsView {
 
     private final TextField playerNameField;
     private final TextField storagePathField;
+    private final TextField packetSendRateField;
 
     private final Button browseButton;
     private final Button saveButton;
@@ -26,6 +27,7 @@ public class SettingsView {
 
         playerNameField = new TextField();
         storagePathField = new TextField();
+        packetSendRateField = new TextField();
 
         browseButton = new Button("Browse...");
         saveButton = new Button("Save");
@@ -64,12 +66,19 @@ public class SettingsView {
         Label storagePathLabel = new Label("Storage path");
         storagePathLabel.getStyleClass().add("settings-label");
         storagePathField.setMaxWidth(Double.MAX_VALUE);
-
         browseButton.getStyleClass().add("settings-browse-button");
 
+        // ============================
+        // Packet Send Rate
+        // ============================
+
+        Label packetSendRateLabel = new Label("Packet send rate");
+        packetSendRateLabel.getStyleClass().add("settings-label");
+        packetSendRateField.setMaxWidth(Double.MAX_VALUE);
+
+        HBox.setHgrow(storagePathField, javafx.scene.layout.Priority.ALWAYS);
         HBox storageBox = new HBox(8, storagePathField, browseButton);
         storageBox.setAlignment(Pos.CENTER_LEFT);
-        HBox.setHgrow(storagePathField, javafx.scene.layout.Priority.ALWAYS);
 
         // ============================
         // Save
@@ -88,6 +97,8 @@ public class SettingsView {
                 playerNameField,
                 storagePathLabel,
                 storageBox,
+                packetSendRateLabel,
+                packetSendRateField,
                 saveButton,
                 statusLabel);
     }
@@ -117,7 +128,7 @@ public class SettingsView {
     // ============================
 
     public void setPlayerName(String playerName) {
-        playerNameField.setText(playerName != null ? playerName : "");
+        playerNameField.setText(playerName == null ? "" : playerName );
     }
 
     public String getPlayerName() {
@@ -125,7 +136,7 @@ public class SettingsView {
     }
 
     public void setStoragePath(String storagePath) {
-        storagePathField.setText(storagePath != null ? storagePath : "");
+        storagePathField.setText(storagePath == null ? "" : storagePath);
     }
 
     public String getStoragePath() {
@@ -133,6 +144,14 @@ public class SettingsView {
     }
 
     public void setStatus(String message) {
-        statusLabel.setText(message != null ? message : "");
+        statusLabel.setText(message == null ? "" : message);
+    }
+
+    public String getPacketSendRate() {
+        return packetSendRateField.getText().trim();
+    }
+
+    public void setPacketSendRateField(String packetSendRate) {
+        packetSendRateField.setText(packetSendRate == null ? "" : packetSendRate);
     }
 }

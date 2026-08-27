@@ -103,7 +103,7 @@ public class RocketLeagueClient {
 
                 webSocket = httpClient.newWebSocketBuilder().buildAsync(
                         URI.create(config.getRocketLeagueUrl()),
-                        new RocketLeagueListener(config.getPlayerName(), new MatchStorage(config.getStoragePath()),  eventListener, this::handleConnectionClosed))
+                        new RocketLeagueListener(config.getPlayerName(), new MatchStorage(config.getStoragePath()), config.getPacketSendRate(),  eventListener, this::handleConnectionClosed))
                         .join();
 
 

@@ -44,8 +44,8 @@ public class GameAnalyzer {
     // Sesiones de boost
     // ============================
 
-    private static final int MAX_AIRBORNE_BOOST_SAMPLES = 20;
-    private static final int MAX_BOOST_SAMPLES = 10;
+    private final int MAX_AIRBORNE_BOOST_SAMPLES;
+    private final int MAX_BOOST_SAMPLES;
 
     private boolean wasGroundBoosting = false;
 
@@ -60,9 +60,11 @@ public class GameAnalyzer {
     private double boostToSupersonicTotal = 0.0;
     private double previousBoost = -1.0;
 
-    public GameAnalyzer(String playerId) {
+    public GameAnalyzer(String playerId, int packetSendRate) {
         this.playerId = playerId;
         this.samples = 0;
+        this.MAX_AIRBORNE_BOOST_SAMPLES = 2 * packetSendRate;
+        this.MAX_BOOST_SAMPLES = 1 * packetSendRate;
     }
 
     // =========================================================

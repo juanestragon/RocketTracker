@@ -35,7 +35,9 @@ public class ConfigStorage {
             String playerName = getString(map, "playerName");
             String rocketLeagueUrl = getString(map, "rocketLeagueUrl");
             String storagePath = getString(map, "storagePath");
-            return new Config(playerName, rocketLeagueUrl, Path.of(storagePath));
+            int packetSendRate = Integer.parseInt(getString(map, "packetSendRate"));
+
+            return new Config(playerName, rocketLeagueUrl, Path.of(storagePath), packetSendRate);
 
         } catch (IOException e) {
 
@@ -68,7 +70,7 @@ public class ConfigStorage {
     }
 
     private Config createDefaultConfig() {
-        return new Config("", "ws://127.0.0.1:49124", Path.of("data", "matches"));
+        return new Config("", "ws://127.0.0.1:49124", Path.of("data", "matches"), 10);
     }
 
     private String buildJson(Config config) {
@@ -78,7 +80,8 @@ public class ConfigStorage {
         json.append("{\n");
         appendString(json, "playerName", config.getPlayerName(), true);
         appendString(json, "rocketLeagueUrl", config.getRocketLeagueUrl(), true);
-        appendString(json, "storagePath", config.getStoragePath().toString(), false);
+        appendString(json, "storagePath", config.getStoragePath().toString(), true);
+        appendString(json, "packetSendRate", config.getPacketSendRate().toString(), false);
         json.append("}\n");
 
         return json.toString();

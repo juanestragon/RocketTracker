@@ -33,7 +33,6 @@ public class WebController implements WebEventListener, ConnectionStateListener 
         configureStatisticsFilters();
         configureConnectionButton();
         configureSettings();
-        loadSettings();
 
         updateConnectionState(client.getConnectionState());
         showHome();
@@ -289,6 +288,7 @@ public class WebController implements WebEventListener, ConnectionStateListener 
 
         view.setContent(view.getSettingsView().getRoot());
         view.selectNavigationButton(view.getSettingsButton());
+        loadSettings();
     }
 
     private void loadSettings() {
@@ -296,6 +296,7 @@ public class WebController implements WebEventListener, ConnectionStateListener 
         Config config = configStorage.load();
         view.getSettingsView().setPlayerName(config.getPlayerName());
         view.getSettingsView().setStoragePath(config.getStoragePath().toString());
+        view.getSettingsView().setPacketSendRateField(config.getPacketSendRate().toString());
     }
 
     private void saveSettings() {
@@ -303,23 +304,35 @@ public class WebController implements WebEventListener, ConnectionStateListener 
         String playerName = view.getSettingsView().getPlayerName();
 
         String storagePath = view.getSettingsView().getStoragePath();
+        int packetSendRate;
+        try {
+            packetSendRate = Integer.parseInt(view.getSettingsView().getPacketSendRate());
 
-        if (playerName.isBlank()) {
-            view.getSettingsView().setStatus("El nombre del jugador no puede estar vacío.");
-            return;
+            if (playerName.isBlank()) {
+                view.getSettingsView().setStatus("El nombre del jugador no puede estar vacío.");
+                return;
+            }
+
+            if (storagePath.isBlank()) {
+                view.getSettingsView().setStatus("La ruta de almacenamiento no puede estar vacía.");
+
+                return;
+            }
+
+            if (packetSendRate <= 0) {
+                view.getSettingsView().setStatus("El ratio de envio de paquetes debe ser mayor que 0");
+
+                return;
+            }
+
+            Config currentConfig = configStorage.load();
+            Config config = new Config(playerName, currentConfig.getRocketLeagueUrl(), Path.of(storagePath), packetSendRate);
+            configStorage.save(config);
+
+            view.getSettingsView().setStatus("Configuración guardada.");
+        } catch (NumberFormatException e) {
+            view.getSettingsView().setStatus("El ratio de paquetes debe ser un entero");
         }
-
-        if (storagePath.isBlank()) {
-            view.getSettingsView().setStatus("La ruta de almacenamiento no puede estar vacía.");
-
-            return;
-        }
-
-        Config currentConfig = configStorage.load();
-        Config config = new Config(playerName, currentConfig.getRocketLeagueUrl(), Path.of(storagePath));
-        configStorage.save(config);
-
-        view.getSettingsView().setStatus("Configuración guardada.");
     }
 
     private void configureSettings() {
