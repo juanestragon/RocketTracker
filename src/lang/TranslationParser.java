@@ -110,8 +110,9 @@ public class TranslationParser {
         String playerTextField = getString(settings, "playerTextField");
         String storagePathLabel = getString(settings, "storagePathLabel");
         String packetSendRateLabel = getString(settings, "packetSendRateLabel");
+        String languageLabel = getString(settings, "languageLabel");
 
         return new SettingsTrans(emptyPlayerName, emptyStoragePath, invalidPacketSendRate, saved, browseButton, saveButton,
-                title, playerLabel, playerTextField, storagePathLabel, packetSendRateLabel);
+                title, playerLabel, playerTextField, storagePathLabel, packetSendRateLabel, languageLabel);
     }
 }

@@ -650,3 +650,118 @@
     -fx-text-fill: #8e8e8e;
     -fx-font-size: 13px;
 }
+
+/* ============================
+   Language
+   ============================ */
+
+   .settings-language {
+       -fx-pref-height: 38px;
+
+       -fx-background-color: #292929;
+       -fx-border-color: #383838;
+       -fx-border-width: 1px;
+       -fx-border-radius: 6px;
+       -fx-background-radius: 6px;
+
+       -fx-cursor: hand;
+   }
+
+   .settings-language:hover {
+       -fx-background-color: #333333;
+       -fx-border-color: #454545;
+   }
+
+   .settings-language:pressed {
+       -fx-background-color: #202020;
+   }
+
+   /* Texto seleccionado */
+
+   .settings-language .list-cell {
+       -fx-background-color: transparent;
+       -fx-text-fill: #d8d8d8;
+       -fx-padding: 0 12px;
+   }
+
+   /* Flecha */
+
+   .settings-language .arrow {
+       -fx-background-color: #d8d8d8;
+   }
+
+   /* ============================
+      Dropdown
+      ============================ */
+
+   .settings-language .list-view {
+       -fx-background-color: #292929;
+       -fx-border-color: #383838;
+       -fx-border-width: 1px;
+   }
+
+   .settings-language .list-view .list-cell {
+       -fx-background-color: #292929;
+       -fx-text-fill: #d8d8d8;
+       -fx-padding: 8px 12px;
+   }
+
+   .settings-language .list-view .list-cell:hover {
+       -fx-background-color: #333333;
+   }
+
+   .settings-combo-box .list-view .list-cell:filled:selected {
+       -fx-background-color: #383838;
+       -fx-text-fill: #ffffff;
+   }
+
+   /* ============================
+      Recent Matches - ScrollPane
+      ============================ */
+
+   .recent-matches-scroll {
+       -fx-background-color: transparent;
+       -fx-background-insets: 0;
+       -fx-padding: 0;
+   }
+
+   .recent-matches-scroll > .viewport {
+       -fx-background-color: transparent;
+   }
+
+   .recent-matches-scroll > .corner {
+       -fx-background-color: transparent;
+   }
+
+   /* ============================
+      Scrollbar
+      ============================ */
+
+   .recent-matches-scroll .scroll-bar:vertical {
+       -fx-background-color: transparent;
+       -fx-padding: 0 2px 0 4px;
+   }
+
+   .recent-matches-scroll .scroll-bar:vertical .track {
+       -fx-background-color: transparent;
+   }
+
+   .recent-matches-scroll .scroll-bar:vertical .thumb {
+       -fx-background-color: #3a3a3a;
+       -fx-background-radius: 5px;
+   }
+
+   .recent-matches-scroll .scroll-bar:vertical .thumb:hover {
+       -fx-background-color: #4a4a4a;
+   }
+
+   .recent-matches-scroll .scroll-bar:vertical .increment-button,
+   .recent-matches-scroll .scroll-bar:vertical .decrement-button {
+       -fx-background-color: transparent;
+       -fx-padding: 0;
+   }
+
+   .recent-matches-scroll .scroll-bar:vertical .increment-arrow,
+   .recent-matches-scroll .scroll-bar:vertical .decrement-arrow {
+       -fx-padding: 0;
+   }

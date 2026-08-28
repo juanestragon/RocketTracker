@@ -1,11 +1,9 @@
 package gui;
 
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import lang.HomeTrans;
 import lang.StatisticsTrans;
 import matches.MatchResult;
@@ -199,12 +197,11 @@ public class HomeView {
 
     private VBox createRecentMatchesSection() {
 
-        VBox section = new VBox();
+        VBox section = new VBox(8);
         section.getStyleClass().add("home-section");
 
         Label title = new Label(homeTrans.getLastMatchesLabel());
         title.getStyleClass().add("section-title");
-
 
         ColumnConstraints column = new ColumnConstraints();
         column.setPercentWidth(100);
@@ -213,8 +210,17 @@ public class HomeView {
         recentMatchesBox.getColumnConstraints().add(column);
         recentMatchesBox.setMaxWidth(Double.MAX_VALUE);
 
-        VBox.setVgrow(recentMatchesBox, javafx.scene.layout.Priority.ALWAYS);
-        section.getChildren().addAll(title, recentMatchesBox);
+        ScrollPane scrollPane = new ScrollPane(recentMatchesBox);
+        scrollPane.getStyleClass().add("recent-matches-scroll");
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(false);
+        scrollPane.setMinHeight(0);
+        scrollPane.setMaxHeight(Double.MAX_VALUE);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+
+        section.getChildren().addAll(title, scrollPane);
 
         return section;
     }
@@ -333,6 +339,11 @@ public class HomeView {
         row.add(date, 2, 0);
 
         return row;
+    }
+
+    public void updateLang(HomeTrans homeTrans, StatisticsTrans statisticsTrans) {
+        this.homeTrans = homeTrans;
+        this.statisticsTrans =  statisticsTrans;
     }
 
     // ============================

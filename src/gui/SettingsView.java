@@ -3,6 +3,7 @@ package gui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -22,6 +23,8 @@ public class SettingsView {
     private final Button browseButton;
     private final Button saveButton;
 
+    private final ComboBox languageSelector;
+
     private final Label statusLabel;
 
     public SettingsView(SettingsTrans settingsTrans) {
@@ -36,6 +39,8 @@ public class SettingsView {
 
         browseButton = new Button(settingsTrans.getBrowseButton());
         saveButton = new Button(settingsTrans.getSaveButton());
+
+        languageSelector = new ComboBox<>();
 
         statusLabel = new Label();
 
@@ -74,15 +79,21 @@ public class SettingsView {
         browseButton.getStyleClass().add("settings-browse-button");
 
         // ============================
-        // Packet Send Rate
+        // Packet Send Rate And Language
         // ============================
 
         Label packetSendRateLabel = new Label(settingsTrans.getPacketSendRateLabel());
         packetSendRateLabel.getStyleClass().add("settings-label");
         packetSendRateField.setMaxWidth(Double.MAX_VALUE);
 
+
+        Label languageSelectorLabel = new Label(settingsTrans.getLanguageLabel());
+        languageSelectorLabel.getStyleClass().add("settings-label");
+        languageSelector.getItems().addAll("English", "Español");
+        languageSelector.getStyleClass().addAll("settings-language");
+
         HBox.setHgrow(storagePathField, javafx.scene.layout.Priority.ALWAYS);
-        HBox storageBox = new HBox(8, storagePathField, browseButton);
+        HBox storageBox = new HBox(8, storagePathField, browseButton, languageSelectorLabel, languageSelector);
         storageBox.setAlignment(Pos.CENTER_LEFT);
 
         // ============================
@@ -108,6 +119,10 @@ public class SettingsView {
                 statusLabel);
     }
 
+    public void updateLang(SettingsTrans settingsTrans) {
+        this.settingsTrans = settingsTrans;
+    }
+
     // ============================
     // Root
     // ============================
@@ -126,6 +141,10 @@ public class SettingsView {
 
     public Button getSaveButton() {
         return saveButton;
+    }
+
+    public ComboBox getLanguageSelector() {
+        return languageSelector;
     }
 
     // ============================
@@ -158,5 +177,9 @@ public class SettingsView {
 
     public void setPacketSendRateField(String packetSendRate) {
         packetSendRateField.setText(packetSendRate == null ? "" : packetSendRate);
+    }
+
+    public void setLanguageSelector(String selection) {
+        languageSelector.setValue(selection);
     }
 }

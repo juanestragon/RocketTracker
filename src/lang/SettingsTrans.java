@@ -13,8 +13,9 @@ public class SettingsTrans {
     private final String playerTextField;
     private final String storagePathLabel;
     private final String packetSendRateLabel;
+    private final String languageLabel;
 
-    public SettingsTrans(String emptyPlayerName, String emptyStoragePath, String invalidPacketSendRate, String saved, String browseButton, String saveButton, String title, String playerLabel, String playerTextField, String storagePathLabel, String packetSendRateLabel) {
+    public SettingsTrans(String emptyPlayerName, String emptyStoragePath, String invalidPacketSendRate, String saved, String browseButton, String saveButton, String title, String playerLabel, String playerTextField, String storagePathLabel, String packetSendRateLabel, String languageLabel) {
         this.emptyPlayerName = emptyPlayerName;
         this.emptyStoragePath = emptyStoragePath;
         this.invalidPacketSendRate = invalidPacketSendRate;
@@ -26,6 +27,7 @@ public class SettingsTrans {
         this.playerTextField = playerTextField;
         this.storagePathLabel = storagePathLabel;
         this.packetSendRateLabel = packetSendRateLabel;
+        this.languageLabel = languageLabel;
     }
 
     public String getEmptyPlayerName() {
@@ -70,5 +72,9 @@ public class SettingsTrans {
 
     public String getPacketSendRateLabel() {
         return packetSendRateLabel;
+    }
+
+    public String getLanguageLabel() {
+        return languageLabel;
     }
 }

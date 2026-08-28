@@ -7,8 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import lang.GuiTrans;
-import lang.SettingsTrans;
-import lang.StatisticsTrans;
 
 public class GuiView {
 
@@ -53,7 +51,7 @@ public class GuiView {
         build();
     }
 
-    public void updateGuiTrans(GuiTrans guiTrans) {
+    public void updateLang(GuiTrans guiTrans) {
         this.guiTrans = guiTrans;
     }
 

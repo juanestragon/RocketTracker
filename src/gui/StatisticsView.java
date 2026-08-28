@@ -143,6 +143,10 @@ public class StatisticsView {
         return filterBar;
     }
 
+    public void updateLang(StatisticsTrans statisticsTrans) {
+        this.statisticsTrans = statisticsTrans;
+    }
+
     private void configureFilterButton(Button button) {
         button.getStyleClass().add("statistics-filter-button");
     }

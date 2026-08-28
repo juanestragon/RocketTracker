@@ -20,7 +20,8 @@
       "playerLabel": "Nombre de jugador",
       "playerTextField": "Nombre de jugador de Rocket League",
       "storagePathLabel": "Ubicacion de almacenamiento",
-      "packetSendRateLabel": "Ratio de envio de paquetes"
+      "packetSendRateLabel": "Ratio de envio de paquetes",
+      "languageLabel": "Idioma"
     },
 
     "statistics": {
@@ -77,7 +78,8 @@
       "playerLabel": "Player name",
       "playerTextField": "Rocket League player name",
       "storagePathLabel": "Storage path",
-      "packetSendRateLabel": "Packet send rate"
+      "packetSendRateLabel": "Packet send rate",
+      "languageLabel": "Language"
     },
 
     "statistics": {
@@ -101,7 +103,7 @@
     },
 
     "home": {
-      "currentMatchLabel": "There is no game in progress",
+      "currentMatchLabel": "Match not found",
       "playerLabel": "Player",
       "dateLabel": "Date",
       "resultLabel": "Result",

@@ -322,7 +322,7 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
     private void updateHomeMatches() {
 
         homeView.setLastMatch(guiAPI.getLastMatch());
-        homeView.setRecentMatches(guiAPI.getLastMatches(5));
+        homeView.setRecentMatches(guiAPI.getLastMatches(10));
     }
 
     // ============================
@@ -346,6 +346,36 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
                 .setStoragePath(config.getStoragePath().toString());
         settingsView
                 .setPacketSendRateField(config.getPacketSendRate().toString());
+
+        settingsView.setLanguageSelector(decodeLanguage(config.getLang()));
+    }
+
+    private String decodeLanguage(String lang) {
+        return switch (lang) {
+            case "en-US" -> "English";
+            case "es-ES" -> "Español";
+
+            default -> "Undefined";
+        };
+    }
+
+    private String encodeLanguage(String lang) {
+        return switch (lang) {
+            case "Español" -> "es-ES";
+            default -> "en-US";
+        };
+    }
+
+    private void updateLanguage() throws IOException {
+
+        Object langObject = settingsView.getLanguageSelector().getValue();
+        if (langObject instanceof String lang)
+            translation = TranslationParser.parse(Files.readString(Path.of("res", "lang", "lang.json")), encodeLanguage(lang));
+
+        view.updateLang(translation.getGuiTrans());
+        homeView.updateLang(translation.getHomeTrans(), translation.getStatisticsTrans());
+        settingsView.updateLang(translation.getSettingsTrans());
+        statisticsView.updateLang(translation.getStatisticsTrans());
     }
 
     private void saveSettings() {
@@ -380,12 +410,17 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
                 return;
             }
 
-            Config currentConfig = configStorage.load();
-            Config config = new Config(playerName, currentConfig.getRocketLeagueUrl(), Path.of(storagePath), packetSendRate, "");
-            configStorage.save(config);
+            Object langObject = settingsView.getLanguageSelector().getValue();
+            if (langObject instanceof String lang) {
+                Config currentConfig = configStorage.load();
+                Config config = new Config(playerName, currentConfig.getRocketLeagueUrl(), Path.of(storagePath), packetSendRate, encodeLanguage(lang));
+                configStorage.save(config);
+            }
 
             settingsView
                     .setStatus(translation.getSettingsTrans().getSaved());
+
+            updateLanguage();
 
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             if(client.isRunning()) {
@@ -405,6 +440,8 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
         } catch (NumberFormatException e) {
             settingsView
                     .setStatus(translation.getSettingsTrans().getInvalidPacketSendRate());
+        } catch (IOException e) {
+            settingsView.setStatus(translation.getSettingsTrans().getInvalidPacketSendRate());
         }
     }
 
