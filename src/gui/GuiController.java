@@ -14,6 +14,8 @@ import javafx.application.Platform;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -33,7 +35,13 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
 
     public GuiController(GuiAPI guiAPI, GuiView view, RocketLeagueClient client, ConfigStorage configStorage) throws IOException {
         this.configStorage = configStorage;
-        this.translation = TranslationParser.parse(Files.readString(Path.of("res", "lang", "lang.json")), configStorage.load().getLang());
+
+        InputStream input = GuiApplication.class.getResourceAsStream("/lang/lang.json");
+        if (input == null) {
+            throw new IOException("No se encontró /lang/lang.json");
+        }
+
+        this.translation = TranslationParser.parse(new String(input.readAllBytes(), StandardCharsets.UTF_8), configStorage.load().getLang());
         this.guiAPI = guiAPI;
         this.view = view;
         this.client = client;

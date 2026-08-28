@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -34,7 +36,14 @@ public class GuiApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        GuiView view = new GuiView(TranslationParser.parse(Files.readString(Path.of("res", "lang", "lang.json")), configStorage.load().getLang()).getGuiTrans());
+        InputStream input = GuiApplication.class.getResourceAsStream("/lang/lang.json");
+        if (input == null) {
+            throw new IOException("No se encontró /lang/lang.json");
+        }
+
+        String json = new String(input.readAllBytes(), StandardCharsets.UTF_8);
+
+        GuiView view = new GuiView(TranslationParser.parse(json, configStorage.load().getLang()).getGuiTrans());
 
 
         GuiController controller = new GuiController(guiAPI, view, client, guiAPI.getConfigStorage());
