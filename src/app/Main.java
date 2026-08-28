@@ -22,7 +22,7 @@ public class Main {
         RocketLeagueClient client = new RocketLeagueClient(configStorage, eventListener);
         client.start();
 
-        GuiApplication.configure(guiAPI, eventListener, client);
+        GuiApplication.configure(guiAPI, eventListener, client, configStorage);
         Application.launch(GuiApplication.class, args);
 
         client.stop();

@@ -6,6 +6,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lang.HomeTrans;
+import lang.StatisticsTrans;
 import matches.MatchResult;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,9 @@ import java.util.List;
 public class HomeView {
 
     private final VBox root;
+
+    private HomeTrans homeTrans;
+    private StatisticsTrans statisticsTrans;
 
     // ============================
     // Partida actual
@@ -54,11 +59,13 @@ public class HomeView {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-    public HomeView() {
-
+    public HomeView(HomeTrans homeTrans, StatisticsTrans statisticsTrans) {
         root = new VBox();
 
-        currentMatchLabel = new Label("No hay ninguna partida en curso");
+        this.homeTrans = homeTrans;
+        this.statisticsTrans = statisticsTrans;
+
+        currentMatchLabel = new Label(homeTrans.getCurrentMatchLabel());
         lastMatchCard = new VBox();
         lastPlayerLabel = new Label("-");
         lastDateLabel = new Label("-");
@@ -104,7 +111,7 @@ public class HomeView {
 
         VBox section = new VBox();
         section.getStyleClass().add("home-section");
-        Label title = new Label("Última partida");
+        Label title = new Label(homeTrans.getLastMatchLabel());
         title.getStyleClass().add("section-title");
 
         lastMatchCard.getStyleClass().add("last-match-card");
@@ -115,9 +122,9 @@ public class HomeView {
         informationGrid.setHgap(40);
         informationGrid.setVgap(18);
 
-        informationGrid.add(createInfoBlock("Jugador", lastPlayerLabel), 0, 0);
-        informationGrid.add(createInfoBlock("Fecha", lastDateLabel), 1, 0);
-        informationGrid.add(createInfoBlock("Resultado", lastResultLabel), 0, 1);
+        informationGrid.add(createInfoBlock(homeTrans.getPlayerLabel(), lastPlayerLabel), 0, 0);
+        informationGrid.add(createInfoBlock(homeTrans.getDateLabel(), lastDateLabel), 1, 0);
+        informationGrid.add(createInfoBlock(homeTrans.getResultLabel(), lastResultLabel), 0, 1);
         informationGrid.add(createInfoBlock("Playlist", lastPlaylistLabel), 1, 1);
 
         GridPane.setColumnSpan(informationGrid, 2);
@@ -150,22 +157,22 @@ public class HomeView {
         basicMetrics.getStyleClass().add("metrics-row");
 
         basicMetrics.getChildren().addAll(
-                createMetric("Goles", goalsLabel),
-                createMetric("Salvadas", savesLabel),
-                createMetric("Tiros", shotsLabel),
-                createMetric("Asistencias", assistsLabel),
-                createMetric("Demos", demosLabel));
+                createMetric(statisticsTrans.getGoalsLabel(), goalsLabel),
+                createMetric(statisticsTrans.getSavesLabel(), savesLabel),
+                createMetric(statisticsTrans.getShotsLabel(), shotsLabel),
+                createMetric(statisticsTrans.getAssistsLabel(), assistsLabel),
+                createMetric(statisticsTrans.getDemosLabel(), demosLabel));
 
         HBox advancedMetrics = new HBox();
         advancedMetrics.getStyleClass().add("metrics-row");
 
         advancedMetrics.getChildren().addAll(
-                createMetric("Tiempo en aire", airPercentageLabel),
-                createMetric("Tiempo supersónico", supersonicPercentageLabel),
-                createMetric("Boost hasta supersónico", averageBoostToSupersonicLabel),
-                createMetric("Boost supersónico", boostUsedSupersonicLabel),
-                createMetric("Boost que alcanzó supersónicas", supersonicSessionPercentageLabel),
-                createMetric("Velocidad media", averageSpeedLabel));
+                createMetric(statisticsTrans.getAirTimeLabel(), airPercentageLabel),
+                createMetric(statisticsTrans.getSupersonicTimeLabel(), supersonicPercentageLabel),
+                createMetric(statisticsTrans.getBoostToSupersonicLabel(), averageBoostToSupersonicLabel),
+                createMetric(statisticsTrans.getBoostInSupersonicLabel(), boostUsedSupersonicLabel),
+                createMetric(statisticsTrans.getSupersonicSessionPercentageLabel(), supersonicSessionPercentageLabel),
+                createMetric(statisticsTrans.getSpeedLabel(), averageSpeedLabel));
 
         metrics.getChildren().addAll(basicMetrics, advancedMetrics);
 
@@ -195,7 +202,7 @@ public class HomeView {
         VBox section = new VBox();
         section.getStyleClass().add("home-section");
 
-        Label title = new Label("Últimas partidas");
+        Label title = new Label(homeTrans.getLastMatchesLabel());
         title.getStyleClass().add("section-title");
 
 
@@ -225,7 +232,7 @@ public class HomeView {
     }
 
     public void clearCurrentMatch() {
-        currentMatchLabel.setText("No hay ninguna partida en curso");
+        currentMatchLabel.setText(homeTrans.getCurrentMatchLabel());
     }
 
     public void setLastMatch(MatchResult match) {
@@ -237,7 +244,7 @@ public class HomeView {
 
         lastPlayerLabel.setText(match.getPlayerName());
         lastDateLabel.setText(formatDate(match.getDate()));
-        lastResultLabel.setText(match.isWon() ? "Victoria" : "Derrota");
+        lastResultLabel.setText(match.isWon() ? homeTrans.getResultLabelWin() : homeTrans.getResultLabelLoose());
         lastResultLabel.getStyleClass().removeAll("match-win", "match-loss");
         lastResultLabel.getStyleClass().add(match.isWon() ? "match-win" : "match-loss");
         lastPlaylistLabel.setText(getPlaylistName(match.getPlaylistId()));
@@ -311,7 +318,7 @@ public class HomeView {
         playlist.setMaxWidth(Double.MAX_VALUE);
         playlist.setAlignment(Pos.CENTER_LEFT);
 
-        Label result = new Label(match.isWon() ? "Victoria" : "Derrota");
+        Label result = new Label(match.isWon() ? homeTrans.getResultLabelWin() : homeTrans.getResultLabelLoose());
         result.getStyleClass().add(match.isWon() ? "match-win" : "match-loss");
         result.setMaxWidth(Double.MAX_VALUE);
         result.setAlignment(Pos.CENTER);
@@ -391,7 +398,7 @@ public class HomeView {
             case 26 -> "External Match";
             case 40 -> "Coops Vs AI";
 
-            default -> "Desconocida (" + playListId + ")";
+            default -> "Unknown (" + playListId + ")";
         };
     }
 

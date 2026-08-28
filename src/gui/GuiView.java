@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import lang.GuiTrans;
+import lang.SettingsTrans;
+import lang.StatisticsTrans;
 
 public class GuiView {
 
@@ -24,14 +27,12 @@ public class GuiView {
     private final Label connectionStatus;
     private final Button connectionButton;
 
-    private final SettingsView settingsView;
-
     private View currentView;
+    private GuiTrans guiTrans;
 
+    public GuiView(GuiTrans guiTrans) {
 
-    public GuiView() {
-
-        settingsView = new SettingsView();
+        this.guiTrans = guiTrans;
 
         root = new BorderPane();
         currentView = View.HOME;
@@ -40,16 +41,20 @@ public class GuiView {
 
         applicationName = new Label("Rocket Tracker");
 
-        homeButton = createNavigationButton("Home");
-        statisticsButton = createNavigationButton("Statistics");
-        settingsButton = createNavigationButton("Settings");
-        connectionStatus = new Label("● Desconectado");
+        homeButton = createNavigationButton(guiTrans.getHomeButton());
+        statisticsButton = createNavigationButton(guiTrans.getStatisticsButton());
+        settingsButton = createNavigationButton(guiTrans.getSettingsButton());
+        connectionStatus = new Label(guiTrans.getConnectionStatusDisconnected());
         connectionButton = new Button("⏻");
         connectionButton.getStyleClass().add("connection-button");
         connectionBox = new HBox(8, connectionButton, connectionStatus);
         connectionBox.setAlignment(Pos.CENTER_RIGHT);
 
         build();
+    }
+
+    public void updateGuiTrans(GuiTrans guiTrans) {
+        this.guiTrans = guiTrans;
     }
 
     private void build() {
@@ -117,7 +122,7 @@ public class GuiView {
 
     public void setConnectionConnected() {
 
-        connectionStatus.setText("● Conectado");
+        connectionStatus.setText(guiTrans.getConnectionStatusConnected());
         connectionStatus.getStyleClass().removeAll( "connecting", "disconnected");
         connectionStatus.getStyleClass().add("connected");
 
@@ -127,7 +132,7 @@ public class GuiView {
 
     public void setConnectionConnecting() {
 
-        connectionStatus.setText("● Conectando");
+        connectionStatus.setText(guiTrans.getConnectionStatusConnecting());
         connectionStatus.getStyleClass().removeAll("connected", "disconnected");
         connectionStatus.getStyleClass().add("connecting");
 
@@ -137,7 +142,7 @@ public class GuiView {
 
     public void setConnectionDisconnected() {
 
-        connectionStatus.setText("● Desconectado");
+        connectionStatus.setText(guiTrans.getConnectionStatusDisconnected());
         connectionStatus.getStyleClass().removeAll("connected", "connecting");
         connectionStatus.getStyleClass().add("disconnected");
 
@@ -167,10 +172,6 @@ public class GuiView {
 
     public Button getConnectionButton() {
         return connectionButton;
-    }
-
-    public SettingsView getSettingsView() {
-        return settingsView;
     }
 
     public void setContent(javafx.scene.Node node) {

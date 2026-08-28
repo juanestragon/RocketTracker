@@ -3,6 +3,8 @@ package gui;
 import config.Config;
 import config.ConfigStorage;
 import events.GuiEventListener;
+import lang.Translation;
+import lang.TranslationParser;
 import network.ConnectionState;
 import network.ConnectionStateListener;
 import network.RocketLeagueClient;
@@ -11,6 +13,8 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class GuiController implements GuiEventListener, ConnectionStateListener {
@@ -22,17 +26,21 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
     private final HomeView homeView;
     private final StatisticsView statisticsView;
     private final ConfigStorage configStorage;
+    private final SettingsView settingsView;
 
+    private Translation translation;
     private boolean max = true;
 
-    public GuiController(GuiAPI guiAPI, GuiView view, RocketLeagueClient client, ConfigStorage configStorage) {
+    public GuiController(GuiAPI guiAPI, GuiView view, RocketLeagueClient client, ConfigStorage configStorage) throws IOException {
         this.configStorage = configStorage;
+        this.translation = TranslationParser.parse(Files.readString(Path.of("res", "lang", "lang.json")), configStorage.load().getLang());
         this.guiAPI = guiAPI;
         this.view = view;
         this.client = client;
 
-        this.homeView = new HomeView();
-        this.statisticsView = new StatisticsView();
+        this.homeView = new HomeView(translation.getHomeTrans(), translation.getStatisticsTrans());
+        this.statisticsView = new StatisticsView(translation.getStatisticsTrans());
+        this.settingsView = new SettingsView(translation.getSettingsTrans());
 
         configureNavigation();
         configureStatisticsFilters();
@@ -314,7 +322,7 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
     private void updateHomeMatches() {
 
         homeView.setLastMatch(guiAPI.getLastMatch());
-        homeView.setRecentMatches(guiAPI.getLastMatches(10));
+        homeView.setRecentMatches(guiAPI.getLastMatches(5));
     }
 
     // ============================
@@ -323,7 +331,8 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
 
     private void showSettings() {
 
-        view.setContent(view.getSettingsView().getRoot());
+        view.setContent(settingsView
+                .getRoot());
         view.selectNavigationButton(view.getSettingsButton());
         loadSettings();
     }
@@ -331,65 +340,80 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
     private void loadSettings() {
 
         Config config = configStorage.load();
-        view.getSettingsView().setPlayerName(config.getPlayerName());
-        view.getSettingsView().setStoragePath(config.getStoragePath().toString());
-        view.getSettingsView().setPacketSendRateField(config.getPacketSendRate().toString());
+        settingsView
+                .setPlayerName(config.getPlayerName());
+        settingsView
+                .setStoragePath(config.getStoragePath().toString());
+        settingsView
+                .setPacketSendRateField(config.getPacketSendRate().toString());
     }
 
     private void saveSettings() {
 
-        String playerName = view.getSettingsView().getPlayerName();
+        String playerName = settingsView
+                .getPlayerName();
 
-        String storagePath = view.getSettingsView().getStoragePath();
+        String storagePath = settingsView
+                .getStoragePath();
         int packetSendRate;
         try {
-            packetSendRate = Integer.parseInt(view.getSettingsView().getPacketSendRate());
+            packetSendRate = Integer.parseInt(settingsView
+                    .getPacketSendRate());
 
             if (playerName.isBlank()) {
-                view.getSettingsView().setStatus("El nombre del jugador no puede estar vacío.");
+                settingsView
+                        .setStatus(translation.getSettingsTrans().getEmptyPlayerName());
                 return;
             }
 
             if (storagePath.isBlank()) {
-                view.getSettingsView().setStatus("La ruta de almacenamiento no puede estar vacía.");
+                settingsView
+                        .setStatus(translation.getSettingsTrans().getEmptyStoragePath());
 
                 return;
             }
 
             if (packetSendRate <= 0) {
-                view.getSettingsView().setStatus("El ratio de envio de paquetes debe ser mayor que 0");
+                settingsView
+                        .setStatus(translation.getSettingsTrans().getInvalidPacketSendRate());
 
                 return;
             }
 
             Config currentConfig = configStorage.load();
-            Config config = new Config(playerName, currentConfig.getRocketLeagueUrl(), Path.of(storagePath), packetSendRate);
+            Config config = new Config(playerName, currentConfig.getRocketLeagueUrl(), Path.of(storagePath), packetSendRate, "");
             configStorage.save(config);
 
-            view.getSettingsView().setStatus("Configuración guardada.");
+            settingsView
+                    .setStatus(translation.getSettingsTrans().getSaved());
 
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             if(client.isRunning()) {
                 client.stop();
                 pause.setOnFinished(event -> {
-                    view.getSettingsView().setStatus("");
+                    settingsView
+                            .setStatus("");
                     client.start();
                 });
             } else{
-                pause.setOnFinished(event -> view.getSettingsView().setStatus(""));
+                pause.setOnFinished(event -> settingsView
+                        .setStatus(""));
             }
             pause.play();
 
 
         } catch (NumberFormatException e) {
-            view.getSettingsView().setStatus("El ratio de paquetes debe ser un entero");
+            settingsView
+                    .setStatus(translation.getSettingsTrans().getInvalidPacketSendRate());
         }
     }
 
     private void configureSettings() {
 
-        view.getSettingsView().getBrowseButton().setOnAction(event -> browseStoragePath());
-        view.getSettingsView().getSaveButton().setOnAction(event -> saveSettings());
+        settingsView
+                .getBrowseButton().setOnAction(event -> browseStoragePath());
+        settingsView
+                .getSaveButton().setOnAction(event -> saveSettings());
     }
 
     private void browseStoragePath() {
@@ -402,7 +426,8 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
         java.io.File selected = chooser.showDialog(stage);
 
         if (selected != null) {
-            view.getSettingsView().setStoragePath(selected.toPath().toString());
+            settingsView
+                    .setStoragePath(selected.toPath().toString());
         }
 
         if (wasMaximized) {

@@ -8,12 +8,14 @@ public class Config {
     private String rocketLeagueUrl;
     private Path storagePath;
     private int packetSendRate;
+    private String lang;
 
-    public Config(String playerName, String rocketLeagueUrl, Path storagePath, int packetSendRate) {
+    public Config(String playerName, String rocketLeagueUrl, Path storagePath, int packetSendRate, String lang) {
         this.playerName = playerName;
         this.rocketLeagueUrl = rocketLeagueUrl;
         this.storagePath = storagePath;
         this.packetSendRate = packetSendRate;
+        this.lang = lang;
     }
 
     public String getPlayerName() {
@@ -27,5 +29,8 @@ public class Config {
     }
     public Integer getPacketSendRate(){
         return packetSendRate;
+    }
+    public String getLang() {
+        return lang;
     }
 }

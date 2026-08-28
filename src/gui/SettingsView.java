@@ -7,10 +7,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lang.SettingsTrans;
 
 public class SettingsView {
 
     private final VBox root;
+
+    private SettingsTrans settingsTrans;
 
     private final TextField playerNameField;
     private final TextField storagePathField;
@@ -21,16 +24,18 @@ public class SettingsView {
 
     private final Label statusLabel;
 
-    public SettingsView() {
+    public SettingsView(SettingsTrans settingsTrans) {
 
         root = new VBox(16);
+
+        this.settingsTrans = settingsTrans;
 
         playerNameField = new TextField();
         storagePathField = new TextField();
         packetSendRateField = new TextField();
 
-        browseButton = new Button("Browse...");
-        saveButton = new Button("Save");
+        browseButton = new Button(settingsTrans.getBrowseButton());
+        saveButton = new Button(settingsTrans.getSaveButton());
 
         statusLabel = new Label();
 
@@ -47,23 +52,23 @@ public class SettingsView {
         // Title
         // ============================
 
-        Label title = new Label("Settings");
+        Label title = new Label(settingsTrans.getTitle());
         title.getStyleClass().add("settings-title");
 
         // ============================
         // Player name
         // ============================
 
-        Label playerNameLabel = new Label("Player name");
+        Label playerNameLabel = new Label(settingsTrans.getPlayerLabel());
         playerNameLabel.getStyleClass().add("settings-label");
-        playerNameField.setPromptText("Rocket League player name");
+        playerNameField.setPromptText(settingsTrans.getPlayerTextField());
         playerNameField.setMaxWidth(Double.MAX_VALUE);
 
         // ============================
         // Storage path
         // ============================
 
-        Label storagePathLabel = new Label("Storage path");
+        Label storagePathLabel = new Label(settingsTrans.getStoragePathLabel());
         storagePathLabel.getStyleClass().add("settings-label");
         storagePathField.setMaxWidth(Double.MAX_VALUE);
         browseButton.getStyleClass().add("settings-browse-button");
@@ -72,7 +77,7 @@ public class SettingsView {
         // Packet Send Rate
         // ============================
 
-        Label packetSendRateLabel = new Label("Packet send rate");
+        Label packetSendRateLabel = new Label(settingsTrans.getPacketSendRateLabel());
         packetSendRateLabel.getStyleClass().add("settings-label");
         packetSendRateField.setMaxWidth(Double.MAX_VALUE);
 

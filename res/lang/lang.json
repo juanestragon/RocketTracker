@@ -1,0 +1,115 @@
+{
+  "es-ES": {
+    "gui": {
+      "homeButton": "Casa",
+      "statisticsButton": "Estadisticas",
+      "settingsButton": "Ajustes",
+      "connectionStatus-Connected": "● Conectado",
+      "connectionStatus-Connecting": "● Conectando",
+      "connectionStatus-Disconnected": "● Desconectado"
+    },
+
+    "settings": {
+      "emptyPlayerName": "El nombre de jugador no puede estar vacio",
+      "emptyStoragePath": "La ubicacion de almacenamiento no puede estar vacia",
+      "invalidPacketSendRate": "El ratio de envio de paquetes debe ser un entero mayor que 0",
+      "saved": "Configuracion guardada",
+      "browseButton": "Examinar...",
+      "saveButton": "Guardar",
+      "title": "Ajustes",
+      "playerLabel": "Nombre de jugador",
+      "playerTextField": "Nombre de jugador de Rocket League",
+      "storagePathLabel": "Ubicacion de almacenamiento",
+      "packetSendRateLabel": "Ratio de envio de paquetes"
+    },
+
+    "statistics": {
+      "title": "Estadísticas",
+      "allButton": "Todas",
+      "todayButton": "Hoy",
+      "matchLimitLabel": "Partidas contadas:",
+      "matchLimitUnavailable": "No disponible",
+      "winRateLabel": "Victorias",
+      "goalsLabel": "Goles",
+      "savesLabel": "Salvadas",
+      "assistsLabel": "Asistencias",
+      "shotsLabel": "Tiros",
+      "demosLabel": "Demos",
+      "airTimeLabel": "Tiempo en el aire",
+      "supersonicTimeLabel": "Tiempo en supersonica",
+      "speedLabel": "Velociad media",
+      "boostInSupersonicLabel": "Turbo en supersonica",
+      "boostToSupersonicLabel": "Turbo medio hasta supersonica",
+      "supersonicSessionPercentageLabel": "Turbo -> Supersonica"
+    },
+
+    "home": {
+      "currentMatchLabel": "No se encontro la partida",
+      "playerLabel": "Jugador",
+      "dateLabel": "Fecha",
+      "resultLabel": "Resultado",
+      "resultLabelWin": "Victoria",
+      "resultLabelLoose": "Derrota",
+      "lastMatchesLabel": "Ultimas partidas",
+      "lastMatchLabel": "Ultima partida"
+
+    }
+  },
+
+  "en-US": {
+    "gui": {
+      "homeButton": "Home",
+      "statisticsButton": "Statistics",
+      "settingsButton": "Settings",
+      "connectionStatus-Connected": "● Connected",
+      "connectionStatus-Connecting": "● Connecting",
+      "connectionStatus-Disconnected": "● Disconnected"
+    },
+
+    "settings": {
+      "emptyPlayerName": "Player name cannot be empty",
+      "emptyStoragePath": "Storage path cannot be empty",
+      "invalidPacketSendRate": "Packet send rate must be an integer above 0",
+      "saved": "Configuration saved",
+      "browseButton": "Browse...",
+      "saveButton": "Save",
+      "title": "Settings",
+      "playerLabel": "Player name",
+      "playerTextField": "Rocket League player name",
+      "storagePathLabel": "Storage path",
+      "packetSendRateLabel": "Packet send rate"
+    },
+
+    "statistics": {
+      "title": "Statistics",
+      "allButton": "All",
+      "todayButton": "Today",
+      "matchLimitLabel": "Games counted:",
+      "matchLimitUnavailable": "Not available",
+      "winRateLabel": "Wins",
+      "goalsLabel": "Goals",
+      "savesLabel": "Saves",
+      "assistsLabel": "Assists",
+      "shotsLabel": "Shots",
+      "demosLabel": "Demos",
+      "airTimeLabel": "Air time",
+      "supersonicTimeLabel": "Supersonic time",
+      "speedLabel": "Average speed",
+      "boostInSupersonicLabel": "Boost used in supersonic",
+      "boostToSupersonicLabel": "Average boost to reach supersonic",
+      "supersonicSessionPercentageLabel": "Boost -> supersonic"
+    },
+
+    "home": {
+      "currentMatchLabel": "There is no game in progress",
+      "playerLabel": "Player",
+      "dateLabel": "Date",
+      "resultLabel": "Result",
+      "resultLabelWin": "Win",
+      "resultLabelLoose": "Loose",
+      "lastMatchesLabel": "Last games",
+      "lastMatchLabel": "Last game"
+    }
+
+  }
+}

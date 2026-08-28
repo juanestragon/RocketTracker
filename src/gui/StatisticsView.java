@@ -7,10 +7,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lang.StatisticsTrans;
 
 public class StatisticsView {
 
     private final VBox root;
+
+    private StatisticsTrans statisticsTrans;
 
     // ============================
     // Filtros
@@ -45,20 +48,22 @@ public class StatisticsView {
     private final Label averageSupersonicSessionPercentageLabel;
     private final Label averageBoostToSupersonicLabel;
 
-    public StatisticsView() {
+    public StatisticsView(StatisticsTrans statisticsTrans) {
 
         root = new VBox();
 
-        allButton = new Button("Todas");
+        this.statisticsTrans = statisticsTrans;
+
+        allButton = new Button(statisticsTrans.getAllButton());
         oneVsOneButton = new Button("1v1");
         twoVsTwoButton = new Button("2v2");
         threeVsThreeButton = new Button("3v3");
-        todayMatchesButton = new Button("Hoy");
+        todayMatchesButton = new Button(statisticsTrans.getTodayButton());
 
-        matchLimitLabel = new Label("Últimas partidas:");
+        matchLimitLabel = new Label(statisticsTrans.getMatchLimitLabel());
 
         matchLimitField = new TextField();
-        matchLimitField.setPromptText("No disponible");
+        matchLimitField.setPromptText(statisticsTrans.getMatchLimitUnavailable());
 
         winPercentageLabel = new Label("-");
 
@@ -87,7 +92,7 @@ public class StatisticsView {
 
         root.getStyleClass().add("statistics-view");
 
-        Label title = new Label("Statistics");
+        Label title = new Label(statisticsTrans.getTitle());
         title.getStyleClass().add("statistics-title");
 
         HBox filterBar = createFilterBar();
@@ -171,7 +176,7 @@ public class StatisticsView {
 
         winPercentageLabel.getStyleClass().add("statistics-win-rate-value");
 
-        Label title = new Label("Victorias");
+        Label title = new Label(statisticsTrans.getWinRateLabel());
         title.getStyleClass().add("statistics-win-rate-title");
 
         VBox box = new VBox();
@@ -193,10 +198,10 @@ public class StatisticsView {
         grid.setHgap(12);
         grid.setVgap(12);
 
-        grid.add(createStatistic("Goles", averageGoalsLabel), 0, 0);
-        grid.add(createStatistic("Tiros", averageShotsLabel), 1, 0);
-        grid.add(createStatistic("Salvadas", averageSavesLabel), 2, 0);
-        grid.add(createStatistic("Asistencias", averageAssistsLabel), 3, 0);
+        grid.add(createStatistic(statisticsTrans.getGoalsLabel(), averageGoalsLabel), 0, 0);
+        grid.add(createStatistic(statisticsTrans.getShotsLabel(), averageShotsLabel), 1, 0);
+        grid.add(createStatistic(statisticsTrans.getSavesLabel(), averageSavesLabel), 2, 0);
+        grid.add(createStatistic(statisticsTrans.getAssistsLabel(), averageAssistsLabel), 3, 0);
 
         return grid;
     }
@@ -212,10 +217,10 @@ public class StatisticsView {
         grid.setHgap(12);
         grid.setVgap(12);
 
-        grid.add(createStatistic("Demos", averageDemosLabel), 0, 0);
-        grid.add(createStatistic("Tiempo en aire", averageAirPercentageLabel), 1, 0);
-        grid.add(createStatistic("Tiempo supersónico", averageSupersonicPercentageLabel), 2, 0);
-        grid.add(createStatistic("Velocidad media", averageSpeedLabel), 3, 0);
+        grid.add(createStatistic(statisticsTrans.getDemosLabel(), averageDemosLabel), 0, 0);
+        grid.add(createStatistic(statisticsTrans.getAirTimeLabel(), averageAirPercentageLabel), 1, 0);
+        grid.add(createStatistic(statisticsTrans.getSupersonicTimeLabel(), averageSupersonicPercentageLabel), 2, 0);
+        grid.add(createStatistic(statisticsTrans.getSpeedLabel(), averageSpeedLabel), 3, 0);
 
         return grid;
     }
@@ -229,9 +234,9 @@ public class StatisticsView {
         VBox box = new VBox();
         box.getStyleClass().add("statistics-boost");
         box.getChildren().addAll(
-                createStatisticRow("Boost supersónico", averageBoostUsedSupersonicLabel),
-                createStatisticRow("Sesiones → supersónico", averageSupersonicSessionPercentageLabel),
-                createStatisticRow("Boost → supersónico", averageBoostToSupersonicLabel));
+                createStatisticRow(statisticsTrans.getBoostToSupersonicLabel(), averageBoostToSupersonicLabel),
+                createStatisticRow(statisticsTrans.getBoostInSupersonicLabel(), averageBoostUsedSupersonicLabel),
+                createStatisticRow(statisticsTrans.getSupersonicSessionPercentageLabel(), averageSupersonicSessionPercentageLabel));
 
         return box;
     }
@@ -341,7 +346,6 @@ public class StatisticsView {
     }
 
     public void setAverageSupersonicSessionPercentage(double value) {
-
         averageSupersonicSessionPercentageLabel.setText(formatPercentage(value));
     }
 
