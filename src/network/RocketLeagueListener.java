@@ -43,8 +43,11 @@ public class RocketLeagueListener implements WebSocket.Listener {
 
     private int playerTeam = -1;
     private int playerTime = 0;
+    private int countdownTime = 0;
     private boolean playerFound = false;
     private boolean matchActive = false;
+
+    private boolean matchValid = false;
 
     public RocketLeagueListener(String playerName, MatchStorage storage, int packetSendRate,
             MatchEventListener listener, Runnable connectionClosedCallback) {
@@ -97,6 +100,8 @@ public class RocketLeagueListener implements WebSocket.Listener {
             case "UpdateState" -> {if (!inReplay) handleGameUpdate(message);}
             case "MatchEnded" -> handleMatchEnded(message);
             case "MatchDestroyed" -> handleMatchDestroyed();
+            case "MatchInitialized" -> matchValid = true;
+            case "CoundtdownBegin" -> countdownTime = 3 * packetSendRate;
 
             default -> {}
         }
@@ -125,6 +130,10 @@ public class RocketLeagueListener implements WebSocket.Listener {
     private void handleGameUpdate(StatsMessage message) {
 
         if (!matchActive) {
+            return;
+        }
+        if (countdownTime > 0) {
+            countdownTime--;
             return;
         }
 
@@ -194,10 +203,11 @@ public class RocketLeagueListener implements WebSocket.Listener {
         }
 
         System.out.println("Partida finalizada");
-        if (!playerFound || analyzer == null || game == null || !isCompetitive || game.getTimeSeconds() >= 300 || game.getTimeSeconds() < 0) {
+        if (!playerFound || analyzer == null || game == null || !isCompetitive || !matchValid) {
             resetMatch();
             return;
         }
+
 
         boolean won = GameParser.parseTeamNum(message.getData()) == playerTeam;
 
@@ -252,10 +262,12 @@ public class RocketLeagueListener implements WebSocket.Listener {
 
         playerTeam = -1;
         playerTime = 0;
+        countdownTime = 0;
 
         playerFound = false;
         matchActive = false;
         isCompetitive = false;
+        matchValid = false;
     }
 
     @Override
