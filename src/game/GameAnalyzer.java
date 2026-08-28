@@ -138,11 +138,8 @@ public class GameAnalyzer {
             if (!wasSupersonic) {
 
                 successfulSupersonicSessions++;
-
-                if (wasGroundBoosting && currentBoostSession > 0.0) {
-                    boostToSupersonicTotal += currentBoostSession;
-                    finishBoostSession();
-                }
+                boostToSupersonicTotal += currentBoostSession;
+                finishBoostSession();
             }
         }
 
