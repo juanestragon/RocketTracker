@@ -37,8 +37,8 @@ public class SettingsView {
         storagePathField = new TextField();
         packetSendRateField = new TextField();
 
-        browseButton = new Button(settingsTrans.getBrowseButton());
-        saveButton = new Button(settingsTrans.getSaveButton());
+        browseButton = new Button();
+        saveButton = new Button();
 
         languageSelector = new ComboBox<>();
 
@@ -52,6 +52,7 @@ public class SettingsView {
         root.getStyleClass().add("settings-view");
         root.setPadding(new Insets(30));
         root.setAlignment(Pos.TOP_LEFT);
+        root.getChildren().clear();
 
         // ============================
         // Title
@@ -77,6 +78,7 @@ public class SettingsView {
         storagePathLabel.getStyleClass().add("settings-label");
         storagePathField.setMaxWidth(Double.MAX_VALUE);
         browseButton.getStyleClass().add("settings-browse-button");
+        browseButton.setText(settingsTrans.getBrowseButton());
 
         // ============================
         // Packet Send Rate And Language
@@ -89,6 +91,7 @@ public class SettingsView {
 
         Label languageSelectorLabel = new Label(settingsTrans.getLanguageLabel());
         languageSelectorLabel.getStyleClass().add("settings-label");
+        languageSelector.getItems().clear();
         languageSelector.getItems().addAll("English", "Español");
         languageSelector.getStyleClass().addAll("settings-language");
 
@@ -100,6 +103,7 @@ public class SettingsView {
         // Save
         // ============================
 
+        saveButton.setText(settingsTrans.getSaveButton());
         saveButton.getStyleClass().add("settings-save-button");
         statusLabel.getStyleClass().add("settings-status");
 
@@ -121,6 +125,7 @@ public class SettingsView {
 
     public void updateLang(SettingsTrans settingsTrans) {
         this.settingsTrans = settingsTrans;
+        build();
     }
 
     // ============================

@@ -123,6 +123,8 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
 
     private void configureStatisticsFilters() {
 
+        statisticsView.selectFilter(statisticsView.getAllButton());
+
         statisticsView.getAllButton().setOnAction(event -> {
             statisticsView.selectFilter(statisticsView.getAllButton());
             max = true;
@@ -383,6 +385,7 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
         view.updateLang(translation.getGuiTrans());
         homeView.updateLang(translation.getHomeTrans(), translation.getStatisticsTrans());
         settingsView.updateLang(translation.getSettingsTrans());
+        loadSettings();
         statisticsView.updateLang(translation.getStatisticsTrans());
     }
 
@@ -425,11 +428,9 @@ public class GuiController implements GuiEventListener, ConnectionStateListener 
                 configStorage.save(config);
             }
 
-            settingsView
-                    .setStatus(translation.getSettingsTrans().getSaved());
-
             updateLanguage();
 
+            settingsView.setStatus(translation.getSettingsTrans().getSaved());
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             if(client.isRunning()) {
                 client.stop();

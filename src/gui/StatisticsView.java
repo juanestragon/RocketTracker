@@ -91,6 +91,7 @@ public class StatisticsView {
     private void build() {
 
         root.getStyleClass().add("statistics-view");
+        root.getChildren().clear();
 
         Label title = new Label(statisticsTrans.getTitle());
         title.getStyleClass().add("statistics-title");
@@ -117,6 +118,7 @@ public class StatisticsView {
     private HBox createFilterBar() {
 
         HBox filterBar = new HBox();
+        filterBar.getChildren().clear();
         filterBar.getStyleClass().add("statistics-filter-bar");
 
         configureFilterButton(allButton);
@@ -138,13 +140,17 @@ public class StatisticsView {
                 matchLimitField,
                 todayMatchesButton);
 
-        selectFilter(allButton);
-
         return filterBar;
     }
 
     public void updateLang(StatisticsTrans statisticsTrans) {
         this.statisticsTrans = statisticsTrans;
+
+        allButton.setText(statisticsTrans.getAllButton());
+        todayMatchesButton.setText(statisticsTrans.getTodayButton());
+        matchLimitLabel.setText(statisticsTrans.getMatchLimitLabel());
+
+        build();
     }
 
     private void configureFilterButton(Button button) {
@@ -169,6 +175,7 @@ public class StatisticsView {
             todayMatchesButton.getStyleClass().add("selected");
             matchLimitField.setText("");
             matchLimitField.setDisable(true);
+            matchLimitField.setText(statisticsTrans.getMatchLimitUnavailable());
         }
     }
 

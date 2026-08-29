@@ -53,6 +53,12 @@ public class GuiView {
 
     public void updateLang(GuiTrans guiTrans) {
         this.guiTrans = guiTrans;
+
+        homeButton.setText(guiTrans.getHomeButton());
+        statisticsButton.setText(guiTrans.getStatisticsButton());
+        settingsButton.setText(guiTrans.getSettingsButton());
+        connectionStatus.setText(guiTrans.getSettingsButton());
+
     }
 
     private void build() {

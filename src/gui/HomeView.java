@@ -95,9 +95,9 @@ public class HomeView {
         currentMatchLabel.getStyleClass().add("current-match");
 
         VBox lastMatchSection = createLastMatchSection();
-
         VBox recentMatchesSection = createRecentMatchesSection();
 
+        root.getChildren().clear();
         root.getChildren().addAll(currentMatchLabel, lastMatchSection, recentMatchesSection);
     }
 
@@ -120,6 +120,8 @@ public class HomeView {
         informationGrid.setHgap(40);
         informationGrid.setVgap(18);
 
+
+        informationGrid.getChildren().clear();
         informationGrid.add(createInfoBlock(homeTrans.getPlayerLabel(), lastPlayerLabel), 0, 0);
         informationGrid.add(createInfoBlock(homeTrans.getDateLabel(), lastDateLabel), 1, 0);
         informationGrid.add(createInfoBlock(homeTrans.getResultLabel(), lastResultLabel), 0, 1);
@@ -128,6 +130,7 @@ public class HomeView {
         GridPane.setColumnSpan(informationGrid, 2);
 
         VBox metrics = createMetrics();
+        lastMatchCard.getChildren().clear();
         lastMatchCard.getChildren().addAll(informationGrid, metrics);
         section.getChildren().addAll(title, lastMatchCard);
 
@@ -150,9 +153,18 @@ public class HomeView {
 
         VBox metrics = new VBox();
         metrics.getStyleClass().add("metrics-container");
+        metrics.getChildren().clear();
 
         HBox basicMetrics = new HBox();
         basicMetrics.getStyleClass().add("metrics-row");
+        basicMetrics.getChildren().clear();
+
+        basicMetrics.getChildren().removeAll(
+                createMetric(statisticsTrans.getGoalsLabel(), goalsLabel),
+                createMetric(statisticsTrans.getSavesLabel(), savesLabel),
+                createMetric(statisticsTrans.getShotsLabel(), shotsLabel),
+                createMetric(statisticsTrans.getAssistsLabel(), assistsLabel),
+                createMetric(statisticsTrans.getDemosLabel(), demosLabel));
 
         basicMetrics.getChildren().addAll(
                 createMetric(statisticsTrans.getGoalsLabel(), goalsLabel),
@@ -163,6 +175,7 @@ public class HomeView {
 
         HBox advancedMetrics = new HBox();
         advancedMetrics.getStyleClass().add("metrics-row");
+        advancedMetrics.getChildren().clear();
 
         advancedMetrics.getChildren().addAll(
                 createMetric(statisticsTrans.getAirTimeLabel(), airPercentageLabel),
@@ -209,6 +222,7 @@ public class HomeView {
         recentMatchesBox.getStyleClass().add("recent-matches");
         recentMatchesBox.getColumnConstraints().add(column);
         recentMatchesBox.setMaxWidth(Double.MAX_VALUE);
+        recentMatchesBox.getChildren().clear();
 
         ScrollPane scrollPane = new ScrollPane(recentMatchesBox);
         scrollPane.getStyleClass().add("recent-matches-scroll");
@@ -220,6 +234,7 @@ public class HomeView {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
 
+        section.getChildren().clear();
         section.getChildren().addAll(title, scrollPane);
 
         return section;
@@ -344,6 +359,9 @@ public class HomeView {
     public void updateLang(HomeTrans homeTrans, StatisticsTrans statisticsTrans) {
         this.homeTrans = homeTrans;
         this.statisticsTrans =  statisticsTrans;
+
+        currentMatchLabel.setText(homeTrans.getCurrentMatchLabel());
+        build();
     }
 
     // ============================
