@@ -85,12 +85,7 @@ jpackage ^
     --add-modules javafx.controls,javafx.fxml,javafx.graphics,java.net.http ^
     --dest "%RELEASE%"
 
-cd /d "%RELEASE%\RocketTracker"
-
-if not exist "data\matches" mkdir "data\matches"
-
-:: En Windows creamos un lanzador batch en la raíz para evitar errores de permisos de symlinks
-powershell -NoProfile -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%~dp0RocketTracker.lnk'); $s.TargetPath = '%~dp0bin\RocketTracker.exe'; $s.WorkingDirectory = '%~dp0'; $s.Save()"
+cd /d "%RELEASE%\RocketTracker"g
 
 :: ============================
 :: ZIP
