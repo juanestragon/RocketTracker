@@ -76,13 +76,14 @@ jar ^
 echo [5/5] Ejecutando jpackage...
 
 jpackage ^
-    --type exe ^
+    --type app-image ^
     --name RocketTracker ^
     --input "%BUILD%\input" ^
     --main-jar RocketTracker.jar ^
     --main-class app.Main ^
-    --runtime-image "%BUILD%\runtime" ^
-    --dest "%RELEASE%"
+    --module-path "%JAVAFX%\lib" ^
+    --add-modules javafx.controls,javafx.fxml,javafx.graphics,java.net.http ^
+    --java-options "-Djava.library.path=%JAVAFX%\lib" ^ --dest "%RELEASE%"
 
 cd /d "%RELEASE%\RocketTracker"
 
