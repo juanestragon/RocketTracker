@@ -76,7 +76,7 @@ jar ^
 echo [5/5] Ejecutando jpackage...
 
 jpackage ^
-    --type exe ^
+    --type app-image ^
     --name RocketTracker ^
     --input "%BUILD%\input" ^
     --main-jar RocketTracker.jar ^
