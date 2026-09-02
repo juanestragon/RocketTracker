@@ -88,7 +88,6 @@ echo [5/5] Ejecutando jpackage...
 echo [6/6] Creando aplicacion...
 
 jpackage ^
-    --type exe ^
     --name RocketTracker ^
     --input "%BUILD%\input" ^
     --main-jar RocketTracker.jar ^
