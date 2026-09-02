@@ -69,27 +69,14 @@ jar ^
     --manifest "%BUILD%\MANIFEST.MF" ^
     -C "%BUILD%\classes" .
 
-echo [5/6] Creando runtime...
-
-jlink ^
-    --module-path "%JAVA_HOME%\jmods;%JAVAFX%\lib" ^
-    --add-modules java.base,java.desktop,java.net.http,javafx.controls,javafx.graphics ^
-    --output "%BUILD%\runtime" ^
-    --strip-debug ^
-    --no-header-files ^
-    --no-man-pages ^
-    --compress zip-6
-
 :: ============================
 :: jpackage
 :: ============================
 
 echo [5/5] Ejecutando jpackage...
 
-echo [6/6] Creando aplicacion...
-
 jpackage ^
-    --type app-image ^
+    --type exe ^
     --name RocketTracker ^
     --input "%BUILD%\input" ^
     --main-jar RocketTracker.jar ^
