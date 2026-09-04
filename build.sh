@@ -4,7 +4,7 @@ set -e
 
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-JAVAFX="$PROJECT_DIR/lib/javafx-sdk-21.0.12"
+JAVAFX="$PROJECT_DIR/lib/javafx-jmods-21.0.12-linux"
 
 BUILD="$PROJECT_DIR/build"
 RELEASE="$PROJECT_DIR/release"
@@ -37,7 +37,7 @@ find "$PROJECT_DIR/src" \
     > "$BUILD/sources.txt"
 
 javac \
-    --module-path "$JAVAFX/lib" \
+    --module-path "$JAVAFX" \
     --add-modules javafx.controls \
     -d "$BUILD/classes" \
     @"$BUILD/sources.txt"
@@ -78,7 +78,7 @@ jpackage \
     --input "$BUILD/input" \
     --main-jar RocketTracker.jar \
     --main-class app.Main \
-    --module-path "$JAVAFX/lib" \
+    --module-path "$JAVAFX" \
     --add-modules javafx.controls,javafx.fxml,javafx.graphics,java.net.http \
     --java-options "-Djava.library.path=$JAVAFX/lib" \
     --dest "$RELEASE"

@@ -5,7 +5,7 @@ set "PROJECT_DIR=%~dp0"
 :: Quita la barra final si existe
 if "%PROJECT_DIR:~-1%"=="\" set "PROJECT_DIR=%PROJECT_DIR:~0,-1%"
 
-set "JAVAFX=%PROJECT_DIR%\lib\javafx-sdk-21.0.12"
+set "JAVAFX=%PROJECT_DIR%\lib\javafx-jmods-21.0.12-win"
 set "BUILD=%PROJECT_DIR%\build"
 set "RELEASE=%PROJECT_DIR%\release"
 
@@ -35,7 +35,7 @@ echo [2/5] Compilando Java...
 dir /s /b "%PROJECT_DIR%\src\*.java" > "%BUILD%\sources.txt"
 
 javac ^
-    --module-path "%JAVAFX%\lib" ^
+    --module-path "%JAVAFX%" ^
     --add-modules javafx.controls ^
     -d "%BUILD%\classes" ^
     @"%BUILD%\sources.txt"
@@ -81,7 +81,7 @@ jpackage ^
     --input "%BUILD%\input" ^
     --main-jar RocketTracker.jar ^
     --main-class app.Main ^
-    --module-path "%JAVAFX%\lib" ^
+    --module-path "%JAVAFX%" ^
     --add-modules javafx.controls,javafx.fxml,javafx.graphics,java.net.http ^
     --dest "%RELEASE%"
 
