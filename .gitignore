@@ -7,7 +7,6 @@ out/
 data/
 .kotlin
 build/
-lib/
 update.sh
 
 ### Eclipse ###
