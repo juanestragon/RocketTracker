@@ -29,8 +29,7 @@ PacketSendRate=0
 
 Change the PacketSendRate to a valid value between 1-120, I recommend 10, and make sure you put the same value in the app's setting so it measures the data correctly.
 
-You must set the player name so it finds you in the game. You can check whether it works or not going to free training, if the *Match not found* changes to *Free training* it is working just fine.
-It only detects a player if the name was changed before the game started, so you cannot track other people in the game.
+You must set the player name so it finds you in the game. You can check whether it works or not by going to free training. If the **"Match not found"** changes to **"Free training"**, it means it's working just fine. It only detects a player if the name was changed before the game started, so you cannot track other people in the game.
 
 ## More
 
