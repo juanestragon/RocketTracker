@@ -2,7 +2,7 @@
 
 Rocket Tracker is a free open-source program that provides analytics using the [Rocket League Stats API](https://www.rocketleague.com/developer/stats-api "Stats API").
 
-Go to [Setup](https://github.com/juanestragon/RocketTracker/edit/main/README.md#Setup) to learn how to use it.
+Go to [Setup](https://github.com/juanestragon/RocketTracker/#Setup) to learn how to use it.
 
 ![alt text](https://github.com/juanestragon/RocketTracker/blob/main/screenshots/HomeView.png "Home View")
 ![alt text](https://github.com/juanestragon/RocketTracker/blob/main/screenshots/StatisticsView.png "Statistics View")
