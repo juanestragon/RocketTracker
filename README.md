@@ -29,6 +29,9 @@ PacketSendRate=0
 
 Change the PacketSendRate to a valid value between 1-120, I recommend 10, and make sure you put the same value in the app's setting so it measures the data correctly.
 
+You must set the player name so it finds you in the game. You can check whether it works or not going to free training, if the *Match not found* changes to *Free training* it is working just fine.
+It only detects a player if the name was changed before the game started, so you cannot track other people in the game.
+
 ## More
 
 This tracker only tracks competitive matches, and does not get MMR statistics, if some time epic adds a public API to track MMR I will implement it, I have asked for it in the epic games support service and you can ask for it too [here](https://www.epicgames.com/help/rocket-league-c-37599050/gameplay-c-32343914/cuales-son-los-sitios-y-las-cuentas-oficiales-de-redes-sociales-de-rocket-league-a22635832). 
